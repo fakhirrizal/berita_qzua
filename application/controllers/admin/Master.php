@@ -10,33 +10,20 @@ class Master extends CI_Controller {
 	{
 		$data['parent'] = 'master';
 		$data['child'] = 'administrator';
-		$data['grand_child'] = '';
+		
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/master/data_administrator',$data);
 		$this->load->view('admin/template/footer');
 	}
 	public function json_admin(){
-		$get_data1 = $this->Main_model->getSelectedData('user a', 'a.*,c.fullname',array("a.is_active" => '1','a.deleted' => '0','b.role_id' => '1'),'','','','',array(
-			array(
-				'table' => 'user_to_role b',
-				'on' => 'a.id=b.user_id',
-				'pos' => 'LEFT'
-			),
-			array(
-				'table' => 'user_profile c',
-				'on' => 'a.id=c.user_id',
-				'pos' => 'LEFT'
-			)
+		$get_data1 = $this->Main_model->getSelectedData('user a', 'a.*', array("a.is_active" => '1','a.deleted' => '0','b.role_id' => '1'), '', '', '', '', array(
+			'table' => 'user_to_role b',
+			'on' => 'a.id=b.user_id',
+			'pos' => 'LEFT'
 		))->result();
 		$data_tampil = array();
 		$no = 1;
 		foreach ($get_data1 as $key => $value) {
-			$isi['checkbox'] =	'
-								<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-									<input type="checkbox" class="checkboxes" name="selected_id[]" value="'.$value->id.'"/>
-									<span></span>
-								</label>
-								';
 			$isi['number'] = $no++.'.';
 			$isi['nama'] = $value->fullname;
 			$isi['username'] = $value->username;
@@ -80,7 +67,7 @@ class Master extends CI_Controller {
 	{
 		$data['parent'] = 'master';
 		$data['child'] = 'administrator';
-		$data['grand_child'] = '';
+		
 		$data['prov'] = $this->Main_model->getSelectedData('provinsi a', 'a.*')->result();
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/master/tambah_data_administrator',$data);
@@ -136,7 +123,7 @@ class Master extends CI_Controller {
 	{
 		$data['parent'] = 'master';
 		$data['child'] = 'administrator';
-		$data['grand_child'] = '';
+		
 		// $data['data_utama'] =  $this->Main_model->getSelectedData('kube a', 'a.*', array('md5(a.user_id)'=>$this->uri->segment(3),'a.deleted'=>'0'))->result();
 		// $data['riwayat_pembayaran'] = $this->Main_model->getSelectedData('purchasing a', 'a.*', array('md5(a.user_id)'=>$this->uri->segment(3),'a.deleted'=>'0'))->result();
 		// $data['riwayat_kehadiran'] = $this->Main_model->getSelectedData('presence a', 'a.*', array('md5(a.user_id)'=>$this->uri->segment(3)))->result_array();
@@ -148,7 +135,7 @@ class Master extends CI_Controller {
 	{
 		$data['parent'] = 'master';
 		$data['child'] = 'administrator';
-		$data['grand_child'] = '';
+		
 		$data['data_utama'] = $this->Main_model->getSelectedData('user a', 'a.*', array('md5(a.id)'=>$this->uri->segment(3),'a.deleted'=>'0'))->row();
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/master/ubah_data_administrator',$data);
@@ -262,7 +249,7 @@ class Master extends CI_Controller {
 	{
 		$data['parent'] = 'master';
 		$data['child'] = 'member';
-		$data['grand_child'] = '';
+		
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/master/data_anggota',$data);
 		$this->load->view('admin/template/footer');
@@ -377,7 +364,7 @@ class Master extends CI_Controller {
 	{
 		$data['parent'] = 'master';
 		$data['child'] = 'member';
-		$data['grand_child'] = '';
+		
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/master/tambah_data_anggota',$data);
 		$this->load->view('admin/template/footer');
@@ -497,7 +484,7 @@ class Master extends CI_Controller {
 	public function kategori_berita(){
 		$data['parent'] = 'master';
         $data['child'] = 'kategori_berita';
-        $data['grand_child'] = '';
+        
         $this->load->view('admin/template/header',$data);
         $this->load->view('admin/master/kategori_berita',$data);
         $this->load->view('admin/template/footer');
@@ -509,26 +496,31 @@ class Master extends CI_Controller {
 		foreach ($get_data as $key => $value) {
 			$isi['no'] = $no++.'.';
 			$isi['judul'] = $value->kategori_berita;
-			$get_jumlah_berita = $this->Main_model->getSelectedData('berita a', 'a.*', array('a.id_kategori_berita'=>$value->id_kategori_berita))->result();
-			$isi['isi'] = count($get_jumlah_berita).' Berita';
+			$check_berita = $this->db->query("SELECT * FROM `berita` WHERE `id_kategori_berita` LIKE '%".$value->id_kategori_berita."%'")->result();
+            $tampung_real = 0;
+            foreach ($check_berita as $key => $row) {
+                $pecah_kategori = explode(',',$row->id_kategori_berita);
+                for ($i=0; $i < count($pecah_kategori); $i++) { 
+                    if($pecah_kategori[$i]==$value->id_kategori_berita){
+                        $tampung_real++;
+                        break;
+                    }else{
+                        echo'';
+                    }
+                }
+            }
+            $isi['isi'] = number_format($tampung_real,0).' Berita';
 			$return_on_click = "return confirm('Anda yakin?')";
 			$isi['action'] =	'
-								<div class="btn-group" style="text-align: center;">
-									<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi
-										<i class="fa fa-angle-down"></i>
-									</button>
-									<ul class="dropdown-menu" role="menu">
-										<li>
-											<a href="'.site_url('admin_side/detail_kategori_berita/'.md5($value->id_kategori_berita)).'">
-												<i class="icon-action-redo"></i> Detail Data </a>
-										</li>
-										<li>
-											<a onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_kategori_berita/'.md5($value->id_kategori_berita)).'">
-												<i class="icon-trash"></i> Hapus Data </a>
-										</li>
-									</ul>
-								</div>
-								';
+			<div class="dropdown no-arrow mb-4">
+				<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Aksi
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="'.site_url('admin_side/detail_kategori_berita/'.md5($value->id_kategori_berita)).'">Detail Data</a>
+					<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_kategori_berita/'.md5($value->id_kategori_berita)).'">Hapus Data</a>
+				</div>
+			</div>';
 			$data_tampil[] = $isi;
 		}
 		$results = array(
@@ -541,37 +533,43 @@ class Master extends CI_Controller {
 	public function tambah_kategori_berita(){
 		$data['parent'] = 'master';
         $data['child'] = 'kategori_berita';
-		$data['grand_child'] = '';
+		
         $this->load->view('admin/template/header',$data);
         $this->load->view('admin/master/tambah_kategori_berita',$data);
         $this->load->view('admin/template/footer');
 	}
 	public function simpan_kategori_berita(){
-		$this->db->trans_start();
+		$check = $this->Main_model->getSelectedData('kategori_berita a', 'a.*', array('a.kategori_berita'=>$this->input->post('nama')))->row();
+		if($check==NULL){
+			$this->db->trans_start();
 
-		$get_last_id = $this->Main_model->getLastID('kategori_berita','id_kategori_berita');
+			$get_last_id = $this->Main_model->getLastID('kategori_berita','id_kategori_berita');
 
-		$data_insert_ = array(
-			'id_kategori_berita' => $get_last_id['id_kategori_berita']+1,
-			'kategori_berita' => $this->input->post('nama')
-		);
-		$this->Main_model->insertData("kategori_berita",$data_insert_);
+			$data_insert_ = array(
+				'id_kategori_berita' => $get_last_id['id_kategori_berita']+1,
+				'kategori_berita' => $this->input->post('nama')
+			);
+			$this->Main_model->insertData("kategori_berita",$data_insert_);
 
-		$this->Main_model->log_activity($this->session->userdata('id'),'Adding data',"Menambahkan data kategori berita",$this->session->userdata('location'));
-		$this->db->trans_complete();
-		if($this->db->trans_status() === false){
+			$this->Main_model->log_activity($this->session->userdata('id'),'Adding data',"Menambahkan data kategori berita",$this->session->userdata('location'));
+			$this->db->trans_complete();
+			if($this->db->trans_status() === false){
+				$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal disimpan.<br /></div>' );
+				echo "<script>window.location='".base_url()."admin_side/kategori_berita'</script>";
+			}
+			else{
+				$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil disimpan.<br /></div>' );
+				echo "<script>window.location='".base_url()."admin_side/kategori_berita/'</script>";
+			}
+		}else{
 			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal disimpan.<br /></div>' );
 			echo "<script>window.location='".base_url()."admin_side/kategori_berita'</script>";
-		}
-		else{
-			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil disimpan.<br /></div>' );
-			echo "<script>window.location='".base_url()."admin_side/kategori_berita/'</script>";
 		}
 	}
 	public function detail_kategori_berita(){
 		$data['parent'] = 'master';
         $data['child'] = 'kategori_berita';
-		$data['grand_child'] = '';
+		
 		$data['data_utama'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*',array('md5(a.id_kategori_berita)'=>$this->uri->segment(3)))->result();
 		$data['berita'] = $this->Main_model->getSelectedData('berita a', 'a.*',array('md5(a.id_kategori_berita)'=>$this->uri->segment(3),'a.deleted'=>'0'))->result();
         $this->load->view('admin/template/header',$data);
@@ -628,8 +626,8 @@ class Master extends CI_Controller {
 		$id = $get_data->id_kategori_berita;
 		$nama = $get_data->kategori_berita;
 
-		// $this->Main_model->deleteData('kategori_berita',array('id_kategori_berita'=>$id));
-		$this->Main_model->updateData('kategori_berita',array('deleted'=>'1'),array('md5(id_kategori_berita)'=>$this->uri->segment(3)));
+		$this->Main_model->deleteData('kategori_berita',array('id_kategori_berita'=>$id));
+		// $this->Main_model->updateData('kategori_berita',array('deleted'=>'1'),array('md5(id_kategori_berita)'=>$this->uri->segment(3)));
 
 		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","Menghapus data kategori berita (".$nama.")",$this->session->userdata('location'));
 		$this->db->trans_complete();
@@ -646,7 +644,7 @@ class Master extends CI_Controller {
 	public function berita(){
 		$data['parent'] = 'master';
         $data['child'] = 'berita';
-        $data['grand_child'] = '';
+        
         $this->load->view('admin/template/header',$data);
         $this->load->view('admin/master/berita',$data);
         $this->load->view('admin/template/footer');
@@ -658,12 +656,28 @@ class Master extends CI_Controller {
 		foreach ($get_data as $key => $value) {
 			$isi['no'] = $no++.'.';
 			$isi['judul'] = $value->judul;
-			$isi['isi'] = $value->berita;
+			$berita = '';
+			$jumlah_karakter = strlen($value->berita);
+			if($jumlah_karakter>70){
+				$berita = substr($value->berita,0,69).'[....]';
+			}else{
+				$berita = $value->berita;
+			}
+			$isi['isi'] = $berita;
 			$kategori = '';
 			$pecah_kategori = explode(',',$value->id_kategori_berita);
-			for ($i=0; $i < $pecah_kategori; $i++) { 
+			$hitung_urutan = (count($pecah_kategori))-1;
+			for ($i=0; $i < count($pecah_kategori); $i++) {
 				$get_data_kategori = $this->Main_model->getSelectedData('kategori_berita a', 'a.*', array('a.id_kategori_berita'=>$pecah_kategori[$i]))->row();
-				$kategori .= $get_data_kategori->kategori_berita.'<br>';
+				if($get_data_kategori==NULL){
+					echo'';
+				}else{
+					if($i==$hitung_urutan){
+						$kategori .= $get_data_kategori->kategori_berita;
+					}else{
+						$kategori .= $get_data_kategori->kategori_berita.'<br>';
+					}
+				}
 			}
 			$isi['kategori'] = $kategori;
 			$dibuat = '';
@@ -672,22 +686,15 @@ class Master extends CI_Controller {
 			$isi['dibuat'] = $dibuat;
 			$return_on_click = "return confirm('Anda yakin?')";
 			$isi['action'] =	'
-								<div class="btn-group" style="text-align: center;">
-									<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi
-										<i class="fa fa-angle-down"></i>
-									</button>
-									<ul class="dropdown-menu" role="menu">
-										<li>
-											<a href="'.site_url('admin_side/detail_berita/'.md5($value->id_berita)).'">
-												<i class="icon-action-redo"></i> Detail Data </a>
-										</li>
-										<li>
-											<a onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_berita/'.md5($value->id_berita)).'">
-												<i class="icon-trash"></i> Hapus Data </a>
-										</li>
-									</ul>
-								</div>
-								';
+			<div class="dropdown no-arrow mb-4">
+				<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Aksi
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="'.site_url('admin_side/detail_berita/'.md5($value->id_berita)).'">Detail Data</a>
+					<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_berita/'.md5($value->id_berita)).'">Hapus Data</a>
+				</div>
+			</div>';
 			$data_tampil[] = $isi;
 		}
 		$results = array(
@@ -700,7 +707,7 @@ class Master extends CI_Controller {
 	public function tambah_berita(){
 		$data['parent'] = 'master';
         $data['child'] = 'berita';
-		$data['grand_child'] = '';
+		
         $this->load->view('admin/template/header',$data);
         $this->load->view('admin/master/tambah_berita',$data);
 		$this->load->view('admin/template/footer');
@@ -747,6 +754,7 @@ class Master extends CI_Controller {
 		foreach ($get_subscriber as $key => $value) {
 			$mail->AddAddress($value->email,$value->email);
 			$mail->Send();
+			$this->Main_model->updateData('subscriber',array('counter'=>($value->counter)+1),array('id_subscriber'=>$value->id_subscriber));
 		}
 
 		$this->Main_model->log_activity($this->session->userdata('id'),'Adding data',"Menambahkan data berita",$this->session->userdata('location'));
@@ -763,7 +771,7 @@ class Master extends CI_Controller {
 	public function detail_berita(){
 		$data['parent'] = 'master';
         $data['child'] = 'berita';
-		$data['grand_child'] = '';
+		
 		$data['data_utama'] = $this->Main_model->getSelectedData('berita a', 'a.*',array('md5(a.id_berita)'=>$this->uri->segment(3)))->row();
         $this->load->view('admin/template/header',$data);
         $this->load->view('admin/master/ubah_berita',$data);
@@ -804,10 +812,10 @@ class Master extends CI_Controller {
 		$nama = '';
 		$get_data = $this->Main_model->getSelectedData('berita a', 'a.*',array('md5(a.id_berita)'=>$this->uri->segment(3)))->row();
 		$id = $get_data->id_berita;
-		$nama = $get_data->pertanyaan;
+		$nama = $get_data->judul;
 
-		// $this->Main_model->deleteData('berita',array('id_berita'=>$id));
-		$this->Main_model->updateData('berita',array('deleted'=>'1'),array('md5(id_berita)'=>$this->uri->segment(3)));
+		$this->Main_model->deleteData('berita',array('id_berita'=>$id));
+		$this->Main_model->deleteData('komentar_berita',array('id_berita'=>$id));
 
 		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","Menghapus data berita (".$nama.")",$this->session->userdata('location'));
 		$this->db->trans_complete();

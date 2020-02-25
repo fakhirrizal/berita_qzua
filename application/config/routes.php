@@ -65,20 +65,20 @@ $route['admin_side/login_process'] = 'admin/App/login_process';
 $route['admin_side/launcher'] = 'admin/App/launcher';
 $route['admin_side/beranda'] = 'admin/App/home';
 $route['admin_side/menu'] = 'admin/App/menu';
-$route['admin_side/log_activity'] = 'admin/App/log_activity';
+$route['admin_side/log_aktifitas'] = 'admin/App/log_activity';
 $route['admin_side/cleaning_log'] = 'admin/App/cleaning_log';
 $route['admin_side/tentang_aplikasi'] = 'admin/App/about';
 $route['admin_side/bantuan'] = 'admin/App/helper';
 $route['admin_side/logout'] = 'admin/App/logout';
 
-$route['admin_side/administrator'] = 'admin/Master/administrator_data';
-$route['admin_side/tambah_data_admin'] = 'admin/Master/tambah_administrator_data';
-$route['admin_side/simpan_data_admin'] = 'admin/Master/simpan_administrator_data';
-$route['admin_side/detail_data_admin/(:any)'] = 'admin/Master/detail_administrator_data/$1';
-$route['admin_side/ubah_data_admin/(:any)'] = 'admin/Master/ubah_administrator_data/$1';
-$route['admin_side/perbarui_data_admin'] = 'admin/Master/perbarui_administrator_data';
+$route['admin_side/administrator'] = 'admin/Master/data_administrator';
+$route['admin_side/tambah_data_admin'] = 'admin/Master/tambah_data_administrator';
+$route['admin_side/simpan_data_admin'] = 'admin/Master/simpan_data_administrator';
+$route['admin_side/detail_data_admin/(:any)'] = 'admin/Master/detail_data_administrator/$1';
+$route['admin_side/ubah_data_admin/(:any)'] = 'admin/Master/ubah_data_administrator/$1';
+$route['admin_side/perbarui_data_admin'] = 'admin/Master/perbarui_data_administrator';
 $route['admin_side/atur_ulang_kata_sandi_admin/(:any)'] = 'admin/Master/reset_password_administrator_account/$1';
-$route['admin_side/hapus_data_admin/(:any)'] = 'admin/Master/hapus_administrator_data/$1';
+$route['admin_side/hapus_data_admin/(:any)'] = 'admin/Master/hapus_data_administrator/$1';
 
 $route['admin_side/data_anggota'] = 'admin/Master/data_anggota';
 $route['admin_side/tambah_data_anggota'] = 'admin/Master/tambah_data_anggota';
@@ -101,6 +101,7 @@ $route['admin_side/perbarui_berita'] = 'admin/Master/perbarui_berita';
 $route['admin_side/hapus_berita/(:any)'] = 'admin/Master/hapus_berita/$1';
 
 /* Public */
+$route['kategori'] = 'User/kategori';
 $route['kategori/(:any)'] = 'User/kategori/$1';
 $route['save_subscriber'] = 'User/save_subscriber';
 

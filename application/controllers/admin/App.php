@@ -118,7 +118,7 @@ class App extends CI_Controller {
 	{
 		$data['parent'] = 'home';
 		$data['child'] = '';
-		$data['grand_child'] = '';
+		
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/app/home',$data);
 		$this->load->view('admin/template/footer');
@@ -127,7 +127,7 @@ class App extends CI_Controller {
 	{
 		$data['parent'] = 'menu';
 		$data['child'] = '';
-		$data['grand_child'] = '';
+		
 		$data['clinic_center_menu'] = $this->Main_model->getSelectedData('menu a', '*', array("parent_id" => "", "a.app_key" => "clinic_center", "a.menu_status" => '1', 'deleted' => '0'), 'a.menu_order ASC','','','','')->result();
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/app/menu',$data);
@@ -137,10 +137,10 @@ class App extends CI_Controller {
 	{
 		$data['parent'] = 'log_activity';
 		$data['child'] = '';
-		$data['grand_child'] = '';
+		
 		$data['data_tabel'] = $this->Main_model->getSelectedData('activity_logs a', 'a.*,b.fullname', '', "a.activity_time DESC",'','','',array(
-			'table' => 'user_profile b',
-			'on' => 'a.user_id=b.user_id',
+			'table' => 'user b',
+			'on' => 'a.user_id=b.id',
 			'pos' => 'LEFT'
 		))->result();
 		$this->load->view('admin/template/header',$data);
@@ -164,7 +164,7 @@ class App extends CI_Controller {
 	{
 		$data['parent'] = 'about';
 		$data['child'] = '';
-		$data['grand_child'] = '';
+		
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/app/about',$data);
 		$this->load->view('admin/template/footer');
@@ -173,7 +173,7 @@ class App extends CI_Controller {
 	{
 		$data['parent'] = 'helper';
 		$data['child'] = '';
-		$data['grand_child'] = '';
+		
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/app/helper',$data);
 		$this->load->view('admin/template/footer');
