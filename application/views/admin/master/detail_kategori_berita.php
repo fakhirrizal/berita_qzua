@@ -2,101 +2,40 @@
 <style media="all" type="text/css">
     .alignCenter { text-align: center; }
 </style>
-<ul class="page-breadcrumb breadcrumb">
-	<li>
-		<span>Master</span>
-		<i class="fa fa-circle"></i>
-	</li>
-	<li>
-		<span><a href='<?= site_url('/admin_side/kategori_Berita'); ?>'>Kategori Berita</a></span>
-		<i class="fa fa-circle"></i>
-	</li>
-	<li>
-		<span>Detil Data</span>
-	</li>
-</ul>
 <?= $this->session->flashdata('sukses') ?>
 <?= $this->session->flashdata('gagal') ?>
-<div class="page-content-inner">
-	<div class="m-heading-1 border-yellow m-bordered" style="background-color:#FAD405;">
-		<h3>Catatan</h3>
-		<!-- <p> 1. Jika laporan telah "<b>disetujui</b>" ataupun "<b>ditolak</b>" maka data tidak dapat diubah kembali.</p> -->
-		<!-- <p> 2. Jika menghapus data barang maka stok di master barang akan bertambah.</p> -->
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="portlet light ">
-				<div class="portlet-body">
-					<div class='row'>
-						<?php
-						if(isset($data_utama)){
-							foreach($data_utama as $row)
-							{
-						?>
-								<div class="col-md-6">
-									<table class="table">
-										<tbody>
-                                            <tr>
-												<td> Kategori Berita </td>
-												<td> : </td>
-												<td><?php echo $row->kategori_Berita; ?></td>
-											</tr>
-                                            <tr>
-												<td> Jumlah Berita </td>
-												<td> : </td>
-												<td><?php echo count($Berita).' Berita'; ?></td>
-											</tr>
-											<tr>
-												<td> </td>
-												<td> </td>
-												<td> </td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="col-md-6">
-									<table class="table">
-									</table>
-								</div>
-						<?php }} ?>
-					</div>
-					<div class='row'>
-						<div class="col-md-12" >
-							<div class="tabbable-line">
-								<div class="table-toolbar">
-									<div class="row">
-										<div class="col-md-6">
-											<a href="<?php echo site_url('admin_side/tambah_Berita'); ?>" class="btn green uppercase">Tambah Data Berita <i class="fa fa-plus"></i> </a>
-										</div>
-									</div>
-								</div>
-								<script type="text/javascript">
-									function getPageWO() {
-										$('#tabel_Berita_berdasarkan_kategori').html('<img src="https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-6d0b072c3d3f.gif" />');
-										var modul = 'tabel_Berita_berdasarkan_kategori';
-										var data = '<?= $this->uri->segment(3); ?>';
-										jQuery.ajax({
-											url: "<?php echo site_url(); ?>admin/Master/ajax_page",
-											data: {modul:modul,data:data},
-											type: "POST",
-											success:function(data){
-												$('#tabel_Berita_berdasarkan_kategori').html(data);
-												$("#loading-image").hide();
-											}
-										});
-									}
-									getPageWO();
-								</script>
-								<img id="loading-image" src="https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-6d0b072c3d3f.gif" width='100%'/>
-								<div id="tabel_Berita_berdasarkan_kategori">
-								</div>  
-							</div>
-						</div>
-						<div class="col-md-12" >
-						<hr><a href="<?php echo base_url()."admin_side/kategori_Berita"; ?>" class="btn btn-info" role="button"><i class="fa fa-angle-double-left"></i> Kembali</a></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="page-breadcrumb breadcrumb" style="background-color:#8cb2ea;">
+	<font color='black'>
+		<h4>Catatan</h4>
+		<a> 1. Kolom isian dengan tanda bintang (<font color='red'>*</font>) adalah wajib untuk di isi.</a>
+		<!-- <br><a> 2. Data ekspor berupa file excel (<b>.xls</b>)</a> -->
+	</font>
+</div>
+<div class="card shadow mb-4">
+    <form role="form" class="form-horizontal" action="<?=base_url('admin_side/perbarui_kategori_berita');?>" method="post" enctype='multipart/form-data'>
+        <input type="hidden" name="id" value='<?= md5($data_utama->id_kategori_berita); ?>'>
+        <div class="card-header py-3">
+            <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>">
+            <div class="form-body">
+                <div class="form-group form-md-line-input has-danger">
+                    <label class="control-label" for="form_control_1">Kategori Berita <span class="required"> * </span></label>
+                    <input type="text" class="form-control" name="nama" placeholder="Type something" value='<?= $data_utama->kategori_berita; ?>' required>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <button type="reset" class="btn btn-secondary btn-icon-split">
+                <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+                </span>
+                <span class="text">Batal</span>
+            </button>
+            <button type="submit" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+                </span>
+                <span class="text">Perbarui</span>
+            </button>
+        </div>
+    </form>
 </div>

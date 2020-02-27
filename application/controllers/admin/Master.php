@@ -24,37 +24,33 @@ class Master extends CI_Controller {
 		$data_tampil = array();
 		$no = 1;
 		foreach ($get_data1 as $key => $value) {
-			$isi['number'] = $no++.'.';
-			$isi['nama'] = $value->fullname;
-			$isi['username'] = $value->username;
-			$isi['total_login'] = number_format($value->total_login,0).'x';
-			$pecah_tanggal = explode(' ',$value->last_activity);
-			$isi['last_activity'] = $this->Main_model->convert_tanggal($pecah_tanggal[0]).' '.substr($pecah_tanggal[1],0,5);
-			$return_on_click = "return confirm('Anda yakin?')";
-			$isi['action'] =	'
-								<div class="btn-group" style="text-align: center;">
-									<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi
-										<i class="fa fa-angle-down"></i>
-									</button>
-									<ul class="dropdown-menu" role="menu">
-										<li>
-											<a href="'.site_url('admin_side/ubah_data_admin/'.md5($value->id)).'">
-												<i class="icon-wrench"></i> Ubah Data </a>
-										</li>
-										<li>
-											<a onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_data_admin/'.md5($value->id)).'">
-												<i class="icon-trash"></i> Hapus Data </a>
-										</li>
-										<li class="divider"> </li>
-										<li>
-											<a href="'.site_url('admin_side/atur_ulang_kata_sandi_admin/'.md5($value->id)).'">
-												<i class="fa fa-refresh"></i> Atur Ulang Sandi
-											</a>
-										</li>
-									</ul>
-								</div>
-								';
-			$data_tampil[] = $isi;
+			if($value->id==$this->session->userdata('id')){
+				echo'';
+			}else{
+				$isi['number'] = $no++.'.';
+				$isi['nama'] = $value->fullname;
+				$isi['username'] = $value->username;
+				$isi['total_login'] = number_format($value->total_login,0).'x';
+				$pecah_tanggal = explode(' ',$value->last_activity);
+				if($value->last_activity==NULL){
+					$isi['last_activity'] = '-';
+				}else{
+					$isi['last_activity'] = $this->Main_model->convert_tanggal($pecah_tanggal[0]).' '.substr($pecah_tanggal[1],0,5);
+				}
+				$return_on_click = "return confirm('Anda yakin?')";
+				$isi['action'] =
+				'<div class="dropdown no-arrow mb-4">
+					<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Aksi
+					</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_data_admin/'.md5($value->id)).'">Hapus Data</a>
+						<hr>
+						<a class="dropdown-item" href="'.site_url('admin_side/atur_ulang_kata_sandi_admin/'.md5($value->id)).'">Atur Ulang Sandi</a>
+					</div>
+				</div>';
+				$data_tampil[] = $isi;
+			}
 		}
 		$results = array(
 			"sEcho" => 1,
@@ -68,7 +64,6 @@ class Master extends CI_Controller {
 		$data['parent'] = 'master';
 		$data['child'] = 'administrator';
 		
-		$data['prov'] = $this->Main_model->getSelectedData('provinsi a', 'a.*')->result();
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/master/tambah_data_administrator',$data);
 		$this->load->view('admin/template/footer');
@@ -82,6 +77,7 @@ class Master extends CI_Controller {
 			$data_insert1 = array(
 				'id' => $get_user_id['id']+1,
 				'username' => $this->input->post('un'),
+				'fullname' => $this->input->post('nama'),
 				'pass' => $this->input->post('ps'),
 				'is_active' => '1',
 				'created_by' => $this->session->userdata('id'),
@@ -92,17 +88,10 @@ class Master extends CI_Controller {
 
 			$data_insert2 = array(
 				'user_id' => $get_user_id['id']+1,
-				'fullname' => $this->input->post('nama')
-			);
-			$this->Main_model->insertData('user_profile',$data_insert2);
-			// print_r($data_insert2);
-
-			$data_insert3 = array(
-				'user_id' => $get_user_id['id']+1,
 				'role_id' => '1'
 			);
-			$this->Main_model->insertData('user_to_role',$data_insert3);
-			// print_r($data_insert3);
+			$this->Main_model->insertData('user_to_role',$data_insert2);
+			// print_r($data_insert2);
 
 			$this->Main_model->log_activity($this->session->userdata('id'),'Adding data',"Menambahkan data Admin (".$this->input->post('nama').")",$this->session->userdata('location'));
 			$this->db->trans_complete();
@@ -197,17 +186,17 @@ class Master extends CI_Controller {
 			echo "<script>window.location='".base_url()."admin_side/administrator/'</script>";
 		}
 	}
-	public function reset_password_administrator_account(){
+	public function atur_ulang_kata_sandi_admin(){
 		$this->db->trans_start();
 		$user_id = '';
 		$name = '';
-		$get_data = $this->Main_model->getSelectedData('user_profile a', 'a.*',array('md5(a.user_id)'=>$this->uri->segment(3)))->row();
-		$user_id = $get_data->user_id;
+		$get_data = $this->Main_model->getSelectedData('user a', 'a.*',array('md5(a.id)'=>$this->uri->segment(3)))->row();
+		$user_id = $get_data->id;
 		$name = $get_data->fullname;
 
 		$this->Main_model->updateData('user',array('pass'=>'1234'),array('id'=>$user_id));
 
-		$this->Main_model->log_activity($this->session->userdata('id'),"Update admin's data","Reset password admin's account (".$name.")",$this->session->userdata('location'));
+		$this->Main_model->log_activity($this->session->userdata('id'),"Updating data","Mengatur ulang kata sandi akun (".$name.")",$this->session->userdata('location'));
 		$this->db->trans_complete();
 		if($this->db->trans_status() === false){
 			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal diubah.<br /></div>' );
@@ -225,15 +214,13 @@ class Master extends CI_Controller {
 		$this->db->trans_start();
 		$user_id = '';
 		$name = '';
-		$get_data = $this->Main_model->getSelectedData('user_profile a', 'a.*',array('md5(a.user_id)'=>$this->uri->segment(3)))->row();
-		$user_id = $get_data->user_id;
+		$get_data = $this->Main_model->getSelectedData('user a', 'a.*',array('md5(a.id)'=>$this->uri->segment(3)))->row();
+		$user_id = $get_data->id;
 		$name = $get_data->fullname;
 
-		$this->Main_model->deleteData('user_profile',array('user_id'=>$user_id));
-		$this->Main_model->deleteData('user_to_role',array('user_id'=>$user_id));
-		$this->Main_model->deleteData('user',array('id'=>$user_id));
+		$this->Main_model->updateData('user',array('is_active'=>'0','deleted'=>'1'),array('id'=>$user_id));
 
-		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting admin's data","Delete admin's data (".$name.")",$this->session->userdata('location'));
+		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","Menghapus data akun (".$name.")",$this->session->userdata('location'));
 		$this->db->trans_complete();
 		if($this->db->trans_status() === false){
 			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal dihapus.<br /></div>' );
@@ -480,6 +467,34 @@ class Master extends CI_Controller {
 			echo "<script>window.location='".base_url()."admin_side/data_anggota/'</script>";
 		}
 	}
+	/* Subscriber */
+	public function subscriber(){
+		$data['parent'] = 'master';
+        $data['child'] = 'subscriber';
+        
+        $this->load->view('admin/template/header',$data);
+        $this->load->view('admin/master/subscriber',$data);
+        $this->load->view('admin/template/footer');
+	}
+	public function json_subscriber(){
+		$get_data = $this->Main_model->getSelectedData('subscriber a', 'a.*')->result();
+        $data_tampil = array();
+        $no = 1;
+		foreach ($get_data as $key => $value) {
+			$isi['no'] = $no++.'.';
+			$isi['judul'] = $value->email;
+			$isi['isi'] = number_format($value->counter,0).' x';
+			$pecah_tanggal = explode(' ',$value->created_at);
+			$isi['action'] = $this->Main_model->convert_tanggal($pecah_tanggal[0]).' '.substr($pecah_tanggal[1],0,5);
+			$data_tampil[] = $isi;
+		}
+		$results = array(
+			"sEcho" => 1,
+			"iTotalRecords" => count($data_tampil),
+			"iTotalDisplayRecords" => count($data_tampil),
+			"aaData"=>$data_tampil);
+		echo json_encode($results);
+	}
 	/* Master Kategori Berita*/
 	public function kategori_berita(){
 		$data['parent'] = 'master';
@@ -543,10 +558,10 @@ class Master extends CI_Controller {
 		if($check==NULL){
 			$this->db->trans_start();
 
-			$get_last_id = $this->Main_model->getLastID('kategori_berita','id_kategori_berita');
+			// $get_last_id = $this->Main_model->getLastID('kategori_berita','id_kategori_berita');
 
 			$data_insert_ = array(
-				'id_kategori_berita' => $get_last_id['id_kategori_berita']+1,
+				// 'id_kategori_berita' => $get_last_id['id_kategori_berita']+1,
 				'kategori_berita' => $this->input->post('nama')
 			);
 			$this->Main_model->insertData("kategori_berita",$data_insert_);
@@ -570,44 +585,18 @@ class Master extends CI_Controller {
 		$data['parent'] = 'master';
         $data['child'] = 'kategori_berita';
 		
-		$data['data_utama'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*',array('md5(a.id_kategori_berita)'=>$this->uri->segment(3)))->result();
-		$data['berita'] = $this->Main_model->getSelectedData('berita a', 'a.*',array('md5(a.id_kategori_berita)'=>$this->uri->segment(3),'a.deleted'=>'0'))->result();
+		$data['data_utama'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*',array('md5(a.id_kategori_berita)'=>$this->uri->segment(3)))->row();
         $this->load->view('admin/template/header',$data);
         $this->load->view('admin/master/detail_kategori_berita',$data);
         $this->load->view('admin/template/footer');
 	}
 	public function perbarui_kategori_berita(){
 		$this->db->trans_start();
-		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
-		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/kategori_berita/'; // path folder
-		$config['allowed_types'] = 'jpg|jpeg|png|bmp'; // type yang dapat diakses bisa anda sesuaikan
-		$config['max_size'] = '3072'; // maksimum besar file 3M
-		$config['file_name'] = $nmfile; // nama yang terupload nantinya
-
-		$this->upload->initialize($config);
-		if(isset($_FILES['file']['name']))
-		{
-			if(!$this->upload->do_upload('file'))
-			{
-				echo'';
-			}
-			else
-			{
-				$gbr = $this->upload->data();
-				$data_insert_1 = array(
-					'judul' => $this->input->post('judul'),
-					'foto' => $gbr['file_name'],
-					'isi' => $this->input->post('isi')
-				);
-				$this->Main_model->updateData('kategori_berita',$data_insert_1,array('md5(id_kategori_berita)'=>$this->input->post('id')));
-			}
-		}else{echo'';}
-		$data_insert_2 = array(
-			'judul' => $this->input->post('judul'),
-			'isi' => $this->input->post('isi')
+		$data_insert_1 = array(
+			'kategori_berita' => $this->input->post('nama')
 		);
-		$this->Main_model->updateData('kategori_berita',$data_insert_2,array('md5(id_kategori_berita)'=>$this->input->post('id')));
-		$this->Main_model->log_activity($this->session->userdata('id'),'Updating data',"Memperbarui data kategori_berita (".$this->input->post('judul').")",$this->session->userdata('location'));
+		$this->Main_model->updateData('kategori_berita',$data_insert_1,array('md5(id_kategori_berita)'=>$this->input->post('id')));
+		$this->Main_model->log_activity($this->session->userdata('id'),'Updating data',"Memperbarui data kategori_berita (".$this->input->post('nama').")",$this->session->userdata('location'));
 		$this->db->trans_complete();
 		if($this->db->trans_status() === false){
 			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal disimpan.<br /></div>' );
@@ -707,30 +696,50 @@ class Master extends CI_Controller {
 	public function tambah_berita(){
 		$data['parent'] = 'master';
         $data['child'] = 'berita';
-		
+		$data['kategori'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*')->result();
         $this->load->view('admin/template/header',$data);
         $this->load->view('admin/master/tambah_berita',$data);
 		$this->load->view('admin/template/footer');
 	}
 	public function simpan_berita(){
 		$this->db->trans_start();
-		$get_last_id = $this->Main_model->getLastID('berita','id_berita');
-		$data_insert_1 = array(
-			'pertanyaan' => $this->input->post('isi'),
-			'pilihan_1' => $this->input->post('1'),
-			'pilihan_2' => $this->input->post('2'),
-			'pilihan_3' => $this->input->post('3'),
-			'pilihan_4' => $this->input->post('4'),
-			'pilihan_5' => $this->input->post('5'),
-			'jawaban' => $this->input->post('answer'),
-			'alasan_1' => $this->input->post('a'),
-			'alasan_2' => $this->input->post('b'),
-			'alasan_3' => $this->input->post('c'),
-			'alasan_4' => $this->input->post('d'),
-			'alasan_5' => $this->input->post('e'),
-			'alasan_benar' => $this->input->post('alesan')
+		$id_kategori_berita = '';
+		$nama_file = '';
+		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
+		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/berita/'; // path folder
+		$config['allowed_types'] = 'jpg|png|jpeg|bmp'; // type yang dapat diakses bisa anda sesuaikan
+		$config['max_size'] = '3072'; // maksimum besar file 3M
+		$config['max_width']  = '5000'; // lebar maksimum 5000 px
+		$config['max_height']  = '5000'; // tinggi maksimu 5000 px
+		$config['file_name'] = $nmfile; // nama yang terupload nantinya
+
+		$this->upload->initialize($config);
+
+		if(isset($_FILES['foto']['name']))
+		{
+			if(!$this->upload->do_upload('foto'))
+			{
+				// $a = $this->upload->display_errors();
+				// echo "<script>alert('".$a."')</script>";
+				// echo "<script>window.location='".base_url('tambah_iklan')."'</script>";
+				echo'';
+			}
+			else
+			{
+				$gbr = $this->upload->data();
+				$nama_file = $gbr['file_name'];
+			}
+		}else{echo'';}
+		$id_kategori_berita = implode(',',$this->input->post('kat'));
+		$data_insert1 = array(
+			'id_kategori_berita' => $id_kategori_berita,
+			'judul' => $this->input->post('nama'),
+			'berita' => $this->input->post('desc'),
+			'thumbnail' => $nama_file,
+			'created_by' => $this->session->userdata('id'),
+			'created_at' => date('Y-m-d H:i:s')
 		);
-		$this->Main_model->insertData('berita',$data_insert_1);
+		$this->Main_model->insertData('berita',$data_insert1);
 
 		$get_subscriber = $this->Main_model->getSelectedData('subscriber a', 'a.*')->result();
 
@@ -757,7 +766,7 @@ class Master extends CI_Controller {
 			$this->Main_model->updateData('subscriber',array('counter'=>($value->counter)+1),array('id_subscriber'=>$value->id_subscriber));
 		}
 
-		$this->Main_model->log_activity($this->session->userdata('id'),'Adding data',"Menambahkan data berita",$this->session->userdata('location'));
+		$this->Main_model->log_activity($this->session->userdata('id'),'Adding data',"Menambahkan data berita (".$this->input->post('nama').")",$this->session->userdata('location'));
 		$this->db->trans_complete();
 		if($this->db->trans_status() === false){
 			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal disimpan.<br /></div>' );
@@ -771,7 +780,7 @@ class Master extends CI_Controller {
 	public function detail_berita(){
 		$data['parent'] = 'master';
         $data['child'] = 'berita';
-		
+		$data['kategori'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*')->result();
 		$data['data_utama'] = $this->Main_model->getSelectedData('berita a', 'a.*',array('md5(a.id_berita)'=>$this->uri->segment(3)))->row();
         $this->load->view('admin/template/header',$data);
         $this->load->view('admin/master/ubah_berita',$data);
@@ -779,30 +788,50 @@ class Master extends CI_Controller {
 	}
 	public function perbarui_berita(){
 		$this->db->trans_start();
-		$data_insert_1 = array(
-			'pertanyaan' => $this->input->post('isi'),
-			'pilihan_1' => $this->input->post('1'),
-			'pilihan_2' => $this->input->post('2'),
-			'pilihan_3' => $this->input->post('3'),
-			'pilihan_4' => $this->input->post('4'),
-			'pilihan_5' => $this->input->post('5'),
-			'jawaban' => $this->input->post('answer'),
-			'alasan_1' => $this->input->post('a'),
-			'alasan_2' => $this->input->post('b'),
-			'alasan_3' => $this->input->post('c'),
-			'alasan_4' => $this->input->post('d'),
-			'alasan_5' => $this->input->post('e'),
-			'alasan_benar' => $this->input->post('alesan')
+		$this->Main_model->updateData('berita',array('id_kategori_berita'=>''),array('id_berita'=>$this->input->post('id')));
+		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
+		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/berita/'; // path folder
+		$config['allowed_types'] = 'jpg|png|jpeg|bmp'; // type yang dapat diakses bisa anda sesuaikan
+		$config['max_size'] = '3072'; // maksimum besar file 3M
+		$config['max_width']  = '5000'; // lebar maksimum 5000 px
+		$config['max_height']  = '5000'; // tinggi maksimu 5000 px
+		$config['file_name'] = $nmfile; // nama yang terupload nantinya
+
+		$this->upload->initialize($config);
+
+		if(isset($_FILES['foto']['name']))
+		{
+			if(!$this->upload->do_upload('foto'))
+			{
+				// $a = $this->upload->display_errors();
+				// echo "<script>alert('".$a."')</script>";
+				// echo "<script>window.location='".base_url('tambah_berita')."'</script>";
+				echo'';
+			}
+			else
+			{
+				$gbr = $this->upload->data();
+				$nama_file = $gbr['file_name'];
+				$this->Main_model->updateData('berita',array('thumbnail'=>$nama_file),array('id_berita'=>$this->input->post('id')));
+			}
+		}else{echo'';}
+
+		$data_insert1 = array(
+			'id_kategori_berita' => implode(',',$this->input->post('kat')),
+			'judul' => $this->input->post('nama'),
+			'berita' => $this->input->post('desc')
 		);
-		$this->Main_model->updateData('berita',$data_insert_1,array('md5(id_berita)'=>$this->input->post('id')));
-		$this->Main_model->log_activity($this->session->userdata('id'),'Updating data',"Memperbarui data berita (".$this->input->post('judul').")",$this->session->userdata('location'));
+		$this->Main_model->updateData('berita',$data_insert1,array('id_berita'=>$this->input->post('id')));
+		// print_r($data_insert1);
+
+		$this->Main_model->log_activity($this->session->userdata('id'),'Updating data',"Memperbarui data berita (".$this->input->post('nama').")",$this->session->userdata('location'));
 		$this->db->trans_complete();
 		if($this->db->trans_status() === false){
-			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal disimpan.<br /></div>' );
-			echo "<script>window.location='".base_url()."admin_side/berita'</script>";
+			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal ditambahkan.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/detail_berita/".md5($this->input->post('id'))."'</script>";
 		}
 		else{
-			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil disimpan.<br /></div>' );
+			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil ditambahkan.<br /></div>' );
 			echo "<script>window.location='".base_url()."admin_side/berita/'</script>";
 		}
 	}
@@ -826,6 +855,186 @@ class Master extends CI_Controller {
 		else{
 			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil dihapus.<br /></div>' );
 			echo "<script>window.location='".base_url()."admin_side/berita/'</script>";
+		}
+	}
+	/* Data Event */
+	public function event(){
+		$data['parent'] = 'master';
+        $data['child'] = 'event';
+        $this->load->view('admin/template/header',$data);
+        $this->load->view('admin/master/event',$data);
+        $this->load->view('admin/template/footer');
+	}
+	public function json_event(){
+		$get_data = $this->Main_model->getSelectedData('event a', 'a.*')->result();
+		$data_tampil = array();
+		$no = 1;
+		foreach ($get_data as $key => $value) {
+			$isi['no'] = $no++.'.';
+			$isi['judul'] = $value->judul;
+			$isi['tgl'] = $this->Main_model->convert_tanggal($value->tanggal_pelaksanaan);
+			$isi['tempat'] = $value->tempat;
+			$isi['by'] = $value->penyelenggara;
+			$return_on_click = "return confirm('Anda yakin?')";
+			$isi['action'] =
+			'<div class="dropdown no-arrow mb-4">
+				<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Aksi
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="'.site_url('admin_side/detail_event/'.md5($value->id_event)).'">Detail Data</a>
+					<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_event/'.md5($value->id_event)).'">Hapus Data</a>
+				</div>
+			</div>';
+			$data_tampil[] = $isi;
+		}
+		$results = array(
+			"sEcho" => 1,
+			"iTotalRecords" => count($data_tampil),
+			"iTotalDisplayRecords" => count($data_tampil),
+			"aaData"=>$data_tampil);
+		echo json_encode($results);
+	}
+	public function tambah_event(){
+		$data['parent'] = 'master';
+        $data['child'] = 'event';
+        $this->load->view('admin/template/header',$data);
+        $this->load->view('admin/master/tambah_event',$data);
+        $this->load->view('admin/template/footer');
+	}
+	public function simpan_event(){
+		$this->db->trans_start();
+		$get_id = $this->Main_model->getLastID('event','id_event');
+		$nama_file = '';
+
+		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
+		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/event/'; // path folder
+		$config['allowed_types'] = 'jpg|png|jpeg|bmp'; // type yang dapat diakses bisa anda sesuaikan
+		$config['max_size'] = '3072'; // maksimum besar file 3M
+		$config['max_width']  = '5000'; // lebar maksimum 5000 px
+		$config['max_height']  = '5000'; // tinggi maksimu 5000 px
+		$config['file_name'] = $nmfile; // nama yang terupload nantinya
+
+		$this->upload->initialize($config);
+
+		if(isset($_FILES['foto']['name']))
+		{
+			if(!$this->upload->do_upload('foto'))
+			{
+				// $a = $this->upload->display_errors();
+				// echo "<script>alert('".$a."')</script>";
+				// echo "<script>window.location='".base_url('tambah_event')."'</script>";
+				echo'';
+			}
+			else
+			{
+				$gbr = $this->upload->data();
+				$nama_file = $gbr['file_name'];
+			}
+		}else{echo'';}
+
+		$data_insert1 = array(
+			'id_event' => $get_id['id_event']+1,
+			'judul' => $this->input->post('nama'),
+			'deskripsi' => $this->input->post('desc'),
+			'tanggal_pelaksanaan' => $this->input->post('tgl'),
+			'tempat' => $this->input->post('tempat'),
+			'penyelenggara' => $this->input->post('by'),
+			'poster' => $nama_file,
+			'created_by' => $this->session->userdata('id'),
+			'created_at' => date('Y-m-d H:i:s')
+		);
+		$this->Main_model->insertData('event',$data_insert1);
+		// print_r($data_insert1);
+
+		$this->Main_model->log_activity($this->session->userdata('id'),'Adding data',"Menambahkan data event (".$this->input->post('nama').")",$this->session->userdata('location'));
+		$this->db->trans_complete();
+		if($this->db->trans_status() === false){
+			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal ditambahkan.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/tambah_event/'</script>";
+		}
+		else{
+			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil ditambahkan.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/event/'</script>";
+		}
+	}
+	public function detail_event(){
+		$data['parent'] = 'master';
+		$data['child'] = 'event';
+		$data['data_utama'] = $this->Main_model->getSelectedData('event a', 'a.*', array('md5(a.id_event)'=>$this->uri->segment(3)))->row();
+        $this->load->view('admin/template/header',$data);
+        $this->load->view('admin/master/ubah_event',$data);
+        $this->load->view('admin/template/footer');
+	}
+	public function perbarui_event(){
+		$this->db->trans_start();
+		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
+		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/event/'; // path folder
+		$config['allowed_types'] = 'jpg|png|jpeg|bmp'; // type yang dapat diakses bisa anda sesuaikan
+		$config['max_size'] = '3072'; // maksimum besar file 3M
+		$config['max_width']  = '5000'; // lebar maksimum 5000 px
+		$config['max_height']  = '5000'; // tinggi maksimu 5000 px
+		$config['file_name'] = $nmfile; // nama yang terupload nantinya
+
+		$this->upload->initialize($config);
+
+		if(isset($_FILES['foto']['name']))
+		{
+			if(!$this->upload->do_upload('foto'))
+			{
+				// $a = $this->upload->display_errors();
+				// echo "<script>alert('".$a."')</script>";
+				// echo "<script>window.location='".base_url('tambah_event')."'</script>";
+				echo'';
+			}
+			else
+			{
+				$gbr = $this->upload->data();
+				$nama_file = $gbr['file_name'];
+				$this->Main_model->updateData('event',array('poster'=>$nama_file),array('md5(id_event)'=>$this->input->post('id')));
+			}
+		}else{echo'';}
+
+		$data_insert1 = array(
+			'judul' => $this->input->post('nama'),
+			'deskripsi' => $this->input->post('desc'),
+			'tanggal_pelaksanaan' => $this->input->post('tgl'),
+			'tempat' => $this->input->post('tempat'),
+			'penyelenggara' => $this->input->post('by')
+		);
+		$this->Main_model->updateData('event',$data_insert1,array('md5(id_event)'=>$this->input->post('id')));
+		// print_r($data_insert1);
+
+		$this->Main_model->log_activity($this->session->userdata('id'),'Updating data',"Memperbarui data event (".$this->input->post('nama').")",$this->session->userdata('location'));
+		$this->db->trans_complete();
+		if($this->db->trans_status() === false){
+			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal ditambahkan.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/detail_event/".$this->input->post('id')."'</script>";
+		}
+		else{
+			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil ditambahkan.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/event/'</script>";
+		}
+	}
+	public function hapus_event(){
+		$this->db->trans_start();
+		$id = '';
+		$nama = '';
+		$get_data = $this->Main_model->getSelectedData('event a', 'a.*',array('md5(a.id_event)'=>$this->uri->segment(3)))->row();
+		$id = $get_data->id_event;
+		$nama = $get_data->judul;
+
+		$this->Main_model->deleteData('event',array('id_event'=>$id));
+
+		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","Menghapus data event (".$nama.")",$this->session->userdata('location'));
+		$this->db->trans_complete();
+		if($this->db->trans_status() === false){
+			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal dihapus.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/event/'</script>";
+		}
+		else{
+			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil dihapus.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/event/'</script>";
 		}
 	}
 	/* Other Function */

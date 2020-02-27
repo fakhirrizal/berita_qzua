@@ -1,116 +1,78 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<ul class="page-breadcrumb breadcrumb">
-	<li>
-		<span>Log Aktifitas</span>
-	</li>
-</ul>
+<style media="all" type="text/css">
+    .alignCenter { text-align: center; }
+</style>
 <?= $this->session->flashdata('sukses') ?>
 <?= $this->session->flashdata('gagal') ?>
-<div class="page-content-inner">
-	<div class="m-heading-1 border-yellow m-bordered" style="background-color:#FAD405;">
-		<h3>Catatan</h3>
-		<!-- <p> Hanya status <b>aktif</b> yang akan tampil di shop display pengguna</p> -->
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<!-- BEGIN EXAMPLE TABLE PORTLET-->
-			<div class="portlet light ">
-				<div class="portlet-body">
-					<form action="#" method="post" onsubmit="return deleteConfirm();"/>
-					<div class="table-toolbar">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="btn-group">
-									<!-- <button type='submit' id="sample_editable_1_new" class="btn sbold red"> Hapus
-										<i class="fa fa-trash"></i>
-									</button> -->
-								</div>
-									<!-- <span class="separator">|</span> -->
-									<a href="<?=base_url('admin_side/cleaning_log');?>" class="btn red uppercase">Kosongkan Log <i class="fa fa-trash"></i> </a>
+<div class="page-breadcrumb breadcrumb" style="background-color:#8cb2ea;">
+	<font color='black'>
+		<h4>Catatan</h4>
+		<!-- <a> 1. Ketika mengklik <b>Atur Ulang Sandi</b>, maka kata sandi otomatis menjadi "<b>1234</b>"</a><br>
+		<a> 2. Data ekspor berupa file excel (<b>.xls</b>)</a> -->
+	</font>
+</div>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+	<!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
+	<a href="<?=base_url('admin_side/cleaning_log');?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Kosongkan Log <i class="fa fa-trash"></i></a>
+  </div>
+  <div class="card-body">
+	<div class="table-responsive">
+		<table class="table table-striped table-bordered" id="tbl">
+			<thead>
+				<tr>
+					<th style="text-align: center;" width="4%"> # </th>
+					<th style="text-align: center;"> Tipe Aktifitas </th>
+					<th style="text-align: center;"> Aktifitas </th>
+					<th style="text-align: center;"> Pengguna </th>
+					<th style="text-align: center;"> Waktu </th>
+					<th style="text-align: center;" width="7%"> Aksi </th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+				$no = 1;
+				foreach ($data_tabel as $key => $value) {
+					$pecah_datetime = explode(' ',$value->activity_time);
+				?>
+				<tr>
+					<td style="text-align: center;"><?= $no++.'.'; ?></td>
+					<td style="text-align: center;"><?= $value->activity_type; ?></td>
+					<td style="text-align: center;"><?= $value->activity_data; ?></td>
+					<td style="text-align: center;"><?= $value->fullname; ?></td>
+					<td style="text-align: center;"><?= $this->Main_model->convert_tanggal($pecah_datetime[0]).' '.$pecah_datetime[1]; ?></td>
+					<td style="text-align: center;">
+						<div class="dropdown no-arrow mb-4">
+							<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Aksi
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item detaildata" href="#" data-toggle="modal" data-target="#detaildata" id="<?= md5($value->activity_id); ?>">Detail Data</a>
+								<a class="dropdown-item" onclick="return confirm('Anda yakin?')" href="<?= site_url('admin_side/hapus_aktifitas/'.md5($value->activity_id)); ?>">Hapus Data</a>
 							</div>
 						</div>
-					</div>
-					<table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
-						<thead>
-							<tr>
-								<th width="3%">
-									<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-										<input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" />
-										<span></span>
-									</label>
-								</th>
-								<th style="text-align: center;" width="4%"> # </th>
-								<th style="text-align: center;"> Tipe Aktifitas </th>
-								<th style="text-align: center;"> Aktifitas </th>
-								<th style="text-align: center;"> Pengguna </th>
-								<th style="text-align: center;"> Waktu </th>
-								<th style="text-align: center;" width="7%"> Aksi </th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-							$no = 1;
-							foreach ($data_tabel as $key => $value) {
-								$pecah_datetime = explode(' ',$value->activity_time);
-							?>
-							<tr class="odd gradeX">
-								<td style="text-align: center;">
-									<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-										<input type="checkbox" class="checkboxes" name="selected_id[]" value="<?= $value->activity_id; ?>"/>
-										<span></span>
-									</label>
-								</td>
-								<td style="text-align: center;"><?= $no++.'.'; ?></td>
-								<td style="text-align: center;"><?= $value->activity_type; ?></td>
-								<td style="text-align: center;"><?= $value->activity_data; ?></td>
-								<td style="text-align: center;"><?= $value->fullname; ?></td>
-								<td style="text-align: center;"><?= $this->Main_model->convert_tanggal($pecah_datetime[0]).' '.$pecah_datetime[1]; ?></td>
-								<td>
-									<div class="btn-group" style="text-align: center;">
-										<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi
-											<i class="fa fa-angle-down"></i>
-										</button>
-										<ul class="dropdown-menu" role="menu">
-											<li>
-												<a class="detaildata" data-toggle="modal" data-target="#detaildata" id="<?= md5($value->activity_id); ?>">
-													<i class="icon-eye"></i> Detail Data </a>
-											</li>
-											<li>
-												<a onclick="return confirm('Anda yakin?')" href="<?=site_url('admin_side/hapus_aktifitas/'.md5($value->activity_id));?>">
-													<i class="icon-trash"></i> Hapus Data </a>
-											</li>
-										</ul>
-									</div>
-								</td>
-							</tr>
-							<?php
-							}
-							?>
-						</tbody>
-					</table>
-					</form>
-					<script type="text/javascript">
-					function deleteConfirm(){
-						var result = confirm("Yakin akan menghapus data ini?");
-						if(result){
-							return true;
-						}else{
-							return false;
-						}
-					}
-					</script>
-				</div>
-			</div>
-			<!-- END EXAMPLE TABLE PORTLET-->
-		</div>
+					</td>
+				</tr>
+				<?php
+				}
+				?>
+			</tbody>
+		</table>
+		<script type="text/javascript" language="javascript" >
+			$(document).ready(function(){
+				$('#tbl').dataTable();
+			});
+		</script>
 	</div>
+  </div>
 </div>
+
 <div class="modal fade" id="detaildata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Detail Data Aktifitas</h4>
+				<!-- <h4 class="modal-title" id="myModalLabel">Detail Data Aktifitas</h4> -->
 			</div>
 			<div class="modal-body">
 				<div class="box box-primary" id='formdetaildata' >

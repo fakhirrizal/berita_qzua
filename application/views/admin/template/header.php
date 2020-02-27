@@ -1,3 +1,10 @@
+<?php
+if(($this->session->userdata('id'))==NULL){
+	echo "<script>alert('Harap login terlebih dahulu')</script>";
+	echo "<script>window.location='".base_url()."admin_side'</script>";
+}
+else{echo'';}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,6 +27,7 @@
 
   <!-- Custom styles for this page -->
   <link href="<?= base_url(); ?>assets_dashboard/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 </head>
 
@@ -70,6 +78,19 @@
 			<h6 class="collapse-header">Berita</h6>
             <a class="collapse-item <?php if($child=='kategori_berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/kategori_berita'); ?>">Kategori Berita</a>
             <a class="collapse-item <?php if($child=='berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/berita'); ?>">Berita</a>
+            <a class="collapse-item <?php if($child=='event'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/event'); ?>">Event</a>
+          </div>
+        </div>
+	  </li>
+
+	  <li class="nav-item <?php if($parent=='setting'){echo'active';}else{echo'';} ?>">
+        <a class="nav-link <?php if($parent=='setting'){echo'';}else{echo'collapsed';} ?>" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Pengaturan</span>
+        </a>
+        <div id="collapseThree" class="collapse <?php if($parent=='setting'){echo'show';}else{echo'';} ?>" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item <?php if($child=='iklan'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/iklan'); ?>">Iklan</a>
           </div>
         </div>
 	  </li>

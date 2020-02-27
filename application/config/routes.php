@@ -66,6 +66,7 @@ $route['admin_side/launcher'] = 'admin/App/launcher';
 $route['admin_side/beranda'] = 'admin/App/home';
 $route['admin_side/menu'] = 'admin/App/menu';
 $route['admin_side/log_aktifitas'] = 'admin/App/log_activity';
+$route['admin_side/hapus_aktifitas/(:any)'] = 'admin/App/hapus_aktifitas/$1';
 $route['admin_side/cleaning_log'] = 'admin/App/cleaning_log';
 $route['admin_side/tentang_aplikasi'] = 'admin/App/about';
 $route['admin_side/bantuan'] = 'admin/App/helper';
@@ -77,7 +78,7 @@ $route['admin_side/simpan_data_admin'] = 'admin/Master/simpan_data_administrator
 $route['admin_side/detail_data_admin/(:any)'] = 'admin/Master/detail_data_administrator/$1';
 $route['admin_side/ubah_data_admin/(:any)'] = 'admin/Master/ubah_data_administrator/$1';
 $route['admin_side/perbarui_data_admin'] = 'admin/Master/perbarui_data_administrator';
-$route['admin_side/atur_ulang_kata_sandi_admin/(:any)'] = 'admin/Master/reset_password_administrator_account/$1';
+$route['admin_side/atur_ulang_kata_sandi_admin/(:any)'] = 'admin/Master/atur_ulang_kata_sandi_admin/$1';
 $route['admin_side/hapus_data_admin/(:any)'] = 'admin/Master/hapus_data_administrator/$1';
 
 $route['admin_side/data_anggota'] = 'admin/Master/data_anggota';
@@ -99,6 +100,22 @@ $route['admin_side/simpan_berita'] = 'admin/Master/simpan_berita';
 $route['admin_side/detail_berita/(:any)'] = 'admin/Master/detail_berita/$1';
 $route['admin_side/perbarui_berita'] = 'admin/Master/perbarui_berita';
 $route['admin_side/hapus_berita/(:any)'] = 'admin/Master/hapus_berita/$1';
+
+$route['admin_side/event'] = 'admin/Master/event';
+$route['admin_side/tambah_event'] = 'admin/Master/tambah_event';
+$route['admin_side/simpan_event'] = 'admin/Master/simpan_event';
+$route['admin_side/detail_event/(:any)'] = 'admin/Master/detail_event/$1';
+$route['admin_side/perbarui_event'] = 'admin/Master/perbarui_event';
+$route['admin_side/hapus_event/(:any)'] = 'admin/Master/hapus_event/$1';
+
+$route['admin_side/subscriber'] = 'admin/Master/subscriber';
+
+$route['admin_side/iklan'] = 'admin/Setting/iklan';
+$route['admin_side/tambah_iklan'] = 'admin/Setting/tambah_iklan';
+$route['admin_side/simpan_iklan'] = 'admin/Setting/simpan_iklan';
+$route['admin_side/detail_iklan/(:any)'] = 'admin/Setting/detail_iklan/$1';
+$route['admin_side/perbarui_iklan'] = 'admin/Setting/perbarui_iklan';
+$route['admin_side/hapus_iklan/(:any)'] = 'admin/Setting/hapus_iklan/$1';
 
 /* Public */
 $route['kategori'] = 'User/kategori';

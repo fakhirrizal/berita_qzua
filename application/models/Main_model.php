@@ -100,8 +100,8 @@ class Main_model extends CI_Model{
 			$device = '';
 		}
 		$get_ip = $this->get_client_ip();
-		$ip_check = $this->getSelectedData('visitor a', 'a.*', array('a.ip_address'=>$get_ip))->row();
-		if($ip_check==NULL){
+		$ip_check1 = $this->getSelectedData('visitor a', 'a.*', array('a.ip_address'=>$get_ip))->row();
+		if($ip_check1==NULL){
 			$insertdata = array(
 				'ip_address' => $get_ip,
 				'last_access' => date('Y-m-d H-i-s'),
@@ -120,6 +120,50 @@ class Main_model extends CI_Model{
 				'counter' => ($ip_check->counter)+1
 			);
 			$this->updateData('visitor',$insertdata,array('id_visitor'=>$ip_check->id_visitor));
+		}
+		$ip_check2 = $this->getSelectedData('visitor_per_day a', 'a.*', array('a.ip_address'=>$get_ip))->row();
+		if($ip_check2==NULL){
+			$insertdata = array(
+				'ip_address' => $get_ip,
+				'last_access' => date('Y-m-d H-i-s'),
+				'device' => $device,
+				'os' => $this->agent->platform(),
+				'browser' => $this->agent->browser().' '.$this->agent->version(),
+				'counter' => '1'
+			);
+			$this->insertData('visitor_per_day',$insertdata);
+		}else{
+			$insertdata = array(
+				'last_access' => date('Y-m-d H-i-s'),
+				'device' => $device,
+				'os' => $this->agent->platform(),
+				'browser' => $this->agent->browser().' '.$this->agent->version(),
+				'counter' => ($ip_check->counter)+1
+			);
+			$this->updateData('visitor',$insertdata,array('visitor_per_day'=>$ip_check->id_visitor));
+		}
+		$ip_check3 = $this->getSelectedData('visitor_detail a', 'a.*', array('a.ip_address'=>$get_ip,'a.date'=>date('Y-m-d')))->row();
+		if($ip_check3==NULL){
+			$insertdata = array(
+				'ip_address' => $get_ip,
+				'date' => date('Y-m-d'),
+				'last_access' => date('H-i-s'),
+				'device' => $device,
+				'os' => $this->agent->platform(),
+				'browser' => $this->agent->browser().' '.$this->agent->version(),
+				'counter' => '1'
+			);
+			$this->insertData('visitor_detail',$insertdata);
+		}else{
+			$insertdata = array(
+				'date' => date('Y-m-d'),
+				'last_access' => date('H-i-s'),
+				'device' => $device,
+				'os' => $this->agent->platform(),
+				'browser' => $this->agent->browser().' '.$this->agent->version(),
+				'counter' => ($ip_check->counter)+1
+			);
+			$this->updateData('visitor',$insertdata,array('visitor_detail'=>$ip_check->id_visitor));
 		}
 	}
 	function getLastID($table,$column){

@@ -1,210 +1,173 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<!-- <script src="<?=base_url('assets/pages/scripts/components-editors.min.js');?>" type="text/javascript"></script> -->
-<ul class="page-breadcrumb breadcrumb">
-	<li>
-		<span>Master</span>
-		<i class="fa fa-circle"></i>
-	</li>
-	<li>
-		<span><a href='<?= site_url('/admin_side/Berita'); ?>'>Berita</a></span>
-		<i class="fa fa-circle"></i>
-	</li>
-	<li>
-		<span>Detail Data</span>
-	</li>
-</ul>
+<style media="all" type="text/css">
+    .alignCenter { text-align: center; }
+</style>
 <?= $this->session->flashdata('sukses') ?>
 <?= $this->session->flashdata('gagal') ?>
-<div class="page-content-inner">
-	<div class="m-heading-1 border-yellow m-bordered" style="background-color:#FAD405;">
-		<h3>Catatan</h3>
-		<p> 1. Kolom isian dengan tanda bintang (<font color='red'>*</font>) adalah wajib untuk di isi.</p>
-		<!-- <p> 2. Ketentuan file yang diupload:</p>
-		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Format berupa file <b>.jpg</b>, <b>.jpeg</b>, <b>.png</b>, <b>.bmp</b></p>
-		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Ukuran maksimum file <b>3 MB</b></p> -->
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<!-- BEGIN EXAMPLE TABLE PORTLET-->
-			<div class="portlet light ">
-				<div class="portlet-body">
-					<form role="form" class="form-horizontal" action="<?=base_url('admin_side/perbarui_Berita');?>" method="post" enctype='multipart/form-data'>
-						<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>">
-						<input type="hidden" name="id" value="<?= md5($data_utama->id_Berita); ?>">
-						<div class="form-body">
-                            <div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Pertanyaan <span class="required"> * </span></label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<textarea class="form-control" name="isi" rows='3' placeholder="Type something" required><?= $data_utama->pertanyaan; ?></textarea>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<hr>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Pilihan 1 <span class="required"> * </span></label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<input type="text" class="form-control" name="1" placeholder="Type something" value='<?= $data_utama->pilihan_1; ?>' required>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Pilihan 2 <span class="required"> * </span></label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<input type="text" class="form-control" name="2" placeholder="Type something" value='<?= $data_utama->pilihan_2; ?>' required>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Pilihan 3 </label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<input type="text" class="form-control" name="3" placeholder="Type something" value='<?= $data_utama->pilihan_3; ?>'>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Pilihan 4 </label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<input type="text" class="form-control" name="4" placeholder="Type something" value='<?= $data_utama->pilihan_4; ?>'>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Pilihan 5 </label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<input type="text" class="form-control" name="5" placeholder="Type something" value='<?= $data_utama->pilihan_5; ?>'>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<hr>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Jawaban <span class="required"> * </span></label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<select class="form-control" name="answer" required>
-											<option value=''>-- Pilih --</option>
-											<option value='A' <?php if($data_utama->jawaban=='A'){echo'selected';}else{echo'';} ?>>A</option>
-											<option value='B' <?php if($data_utama->jawaban=='B'){echo'selected';}else{echo'';} ?>>B</option>
-											<option value='C' <?php if($data_utama->jawaban=='C'){echo'selected';}else{echo'';} ?>>C</option>
-											<option value='D' <?php if($data_utama->jawaban=='D'){echo'selected';}else{echo'';} ?>>D</option>
-											<option value='E' <?php if($data_utama->jawaban=='E'){echo'selected';}else{echo'';} ?>>E</option>
-										</select>
-										<div class="form-control-focus"> </div>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<hr>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Alasan Menjawab 1 <span class="required"> * </span></label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<input type="text" class="form-control" name="a" placeholder="Type something" value='<?= $data_utama->alasan_1; ?>' required>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Alasan Menjawab 2 <span class="required"> * </span></label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<input type="text" class="form-control" name="b" placeholder="Type something" value='<?= $data_utama->alasan_2; ?>' required>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Alasan Menjawab 3 </label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<input type="text" class="form-control" name="c" placeholder="Type something" value='<?= $data_utama->alasan_3; ?>'>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Alasan Menjawab 4 </label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<input type="text" class="form-control" name="d" placeholder="Type something" value='<?= $data_utama->alasan_4; ?>'>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Alasan Menjawab 5 </label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<input type="text" class="form-control" name="e" placeholder="Type something" value='<?= $data_utama->alasan_5; ?>'>
-										<div class="form-control-focus"> </div>
-										<span class="help-block">Some help goes here...</span>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-							<hr>
-							<div class="form-group form-md-line-input has-danger">
-								<label class="col-md-2 control-label" for="form_control_1">Alasan Benar <span class="required"> * </span></label>
-								<div class="col-md-10">
-									<div class="input-icon">
-										<select class="form-control" name="alesan" required>
-											<option value=''>-- Pilih --</option>
-											<option value='A' <?php if($data_utama->alasan_benar=='A'){echo'selected';}else{echo'';} ?>>A</option>
-											<option value='B' <?php if($data_utama->alasan_benar=='B'){echo'selected';}else{echo'';} ?>>B</option>
-											<option value='C' <?php if($data_utama->alasan_benar=='C'){echo'selected';}else{echo'';} ?>>C</option>
-											<option value='D' <?php if($data_utama->alasan_benar=='D'){echo'selected';}else{echo'';} ?>>D</option>
-											<option value='E' <?php if($data_utama->alasan_benar=='E'){echo'selected';}else{echo'';} ?>>E</option>
-										</select>
-										<div class="form-control-focus"> </div>
-										<i class="icon-pin"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-						<br>
-						<div class="form-actions margin-top-10">
-							<div class="row">
-								<div class="col-md-offset-2 col-md-10">
-									<button type="reset" class="btn default">Batal</button>
-									<button type="submit" class="btn blue">Perbarui</button>
-								</div>
-							</div>
-						</div>
-					</form>
+<div class="page-breadcrumb breadcrumb" style="background-color:#8cb2ea;">
+	<font color='black'>
+		<h4>Catatan</h4>
+		<a> 1. Kolom isian dengan tanda bintang (<font color='red'>*</font>) adalah wajib untuk di isi.</a><br>
+		<a> 2. Ketentuan file yang diupload:</a><br>
+		<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Format berupa file <b>.jpg</b>, <b>.jpeg</b>, <b>.png</b>, <b>.bmp</b></a><br>
+		<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Ukuran maksimum file <b>3 MB</b></a>
+	</font>
+</div>
+<div class="card shadow mb-4">
+    <form role="form" class="form-horizontal" action="<?=base_url('admin_side/perbarui_berita');?>" method="post" enctype='multipart/form-data'>
+		<input type="hidden" name="id" value='<?= $data_utama->id_berita; ?>'>
+        <div class="card-header py-3">
+            <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>">
+            <div class="form-body">
+                <div class="form-group form-md-line-input has-danger">
+                    <label class="control-label" for="form_control_1">Judul <span class="required"> * </span></label>
+                    <input type="text" class="form-control" name="nama" placeholder="Type something" value='<?= $data_utama->judul; ?>' required>
+                </div>
+                <div class="form-group form-md-line-input has-danger">
+                    <label class="control-label" for="form_control_1">Berita <span class="required"> * </span></label>
+                    <textarea class="form-control" name="desc"><?= $data_utama->berita; ?></textarea>
+                </div>
+                <div class="form-group form-md-line-input has-danger">
+                    <label class="control-label" for="form_control_1">Kategori </label>
+					<style>
+						/* The container */
+						.container {
+						display: block;
+						position: relative;
+						padding-left: 35px;
+						margin-bottom: 12px;
+						cursor: pointer;
+						font-size: 22px;
+						-webkit-user-select: none;
+						-moz-user-select: none;
+						-ms-user-select: none;
+						user-select: none;
+						}
+
+						/* Hide the browser's default checkbox */
+						.container input {
+						position: absolute;
+						opacity: 0;
+						cursor: pointer;
+						height: 0;
+						width: 0;
+						}
+
+						/* Create a custom checkbox */
+						.checkmark {
+						position: absolute;
+						top: 0;
+						left: 0;
+						height: 25px;
+						width: 25px;
+						background-color: #eee;
+						}
+
+						/* On mouse-over, add a grey background color */
+						.container:hover input ~ .checkmark {
+						background-color: #ccc;
+						}
+
+						/* When the checkbox is checked, add a blue background */
+						.container input:checked ~ .checkmark {
+						background-color: #2196F3;
+						}
+
+						/* Create the checkmark/indicator (hidden when not checked) */
+						.checkmark:after {
+						content: "";
+						position: absolute;
+						display: none;
+						}
+
+						/* Show the checkmark when checked */
+						.container input:checked ~ .checkmark:after {
+						display: block;
+						}
+
+						/* Style the checkmark/indicator */
+						.container .checkmark:after {
+						left: 9px;
+						top: 5px;
+						width: 5px;
+						height: 10px;
+						border: solid white;
+						border-width: 0 3px 3px 0;
+						-webkit-transform: rotate(45deg);
+						-ms-transform: rotate(45deg);
+						transform: rotate(45deg);
+						}
+					</style>
+
+					<?php
+					foreach ($kategori as $key => $value) {
+						$kat = explode(',',$data_utama->id_kategori_berita);
+						echo'
+						<label class="container">'.$value->kategori_berita.'
+						<input type="checkbox" name="kat[]" value="'.$value->id_kategori_berita.'" 
+						';
+						for ($i=0; $i < count($kat); $i++) { 
+							if($kat[$i]==$value->id_kategori_berita){
+								echo'checked';
+								break;
+							}else{
+								echo'';
+							}
+						}
+						echo'
+						>
+						<span class="checkmark"></span>
+						</label>
+						';
+					}
+					?>
+
+					<!-- <label class="container">One
+					<input type="checkbox" checked="checked">
+					<span class="checkmark"></span>
+					</label>
+					
+					<label class="container">Three
+					<input type="checkbox">
+					<span class="checkmark"></span>
+					</label>
+					<label class="container">Four
+					<input type="checkbox">
+					<span class="checkmark"></span>
+					</label> -->
+                </div>
+                <div class="form-group form-md-line-input has-danger">
+                    <label class="control-label" for="form_control_1">Cover </label>
+                    <input type="file" class="form-control" name="foto" accept="image/*">
 				</div>
-			</div>
-			<!-- END EXAMPLE TABLE PORTLET-->
-		</div>
-	</div>
+				<?php
+                if($data_utama->thumbnail==NULL){
+                    echo'';
+                }else{
+                    echo'
+                
+                        <div class="form-group form-md-line-input has-danger">
+                            <img src="'.base_url().'data_upload/berita/'.$data_utama->thumbnail.'" width="400px"/>
+                        </div>
+                    
+                    ';
+                }
+                ?>
+            </div>
+        </div>
+        <div class="card-body">
+            <button type="reset" class="btn btn-secondary btn-icon-split">
+                <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+                </span>
+                <span class="text">Batal</span>
+            </button>
+            <button type="submit" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+                </span>
+                <span class="text">Perbarui</span>
+            </button>
+        </div>
+    </form>
 </div>
