@@ -70,6 +70,10 @@ $route['admin_side/hapus_aktifitas/(:any)'] = 'admin/App/hapus_aktifitas/$1';
 $route['admin_side/cleaning_log'] = 'admin/App/cleaning_log';
 $route['admin_side/tentang_aplikasi'] = 'admin/App/about';
 $route['admin_side/bantuan'] = 'admin/App/helper';
+$route['admin_side/profil'] = 'admin/App/profile';
+$route['admin_side/kata_sandi'] = 'admin/App/password';
+$route['admin_side/perbarui_profil'] = 'admin/App/perbarui_profil';
+$route['admin_side/perbarui_kata_sandi'] = 'admin/App/perbarui_kata_sandi';
 $route['admin_side/logout'] = 'admin/App/logout';
 
 $route['admin_side/administrator'] = 'admin/Master/data_administrator';

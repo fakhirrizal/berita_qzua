@@ -118,7 +118,8 @@ class App extends CI_Controller {
 	{
 		$data['parent'] = 'home';
 		$data['child'] = '';
-		
+		$data['berita'] = $this->Main_model->getSelectedData('berita a', 'a.*', '', 'a.counter DESC', '5', '', '', '')->result();
+		$data['komen'] = $this->Main_model->getSelectedData('komentar_berita a', 'a.*', '', 'a.created_at DESC', '5', '', '', '')->result();
 		$this->load->view('admin/template/header',$data);
 		$this->load->view('admin/app/home',$data);
 		$this->load->view('admin/template/footer');
@@ -219,6 +220,96 @@ class App extends CI_Controller {
 	public function logout(){
 		$this->session->sess_destroy();
 		echo "<script>window.location='".base_url('admin_side')."'</script>";
+	}
+	/* Profile */
+	public function profile()
+	{
+		$data['parent'] = '';
+		$data['child'] = '';
+		$data['data_utama'] = $this->Main_model->getSelectedData('user a', 'a.*', array('a.id'=>$this->session->userdata('id')))->row();
+		$this->load->view('admin/template/header',$data);
+		$this->load->view('admin/app/profile',$data);
+		$this->load->view('admin/template/footer');
+	}
+	public function password()
+	{
+		$data['parent'] = '';
+		$data['child'] = '';
+		$data['data_utama'] = $this->Main_model->getSelectedData('user a', 'a.*', array('a.id'=>$this->session->userdata('id')))->row();
+		$this->load->view('admin/template/header',$data);
+		$this->load->view('admin/app/password',$data);
+		$this->load->view('admin/template/footer');
+	}
+	public function perbarui_profil(){
+		$this->db->trans_start();
+		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
+		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/photo_profile/'; // path folder
+		$config['allowed_types'] = 'jpg|png|jpeg|bmp'; // type yang dapat diakses bisa anda sesuaikan
+		$config['max_size'] = '3072'; // maksimum besar file 3M
+		$config['max_width']  = '5000'; // lebar maksimum 5000 px
+		$config['max_height']  = '5000'; // tinggi maksimu 5000 px
+		$config['file_name'] = $nmfile; // nama yang terupload nantinya
+
+		$this->upload->initialize($config);
+
+		if(isset($_FILES['foto']['name']))
+		{
+			if(!$this->upload->do_upload('foto'))
+			{
+				// $a = $this->upload->display_errors();
+				// echo "<script>alert('".$a."')</script>";
+				// echo "<script>window.location='".base_url('tambah_iklan')."'</script>";
+				echo'';
+			}
+			else
+			{
+				$gbr = $this->upload->data();
+				$nama_file = $gbr['file_name'];
+				$this->Main_model->updateData('user',array('photo'=>$nama_file),array('md5(id)'=>$this->input->post('user_id')));
+			}
+		}else{echo'';}
+
+		$data_insert1 = array(
+			'fullname' => $this->input->post('nama')
+		);
+		$this->Main_model->updateData('user',$data_insert1,array('md5(id)'=>$this->input->post('user_id')));
+		// print_r($data_insert1);
+
+		$this->Main_model->log_activity($this->session->userdata('id'),'Updating data',"Memperbarui data profil (".$this->input->post('nama').")",$this->session->userdata('location'));
+		$this->db->trans_complete();
+		if($this->db->trans_status() === false){
+			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal diperbarui.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/profil/'</script>";
+		}
+		else{
+			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil diperbarui.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/profil/'</script>";
+		}
+	}
+	public function perbarui_kata_sandi(){
+		$cek = $this->Main_model->getSelectedData('user a', 'a.*', array('a.pass'=>$this->input->post('old'),'a.id'=>$this->session->userdata('id')))->result();
+		if($cek==NULL){
+			$this->session->set_flashdata('gagal','<div class="alert alert-warning fade show" role="alert"><div class="alert-icon"><i class="flaticon-warning"></i></div><div class="alert-text"><strong>Oops! </strong>Kata sandi tidak valid.</div><div class="alert-close"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="la la-close"></i></span></button></div></div>' );
+			echo "<script>window.location='".base_url()."admin_side/kata_sandi'</script>";
+		}
+		else{
+			$this->db->trans_start();
+			$data_update0 = array(
+				'pass' => $this->input->post('new')
+			);
+			$this->Main_model->updateData('user',$data_update0,array('id'=>$this->session->userdata('id')));
+
+			$this->db->trans_complete();
+			$this->Main_model->log_activity($this->session->userdata('id'),'Updating data',"Memperbarui kata sandi akun (".$this->input->post('nama').")",$this->session->userdata('location'));
+			if($this->db->trans_status() === false){
+				$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal diperbarui.<br /></div>' );
+				echo "<script>window.location='".base_url()."admin_side/kata_sandi/'</script>";
+			}
+			else{
+				$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil diperbarui.<br /></div>' );
+				echo "<script>window.location='".base_url()."admin_side/kata_sandi'</script>";
+			}
+		}
 	}
 	/* Menu setting and user's permission */
 	public function ajax_function(){

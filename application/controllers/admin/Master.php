@@ -748,18 +748,22 @@ class Master extends CI_Controller {
 		$mail = new PHPMailer; 
 		$mail->IsSMTP();
 		$mail->SMTPSecure = 'ssl'; 
-		$mail->Host = "mail.aplikasiku.online";
+		$mail->Host = "eaoron.co.id";
+		// $mail->Host = "mail.aplikasiku.online";
 		// 0 = off (for production use, No debug messages)
 		// 1 = client messages
 		// 2 = client and server messages
 		$mail->SMTPDebug = 0;
 		$mail->Port = 465;
 		$mail->SMTPAuth = true;
-		$mail->Username = "service@aplikasiku.online";
-		$mail->Password = "Asbak425##";
-		$mail->SetFrom("service@aplikasiku.online","Admin");
+		// $mail->Username = "service@aplikasiku.online";
+		// $mail->Password = "Asbak425##";
+		// $mail->SetFrom("service@aplikasiku.online","Admin");
+		$mail->Username = "admin@eaoron.co.id";
+		$mail->Password = "hiyahiya";
+		$mail->SetFrom("admin@eaoron.co.id","Admin");
 		$mail->Subject = "News";
-		$mail->MsgHTML("Link : tes lagi");
+		$mail->MsgHTML("Link : ");
 		foreach ($get_subscriber as $key => $value) {
 			$mail->AddAddress($value->email,$value->email);
 			$mail->Send();
