@@ -25,7 +25,13 @@
                 </div>
                 <div class="form-group form-md-line-input has-danger">
                     <label class="control-label" for="form_control_1">Berita <span class="required"> * </span></label>
-                    <textarea class="form-control" name="desc"><?= $data_utama->berita; ?></textarea>
+					<!-- <textarea class="form-control" name="desc"></textarea> -->
+					<textarea id="summernote" name='desc'><?= $data_utama->berita; ?></textarea>
+					<script>
+						$(document).ready(function() {
+							$('#summernote').summernote();
+						});
+					</script>
                 </div>
                 <div class="form-group form-md-line-input has-danger">
                     <label class="control-label" for="form_control_1">Kategori </label>
