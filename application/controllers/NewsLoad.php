@@ -8,7 +8,9 @@
         }
 
         function newsload (){
-            $limit  = $_POST['limit'];            
+            // $limit  = $_POST['limit'];            
+            // $limit  = $this->input->post('limit');   
+            // $query = $this->NewsLoad_Model->__getdata($limit);
             $query = $this->NewsLoad_Model->__getdata();
             foreach ($query->result() as $row)
             {
