@@ -79,6 +79,7 @@ else{echo'';}
 			<h6 class="collapse-header">Berita</h6>
             <a class="collapse-item <?php if($child=='kategori_berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/kategori_berita'); ?>">Kategori Berita</a>
             <a class="collapse-item <?php if($child=='berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/berita'); ?>">Berita</a>
+            <a class="collapse-item <?php if($child=='komen_berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/komen_berita'); ?>">Komentar Berita</a>
             <a class="collapse-item <?php if($child=='event'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/event'); ?>">Event</a>
           </div>
         </div>

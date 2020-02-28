@@ -199,7 +199,7 @@ class Main_model extends CI_Model{
 		}
 		return $tanggal_tampil;
 	}
-	public function convert_hari($date){
+	function convert_hari($date){
 		$daftar_hari = array(
 			'Sunday' => 'Minggu',
 			'Monday' => 'Senin',
@@ -211,5 +211,10 @@ class Main_model extends CI_Model{
 		);
 		$namahari = date('l', strtotime($date));
 		return $daftar_hari[$namahari];
+	}
+	function convert_datetime($datetime){
+		$split_date = explode(' ',$datetime);
+		$show_string = $this->convert_tanggal($split_date[0]).' '.substr($split_date[1],0,5);
+		return $show_string;
 	}
 }

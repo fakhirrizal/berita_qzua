@@ -861,6 +861,148 @@ class Master extends CI_Controller {
 			echo "<script>window.location='".base_url()."admin_side/berita/'</script>";
 		}
 	}
+	/* Komentar Berita */
+	public function komen_berita(){
+		$data['parent'] = 'master';
+        $data['child'] = 'komen_berita';
+        $this->load->view('admin/template/header',$data);
+        $this->load->view('admin/master/komen_berita',$data);
+        $this->load->view('admin/template/footer');
+	}
+	public function detail_komen(){
+		$data['parent'] = 'master';
+		$data['child'] = 'komen_berita';
+		$date['komen'] = $this->Main_model->getSelectedData('komentar_berita a', 'a.*,b.judul', array('md5(a.id_berita)'=>$this->uri->segment(3),'a.status'=>'1'), '', '', '', '', array(
+			'table' => 'berita b',
+			'on' => 'a.id_berita=b.id_berita',
+			'pos' => 'LEFT'
+		))->result();
+        $this->load->view('admin/template/header',$data);
+        $this->load->view('admin/master/detail_komen',$data);
+        $this->load->view('admin/template/footer');
+	}
+	public function json_komen(){
+		$get_data = $this->Main_model->getSelectedData('komentar_berita a', 'a.*,b.judul,(SELECT COUNT(c.id_berita) FROM komentar_berita c WHERE c.id_berita=a.id_berita AND c.status="1") AS jml', '', '', '', '', '', array(
+			'table' => 'berita b',
+			'on' => 'a.id_berita=b.id_berita',
+			'pos' => 'LEFT'
+		))->result();
+		$data_tampil = array();
+		$no = 1;
+		foreach ($get_data as $key => $value) {
+			$isi['no'] = $no++.'.';
+			$isi['judul'] = '<strong><img alt="" src="http://2.gravatar.com/avatar/581a7695c1ef0cda0403ccffe2baa4fc?s=32&amp;d=mm&amp;r=g" srcset="http://2.gravatar.com/avatar/581a7695c1ef0cda0403ccffe2baa4fc?s=64&amp;d=mm&amp;r=g 2x" class="avatar avatar-32 photo" height="32" width="32"> '.$value->nama.'</strong><br><a href="mailto:'.$value->email.'">'.$value->email.'</a>';
+			$komen = '';
+			$return_on_click = "return confirm('Anda yakin?')";
+			if($value->id_parent_comment==NULL){
+				if($value->status=='0'){
+					$komen = '<p>'.$value->komentar.'</p>
+					<div class="row-actions"><span class="approve"><a href="'.base_url().'admin_side/comment_approved/'.md5($value->id_komentar_berita).'" data-wp-lists="dim:the-comment-list:comment-10:unapproved:e7e7d3:e7e7d3:new=approved" class="vim-a aria-button-if-js" aria-label="Approve this comment" role="button">Approve</a></span>
+					<span class="trash"> | <a href="'.base_url().'admin_side/hapus_komentar/'.md5($value->id_komentar_berita).'" onclick="'.$return_on_click.'" data-wp-lists="delete:the-comment-list:comment-10::trash=1" class="delete vim-d vim-destructive aria-button-if-js" aria-label="Move this comment to the Trash" role="button">Trash</a></span></div>';
+				}else{
+					$komen = '<p>'.$value->komentar.'</p>
+					<div class="row-actions"><span class="trash"><a href="'.base_url().'admin_side/hapus_komentar/'.md5($value->id_komentar_berita).'" onclick="'.$return_on_click.'" data-wp-lists="delete:the-comment-list:comment-10::trash=1" class="delete vim-d vim-destructive aria-button-if-js" aria-label="Move this comment to the Trash" role="button">Trash</a></span></div>';
+				}
+			}else{
+				$get_parent = $get_data = $this->Main_model->getSelectedData('komentar_berita a', 'a.*', array('a.id_komentar_berita'=>$value->id_parent_comment))->row(); 
+				if($value->status=='0'){
+					$komen = 'In reply to <a href="#">'.$get_parent->nama.'</a>.<p>'.$value->komentar.'</p>
+					<div class="row-actions"><span class="approve"><a href="'.base_url().'admin_side/comment_approved/'.md5($value->id_komentar_berita).'" data-wp-lists="dim:the-comment-list:comment-10:unapproved:e7e7d3:e7e7d3:new=approved" class="vim-a aria-button-if-js" aria-label="Approve this comment" role="button">Approve</a></span>
+					<span class="trash"> | <a href="'.base_url().'admin_side/hapus_komentar/'.md5($value->id_komentar_berita).'" onclick="'.$return_on_click.'" data-wp-lists="delete:the-comment-list:comment-10::trash=1" class="delete vim-d vim-destructive aria-button-if-js" aria-label="Move this comment to the Trash" role="button">Trash</a></span></div>';
+				}else{
+					$komen = 'In reply to <a href="#">'.$get_parent->nama.'</a>.<p>'.$value->komentar.'</p>
+					<div class="row-actions"><span class="trash"><a href="'.base_url().'admin_side/hapus_komentar/'.md5($value->id_komentar_berita).'" onclick="'.$return_on_click.'" data-wp-lists="delete:the-comment-list:comment-10::trash=1" class="delete vim-d vim-destructive aria-button-if-js" aria-label="Move this comment to the Trash" role="button">Trash</a></span></div>';
+				}
+			}
+			$isi['isi'] = $komen;
+			$isi['action'] = '<a href="'.base_url().'detail_berita/'.md5($value->id_berita).'">'.$value->judul.'</a><br><a href="#">View Post</a><br>
+			<a href="'.base_url().'admin_side/detail_komen/'.md5($value->id_berita).'" class="btn btn-primary">
+				<span class="badge badge-light">'.$value->jml.'</span>
+			</a>
+			';
+			$isi['date'] = $this->Main_model->convert_datetime($value->created_at);
+			$data_tampil[] = $isi;
+		}
+		$results = array(
+			"sEcho" => 1,
+			"iTotalRecords" => count($data_tampil),
+			"iTotalDisplayRecords" => count($data_tampil),
+			"aaData"=>$data_tampil);
+		echo json_encode($results);
+	}
+	public function json_detail_komen(){
+		$get_data = $this->Main_model->getSelectedData('komentar_berita a', 'a.*', array('md5(a.id_berita)'=>$this->input->post('berita'),'a.status'=>'1'), '', '', '', '', array(
+			'table' => 'berita b',
+			'on' => 'a.id_berita=b.id_berita',
+			'pos' => 'LEFT'
+		))->result();
+		$data_tampil = array();
+		$no = 1;
+		foreach ($get_data as $key => $value) {
+			$isi['no'] = $no++.'.';
+			$isi['judul'] = '<strong><img alt="" src="http://2.gravatar.com/avatar/581a7695c1ef0cda0403ccffe2baa4fc?s=32&amp;d=mm&amp;r=g" srcset="http://2.gravatar.com/avatar/581a7695c1ef0cda0403ccffe2baa4fc?s=64&amp;d=mm&amp;r=g 2x" class="avatar avatar-32 photo" height="32" width="32"> '.$value->nama.'</strong><br><a href="mailto:'.$value->email.'">'.$value->email.'</a>';
+			$komen = '';
+			$return_on_click = "return confirm('Anda yakin?')";
+			if($value->id_parent_comment==NULL){
+				$komen = '<p>'.$value->komentar.'</p>
+				<div class="row-actions"><span class="trash"><a href="'.base_url().'admin_side/hapus_komentar/'.md5($value->id_komentar_berita).'" onclick="'.$return_on_click.'" data-wp-lists="delete:the-comment-list:comment-10::trash=1" class="delete vim-d vim-destructive aria-button-if-js" aria-label="Move this comment to the Trash" role="button">Trash</a></span></div>';
+			}else{
+				$get_parent = $get_data = $this->Main_model->getSelectedData('komentar_berita a', 'a.*', array('a.id_komentar_berita'=>$value->id_parent_comment))->row(); 
+				$komen = 'In reply to <a href="#">'.$get_parent->nama.'</a>.<p>'.$value->komentar.'</p>
+				<div class="row-actions"><span class="trash"><a href="'.base_url().'admin_side/hapus_komentar/'.md5($value->id_komentar_berita).'" onclick="'.$return_on_click.'" data-wp-lists="delete:the-comment-list:comment-10::trash=1" class="delete vim-d vim-destructive aria-button-if-js" aria-label="Move this comment to the Trash" role="button">Trash</a></span></div>';
+			}
+			$isi['isi'] = $komen;
+			$isi['date'] = $this->Main_model->convert_datetime($value->created_at);
+			$data_tampil[] = $isi;
+		}
+		$results = array(
+			"sEcho" => 1,
+			"iTotalRecords" => count($data_tampil),
+			"iTotalDisplayRecords" => count($data_tampil),
+			"aaData"=>$data_tampil);
+		echo json_encode($results);
+	}
+	public function comment_approved(){
+		$this->db->trans_start();
+		$nama = '';
+		$get_data = $this->Main_model->getSelectedData('komentar_berita a', 'a.*',array('md5(a.id_komentar_berita)'=>$this->uri->segment(3)))->row();
+		$nama = $get_data->nama;
+
+		$this->Main_model->updateData('komentar_berita',array('status'=>'1'),array('md5(id_komentar_berita)'=>$this->uri->segment(3)));
+
+		$this->Main_model->log_activity($this->session->userdata('id'),'Updating data',"Menyetujui komentar (dari ".$nama.")",$this->session->userdata('location'));
+		$this->db->trans_complete();
+		if($this->db->trans_status() === false){
+			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal ditambahkan.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/komen_berita/'</script>";
+		}
+		else{
+			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil ditambahkan.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/komen_berita/'</script>";
+		}
+	}
+	public function hapus_komentar(){
+		$this->db->trans_start();
+		$id = '';
+		$nama = '';
+		$get_data = $this->Main_model->getSelectedData('komentar_berita a', 'a.*',array('md5(a.id_komentar_berita)'=>$this->uri->segment(3)))->row();
+		$id = $get_data->id_komentar_berita;
+		$nama = $get_data->nama;
+
+		$this->Main_model->deleteData('komentar_berita',array('id_parent_comment'=>$id));
+		$this->Main_model->deleteData('komentar_berita',array('id_komentar_berita'=>$id));
+
+		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","Menghapus data komentar berita (oleh ".$nama.")",$this->session->userdata('location'));
+		$this->db->trans_complete();
+		if($this->db->trans_status() === false){
+			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal dihapus.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/komen_berita/'</script>";
+		}
+		else{
+			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil dihapus.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/komen_berita/'</script>";
+		}
+	}
 	/* Data Event */
 	public function event(){
 		$data['parent'] = 'master';

@@ -105,6 +105,11 @@ $route['admin_side/detail_berita/(:any)'] = 'admin/Master/detail_berita/$1';
 $route['admin_side/perbarui_berita'] = 'admin/Master/perbarui_berita';
 $route['admin_side/hapus_berita/(:any)'] = 'admin/Master/hapus_berita/$1';
 
+$route['admin_side/komen_berita'] = 'admin/Master/komen_berita';
+$route['admin_side/comment_approved/(:any)'] = 'admin/Master/comment_approved/$1';
+$route['admin_side/detail_komen/(:any)'] = 'admin/Master/detail_komen/$1';
+$route['admin_side/hapus_komentar/(:any)'] = 'admin/Master/hapus_komentar/$1';
+
 $route['admin_side/event'] = 'admin/Master/event';
 $route['admin_side/tambah_event'] = 'admin/Master/tambah_event';
 $route['admin_side/simpan_event'] = 'admin/Master/simpan_event';
