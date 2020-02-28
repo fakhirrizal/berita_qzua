@@ -123,8 +123,11 @@ $route['admin_side/hapus_iklan/(:any)'] = 'admin/Setting/hapus_iklan/$1';
 
 /* Public */
 $route['kategori'] = 'User/kategori';
+$route['news_detail/(:any)'] = 'User/detail/$1';
+$route['news_detail'] = 'User/detail';
 $route['kategori/(:any)'] = 'User/kategori/$1';
 $route['save_subscriber'] = 'User/save_subscriber';
+$route['save_comment'] = 'User/save_comment';
 
 /*
 | -------------------------------------------------------------------------

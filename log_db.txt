@@ -1,2 +1,2 @@
-Tanggal .. ............ ....
-    - ISI
+Tanggal 28 Februari 2019 - Rizal
+    - ALTER TABLE `komentar_berita` ADD `id_parent_comment` INT(9) NULL AFTER `id_komentar_berita`, ADD INDEX `id_komentar_berita` (`id_parent_comment`);

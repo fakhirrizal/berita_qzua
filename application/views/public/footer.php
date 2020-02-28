@@ -23,7 +23,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 						<div class="subscribe_background"></div>
 						<div class="subscribe_content">
 							<div class="subscribe_title">Subscribe</div>
-							<form action="<?= base_url(); ?>/save_subscriber" method='post'>
+							<form action="<?= base_url(); ?>save_subscriber" method='post'>
 								<input type="email" class="sub_input" name='alamat_surel' placeholder="Your Email" required="required">
 								<button class="sub_button">
 									<svg version="1.1" id="link_arrow_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

@@ -9,8 +9,16 @@ class User extends CI_Controller {
     {
         $this->Main_model->update_visitor();
         $data['berita'] = array();
-        // $data['data_marker'] = $this->Main_model->getSelectedData('provinsi a', 'a.*,(SELECT SUM(s.persentase_realisasi) FROM kube k LEFT JOIN status_laporan_kube s ON k.id_kube=s.id_kube WHERE k.id_provinsi=a.id_provinsi) AS persentase_realisasi_kube,(SELECT COUNT(k.id_kube) FROM kube k WHERE k.id_provinsi=a.id_provinsi) AS jumlah_kube,(SELECT SUM(s.persentase_realisasi) FROM rutilahu k LEFT JOIN status_laporan_rutilahu s ON k.id_rutilahu=s.id_rutilahu WHERE k.id_provinsi=a.id_provinsi) AS persentase_realisasi_rutilahu,(SELECT COUNT(k.id_rutilahu) FROM rutilahu k WHERE k.id_provinsi=a.id_provinsi) AS jumlah_rutilahu,(SELECT SUM(s.persentase_realisasi) FROM sarling k LEFT JOIN status_laporan_sarling s ON k.id_sarling=s.id_sarling WHERE k.id_provinsi=a.id_provinsi) AS persentase_realisasi_sarling,(SELECT COUNT(k.id_sarling) FROM sarling k WHERE k.id_provinsi=a.id_provinsi) AS jumlah_sarling',array('a.wilayah'=>'2'))->result();
         $this->load->view('public/main',$data);
+    }
+    public function detail($key=''){
+        if($key!=NULL){
+            $data['data_berita'] = $this->Main_model->getSelectedData('berita a', 'a.*', array('a.id_berita'=>$key))->row();
+            $data['data_komen'] = $this->Main_model->getSelectedData('komentar_berita a', 'a.*', array('a.id_berita'=>$key))->result();
+            $this->load->view('public/berita_detail',$data);
+        }else{
+            redirect();
+        }
     }
     public function kategori($key='')
     {
@@ -64,5 +72,27 @@ class User extends CI_Controller {
             // message success
 			echo "<script>window.location='".base_url()."'</script>";
 		}
+    }
+    public function save_comment(){
+        $this->db->trans_start();
+        $data_insert_ = array(
+            'id_parent_comment' => $this->input->post('id_comment'),
+            'id_berita' => $this->input->post('berita'),
+            'nama' => $this->input->post('text'),
+            'email' => $this->input->post('email'),
+            'komentar' => $this->input->post('comment'),
+            'created_at' => date("Y-m-d H:i:s")
+        );
+        $this->Main_model->insertData('komentar_berita',$data_insert_);
+        $this->db->trans_complete();
+        if($this->db->trans_status() === false){
+            // message failed
+            echo "<script>window.location='".base_url().'news_detail/'.$this->input->post('berita')."'</script>";
+        }
+        else{
+            // message success
+            echo "<script>alert('Date telah berhasil disimpan');</script>";
+            echo "<script>window.location='".base_url().'news_detail/'.$this->input->post('berita')."'</script>";
+        }
     }
 }
