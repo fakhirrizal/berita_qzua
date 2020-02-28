@@ -48,7 +48,7 @@
 
 						<div class="blog_section">
 							<div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">Don't Miss</div>
+								<div class="section_title">Newest Article</div>
 								<div class="section_tags ml-auto">
 									<ul>
 										<li class="active"><a href="category.html">all</a></li>
@@ -73,13 +73,15 @@
 									</ul>
 								</div>
 							</div>
-							<div id = "dontmisscard" class="card mb-2">
-							
+							<div id = "dontmisscard">							
 							</div>
-							<div class="card mb-2" >
-								<div id = "dontmisssub" class="row no-gutters">
-									
-								</div>
+							<div id = "dontmisssub">							
+							</div>
+							<!-- <div id = "dontmisscard2" class="card mb-2">							
+							</div> -->
+
+							<div class="load_more">
+								<div id="load_more_newest" class="load_more_button text-center trans_200">Load More</div>
 							</div>
 						</div>
 
@@ -203,9 +205,6 @@
 							</div>
 						</div>
 					</div>
-					<div class="load_more">
-						<div id="load_more_test" class="load_more_button text-center trans_200">Load More</div>
-					</div>
 				</div>
 
 				<!-- Sidebar -->
@@ -231,18 +230,23 @@
 <script src="<?= base_url(); ?>/assets/js/custom.js"></script>
 <script>
 	$(document).ready(function(){
-		var wrapper		= $("#dontmisscard");
-		var wrapper2	= $("#dontmisssub");
+		var loadmore_var 	= "";
+		var arrayindex		= 0;
+
+		var wrapper			= $("#dontmisscard");
+		var wrapper2		= $("#dontmisssub");
+		var wrapper3		= $("#blog_section_g");
+		
+		var table_wrapper	= "";
+		var table_wrapper2	= "";
+
 
 		$.ajax({
 			url: "<?php echo site_url('NewsLoad/newsload');?>",
-			type: 'POST',                       
-			data: "limit="+8,
+			type: 'POST',
 			dataType: 'json',				
 			success: function( response ) {
-				var table_wrapper	= "";
-				var table_wrapper2	= "";
-
+				loadmore_var = response.slice(0,5)
 				// for (i = 0; i < response.length; i++){
 				// 	table_wrapper+='<div class="card card_small_with_image grid-item">'+
 				// 						'<img class="card-img-top" src="<?= base_url(); ?>/assets/images/post_10.jpg" alt="">'+
@@ -252,55 +256,77 @@
 				// 						'</div>'+
 				// 					'</div>';
 				// }
-				for (i = 0; i < response.length; i++){
+				for (i = 0; i < loadmore_var.length; i++){
 					if (i > 0){
-						table_wrapper2 += '<div class="col-md-4">'+
-											'<img src="<?= base_url(); ?>/assets/images/post_15.jpg" class="card-img" alt="...">'+
-										 '</div>'+
-										 '<div class="col-md-8">'+
-											'<div class="card-body">'+
-												'<h5 class="card-title"><a href="post.html">'+response[i].judul+'</a></h5>'+
-												'<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>'+
-												'<p class="card-text"><small class="text-muted"><span>'+response[i].created_at+'</span></small></p>'+
-											'</div>'+
-										 '</div>';
+						table_wrapper2 += '<div class="card mb-2" >'+
+												'<div class="row no-gutters">'+
+													'<div class="col-md-4">'+
+														'<img src="<?= base_url(); ?>/assets/images/post_15.jpg" class="card-img" alt="...">'+
+													'</div>'+
+													'<div class="col-md-8">'+
+														'<div class="card-body">'+
+															'<h5 class="card-title"><a href="post.html">'+loadmore_var[i].judul+'</a></h5>'+
+															'<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>'+
+															'<p class="card-text"><small class="text-muted"><span>'+loadmore_var[i].created_at+'</span></small></p>'+
+														'</div>'+
+													'</div>'+
+										 		'</div>'+
+											'</div>';
 					}
 
-					table_wrapper = '<img src="<?= base_url(); ?>/assets/images/post_10.jpg" class="card-img-top" alt="">'+
-								'<div class="card-body">'+
-									'<h3 class="card-title"><a href="post.html">'+response[i].judul+'</a></h3>'+
-									'<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>'+
-									'<small class="post_meta"><a href="#">Katy Liu</a><span>'+response[i].created_at+'</span></small>'+
-								'</div>';
-								console.log(response[i].judul);
+					if(i == 0){
+						table_wrapper += '<div class="card mb-2">'+
+											'<img src="<?= base_url(); ?>/assets/images/post_10.jpg" class="card-img-top" alt="">'+
+													'<div class="card-body">'+
+														'<h3 class="card-title"><a href="post.html">'+loadmore_var[i].judul+'</a></h3>'+
+														'<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>'+
+														'<small class="post_meta"><a href="#">Katy Liu</a><span>'+loadmore_var[i].created_at+'</span></small>'+
+													'</div>'+
+										  '</div>';
+					}
+					arrayindex = i
 				}
 				$(wrapper).html(table_wrapper);
 				$(wrapper2).html(table_wrapper2);				
 			}
 		});
 
-		// $("#load_more_test").click(function(){
-		// 	$.ajax({
-		// 		url: "<?php echo site_url('LoadMore/loadmore');?>",
-		// 		type: 'POST',                       
-		// 		data: "limit="+8,
-		// 		dataType: 'json',				
-		// 		success: function( response ) {
-		// 			var table_wrapper	="";
+		
+		$("#load_more_newest").click(function(){
+			$.ajax({
+				url: "<?php echo site_url('NewsLoad/newsload');?>",
+				type: 'POST',
+				dataType: 'json',				
+				success: function( response ) {
+					let resp_length 	= response.length - 1;
+					let arrayindexnew	= arrayindex + 1;
 
-		// 			for (i = 0; i < response.length; i++){
-		// 				table_wrapper	+= '<div class="card card_small_with_image grid-item">'+
-		// 								'<img class="card-img-top" src="<?= base_url(); ?>/assets/images/post_10.jpg" alt="">'+
-		// 								'<div class="card-body">'+
-		// 									'<div class="card-title card-title-small"><a href="post.html">'+response[i].judul+'</a></div>'+
-		// 									'<small class="post_meta"><a href="#">Katy Liu</a><span>Sep 29, 2017 at 9:48 am</span></small>'+
-		// 								'</div>'+
-		// 							'</div>';
-		// 			}
-		// 			$(wrapper).html(table_wrapper);
-		// 		}
-		// 	});
-		// });
+					let loadmore = response.splice(arrayindexnew,resp_length);
+					// console.log(loadmore);
+		
+					for (i = 0; i < loadmore.length; i++){						
+						table_wrapper2 += '<div class="card mb-2" >'+
+												'<div class="row no-gutters">'+
+													'<div class="col-md-4">'+
+														'<img src="<?= base_url(); ?>/assets/images/post_15.jpg" class="card-img" alt="...">'+
+													'</div>'+
+													'<div class="col-md-8">'+
+														'<div class="card-body">'+
+															'<h5 class="card-title"><a href="post.html">'+loadmore[i].judul+'</a></h5>'+
+															'<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>'+
+															'<p class="card-text"><small class="text-muted"><span>'+loadmore[i].created_at+'</span></small></p>'+
+														'</div>'+
+													'</div>'+
+												'</div>'+
+											'</div>';
+						
+					}
+					$(wrapper2).html(table_wrapper2);
+				}
+			});
+
+			
+		});
 	});
 		
 </script>
