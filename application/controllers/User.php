@@ -14,7 +14,7 @@ class User extends CI_Controller {
     public function detail($key=''){
         if($key!=NULL){
             $data['data_berita'] = $this->Main_model->getSelectedData('berita a', 'a.*', array('a.id_berita'=>$key))->row();
-            $data['data_komen'] = $this->Main_model->getSelectedData('komentar_berita a', 'a.*', array('a.id_berita'=>$key))->result();
+            $data['data_komen'] = $this->Main_model->getSelectedData('komentar_berita a', 'a.*', array('a.id_berita'=>$key,'a.status'=>'1'))->result();
             $this->load->view('public/berita_detail',$data);
         }else{
             redirect();
@@ -81,7 +81,8 @@ class User extends CI_Controller {
             'nama' => $this->input->post('text'),
             'email' => $this->input->post('email'),
             'komentar' => $this->input->post('comment'),
-            'created_at' => date("Y-m-d H:i:s")
+            'created_at' => date("Y-m-d H:i:s"),
+            'status' => '0'
         );
         $this->Main_model->insertData('komentar_berita',$data_insert_);
         $this->db->trans_complete();

@@ -1,2 +1,3 @@
 Tanggal 28 Februari 2019 - Rizal
     - ALTER TABLE `komentar_berita` ADD `id_parent_comment` INT(9) NULL AFTER `id_komentar_berita`, ADD INDEX `id_komentar_berita` (`id_parent_comment`);
+    - ALTER TABLE `komentar_berita` ADD `status` ENUM('0','1') NOT NULL COMMENT '0=Pending,1=Published' AFTER `created_at`;
