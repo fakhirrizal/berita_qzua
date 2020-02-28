@@ -117,9 +117,9 @@ class Main_model extends CI_Model{
 				'device' => $device,
 				'os' => $this->agent->platform(),
 				'browser' => $this->agent->browser().' '.$this->agent->version(),
-				'counter' => ($ip_check->counter)+1
+				'counter' => ($ip_check1->counter)+1
 			);
-			$this->updateData('visitor',$insertdata,array('id_visitor'=>$ip_check->id_visitor));
+			$this->updateData('visitor',$insertdata,array('id_visitor'=>$ip_check1->id_visitor));
 		}
 		$ip_check2 = $this->getSelectedData('visitor_per_day a', 'a.*', array('a.ip_address'=>$get_ip))->row();
 		if($ip_check2==NULL){
@@ -138,9 +138,9 @@ class Main_model extends CI_Model{
 				'device' => $device,
 				'os' => $this->agent->platform(),
 				'browser' => $this->agent->browser().' '.$this->agent->version(),
-				'counter' => ($ip_check->counter)+1
+				'counter' => ($ip_check2->counter)+1
 			);
-			$this->updateData('visitor',$insertdata,array('visitor_per_day'=>$ip_check->id_visitor));
+			$this->updateData('visitor_per_day',$insertdata,array('id_visitor'=>$ip_check2->id_visitor));
 		}
 		$ip_check3 = $this->getSelectedData('visitor_detail a', 'a.*', array('a.ip_address'=>$get_ip,'a.date'=>date('Y-m-d')))->row();
 		if($ip_check3==NULL){
@@ -161,9 +161,9 @@ class Main_model extends CI_Model{
 				'device' => $device,
 				'os' => $this->agent->platform(),
 				'browser' => $this->agent->browser().' '.$this->agent->version(),
-				'counter' => ($ip_check->counter)+1
+				'counter' => ($ip_check3->counter)+1
 			);
-			$this->updateData('visitor',$insertdata,array('visitor_detail'=>$ip_check->id_visitor));
+			$this->updateData('visitor_detail',$insertdata,array('id_visitor'=>$ip_check3->id_visitor));
 		}
 	}
 	function getLastID($table,$column){
