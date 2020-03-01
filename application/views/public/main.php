@@ -362,7 +362,7 @@
 													'<div class="col-md-8">'+
 														'<div class="card-body">'+
 															'<h5 class="card-title"><a href="post.html">'+loadmore[i].judul+'</a></h5>'+
-															'<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>'+
+															'<p class="card-text">'+loadmore[i].berita+'</p>'+
 															'<p class="card-text"><small class="text-muted"><span>'+loadmore[i].created_at+'</span></small></p>'+
 														'</div>'+
 													'</div>'+
