@@ -296,7 +296,7 @@
 				for (i = 0; i < loadmore_var.length; i++){
 					var thumbnail = '';
 					if(loadmore_var[i].thumbnail=='' || loadmore_var[i].thumbnail==null){
-						var thumbnail = '<?= base_url(); ?>assets/none.jpg';
+						var thumbnail = '<?= base_url(); ?>assets/none.png';
 					}else{
 						var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore_var[i].thumbnail;
 					}
@@ -347,11 +347,17 @@
 					let loadmore = response.splice(arrayindexnew,resp_length);
 					// console.log(loadmore);
 		
-					for (i = 0; i < loadmore.length; i++){						
+					for (i = 0; i < loadmore.length; i++){
+						var thumbnail = '';
+						if(loadmore[i].thumbnail=='' || loadmore[i].thumbnail==null){
+							var thumbnail = '<?= base_url(); ?>assets/none.png';
+						}else{
+							var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore[i].thumbnail;
+						}						
 						table_wrapper2 += '<div class="card mb-2" >'+
 												'<div class="row no-gutters">'+
 													'<div class="col-md-4">'+
-														'<img src="<?= base_url(); ?>assets/images/post_15.jpg" class="card-img" alt="...">'+
+														'<img src="'+thumbnail+'" class="card-img" alt="...">'+
 													'</div>'+
 													'<div class="col-md-8">'+
 														'<div class="card-body">'+

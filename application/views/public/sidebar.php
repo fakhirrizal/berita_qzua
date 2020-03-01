@@ -53,7 +53,7 @@
 												foreach ($data_berita as $key => $value) {
 													$thumbnail = '';
 													if($value->thumbnail=='' OR $value->thumbnail==NULL){
-														$thumbnail = base_url().'assets/none.jpg';
+														$thumbnail = base_url().'assets/none.png';
 													}else{
 														$thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
 													}
@@ -79,7 +79,7 @@
 												foreach ($data_berita as $key => $value) {
 													$thumbnail = '';
 													if($value->thumbnail=='' OR $value->thumbnail==NULL){
-														$thumbnail = base_url().'assets/none.jpg';
+														$thumbnail = base_url().'assets/none.png';
 													}else{
 														$thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
 													}
@@ -115,7 +115,7 @@
 												if($nomor=='4' OR $nomor=='5' OR $nomor=='6' OR $nomor=='7'){
 													$thumbnail = '';
 													if($value->thumbnail=='' OR $value->thumbnail==NULL){
-														$thumbnail = base_url().'assets/none.jpg';
+														$thumbnail = base_url().'assets/none.png';
 													}else{
 														$thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
 													}
@@ -144,7 +144,7 @@
 												if($nomor=='8' OR $nomor=='9' OR $nomor=='10' OR $nomor=='11'){
 													$thumbnail = '';
 													if($value->thumbnail=='' OR $value->thumbnail==NULL){
-														$thumbnail = base_url().'assets/none.jpg';
+														$thumbnail = base_url().'assets/none.png';
 													}else{
 														$thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
 													}
