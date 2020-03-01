@@ -85,7 +85,7 @@
 													}
 													?>
 											<div class="side_post">
-												<a href="post.html">
+												<a href="<?= base_url(); ?>news_detail/<?= $value->id_berita; ?>">
 													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
 														<div class="side_post_image"><div><img src="<?= $thumbnail; ?>" alt=""></div></div>
 														<div class="side_post_content">
@@ -103,7 +103,7 @@
 										<?php
 										$nomor = 0;
 										if($tanda_1=='lanjut'){
-											if(count($data_berita>8)){
+											if(count($data_berita)>8){
 												$tanda_2 = 'lanjut';
 											}else{
 												echo'';

@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Queensland Zhejiang United Association Inc.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="plugins/jquery.mb.YTPlayer-3.1.12/jquery.mb.YTPlayer.css">
-    <link rel="stylesheet" type="text/css" href="styles/contact.css">
-    <link rel="stylesheet" type="text/css" href="styles/contact_responsive.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/bootstrap4/bootstrap.min.css">
+    <link href="<?= base_url(); ?>assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/jquery.mb.YTPlayer-3.1.12/jquery.mb.YTPlayer.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/contact.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/contact_responsive.css">
     <link href="<?= base_url(); ?>assets/logo.png" rel="icon" type="image/x-icon">
 </head>
 <body>
@@ -30,22 +30,20 @@
 						<div class="logo"><a href="#">avision</a></div>
 						<nav class="main_nav">
 							<ul>
-								<li class="active"><a href="index.html">Home</a></li>
-								<li><a href="#">Fashion</a></li>
-								<li><a href="#">Gadgets</a></li>
-								<li><a href="#">Lifestyle</a></li>
-								<li><a href="#">Video</a></li>
-								<li><a href="contact.html">Contact</a></li>
+								<li><a href="<?= base_url(); ?>">Home</a></li>
+								<li><a href="#">News</a></li>
+								<li><a href="<?= base_url(); ?>about">About</a></li>
+								<li class="active"><a href="<?= base_url(); ?>contact">Contact</a></li>
 							</ul>
 						</nav>
 						<div class="search_container ml-auto">
 							<div class="weather">
 								<div class="temperature">+10°</div>
-								<img class="weather_icon" src="images/cloud.png" alt="">
+								<img class="weather_icon" src="<?= base_url(); ?>assets/images/cloud.png" alt="">
 							</div>
 							<form action="#">
 								<input type="search" class="header_search_input" required="required" placeholder="Type to Search...">
-								<img class="header_search_icon" src="images/search.png" alt="">
+								<img class="header_search_icon" src="<?= base_url(); ?>assets/images/search.png" alt="">
 							</form>
 							
 						</div>
@@ -66,7 +64,7 @@
 		<div class="search">
 			<form action="#">
 				<input type="search" class="header_search_input menu_mm" required="required" placeholder="Type to Search...">
-				<img class="header_search_icon menu_mm" src="images/search_2.png" alt="">
+				<img class="header_search_icon menu_mm" src="<?= base_url(); ?>assets/images/search_2.png" alt="">
 			</form>
 		</div>
 		<nav class="menu_nav">
@@ -84,7 +82,7 @@
 	<!-- Home -->
 
 	<div class="home">
-		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/regular.jpg" data-speed="0.8"></div>
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="<?= base_url(); ?>assets/images/regular.jpg" data-speed="0.8"></div>
 		<div class="home_content">
 			<div class="container">
 				<div class="row">
@@ -151,13 +149,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	</footer>
 </div>
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/masonry/masonry.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="js/contact.js"></script>
+<script src="<?= base_url(); ?>assets/js/jquery-3.2.1.min.js"></script>
+<script src="<?= base_url(); ?>assets/styles/bootstrap4/popper.js"></script>
+<script src="<?= base_url(); ?>assets/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="<?= base_url(); ?>assets/plugins/easing/easing.js"></script>
+<script src="<?= base_url(); ?>assets/plugins/masonry/masonry.js"></script>
+<script src="<?= base_url(); ?>assets/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/contact.js"></script>
 </body>
 </html>

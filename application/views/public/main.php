@@ -57,7 +57,14 @@
 										<li class="active"><a href="<?= base_url(); ?>">all</a></li>
 										<?php
 										$hitung = count($kategori);
-										if($hitung>5){
+										if($hitung>4){
+											$tanda = 1;
+										}else{
+											echo'';
+										}
+										if($kategori==NULL){
+											echo'';
+										}else{
 											foreach ($kategori as $key => $value) {
 												if($no=='0' OR $no=='1' OR $no=='2' OR $no=='3'){
 													echo'<li><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
@@ -66,9 +73,6 @@
 													echo'';
 												}
 											}
-											$tanda = 1;
-										}else{
-											echo'<li><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
 										}
 										?>
 										<!-- <li><a href="category.html">style hunter</a></li>
