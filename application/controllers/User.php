@@ -52,6 +52,15 @@ class User extends CI_Controller {
             }
         }
     }
+    public function event_detail($key=''){
+        if($key!=NULL){
+            $data['data_berita'] = $this->Main_model->getSelectedData('event a', 'a.*', array('a.id_event'=>$key))->row();
+            // $data['data_komen'] = $this->Main_model->getSelectedData('komentar_berita a', 'a.*', array('a.id_berita'=>$key,'a.status'=>'1'))->result();
+            $this->load->view('public/event_detail',$data);
+        }else{
+            redirect();
+        }
+    }
     public function about(){
         $this->load->view('public/about');
     }

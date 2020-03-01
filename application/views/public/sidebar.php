@@ -44,11 +44,12 @@
 											echo'';
 										}else{
 											$tanda_1 = '';
+											$tanda_2 = '';
 											$nomor = 0;
 										?>
 										<div class="owl-item">
 											<?php
-											if(count($data_berita)>5){
+											if(count($data_berita)>4){
 												foreach ($data_berita as $key => $value) {
 													$thumbnail = '';
 													if($value->thumbnail=='' OR $value->thumbnail==NULL){
@@ -59,7 +60,7 @@
 													if($nomor=='0' OR $nomor=='1' OR $nomor=='2' OR $nomor=='3'){
 											?>
 											<div class="side_post">
-												<a href="post.html">
+												<a href="<?= base_url(); ?>news_detail/<?= $value->id_berita; ?>">
 													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
 														<div class="side_post_image"><div><img src="<?= $thumbnail; ?>" alt=""></div></div>
 														<div class="side_post_content">
@@ -99,120 +100,69 @@
 											}
 										?>
 										</div>
-										<!-- Top Stories Slider Item -->
+										<?php
+										$nomor = 0;
+										if($tanda_1=='lanjut'){
+											if(count($data_berita>8)){
+												$tanda_2 = 'lanjut';
+											}else{
+												echo'';
+											}
+										?>
 										<div class="owl-item">
-
-											<!-- Sidebar Post -->
+											<?php
+											foreach ($data_berita as $key => $value) {
+												if($nomor=='4' OR $nomor=='5' OR $nomor=='6' OR $nomor=='7'){
+													$thumbnail = '';
+													if($value->thumbnail=='' OR $value->thumbnail==NULL){
+														$thumbnail = base_url().'assets/none.jpg';
+													}else{
+														$thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
+													}
+											?>
 											<div class="side_post">
-												<a href="post.html">
+												<a href="<?= base_url(); ?>news_detail/<?= $value->id_berita; ?>">
 													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="side_post_image"><div><img src="<?= base_url(); ?>assets/images/top_1.jpg" alt=""></div></div>
+														<div class="side_post_image"><div><img src="<?= $thumbnail; ?>" alt=""></div></div>
 														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
+															<div class="side_post_title"><?= $value->judul; ?></div>
+															<small class="post_meta"><?= $value->fullname; ?><span><?= date("M d", strtotime($value->created_at)); ?></span></small>
 														</div>
 													</div>
 												</a>
 											</div>
-
-											<!-- Sidebar Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="side_post_image"><div><img src="<?= base_url(); ?>assets/images/top_2.jpg" alt=""></div></div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
-											<!-- Sidebar Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="side_post_image"><div><img src="<?= base_url(); ?>assets/images/top_3.jpg" alt=""></div></div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
-											<!-- Sidebar Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="side_post_image"><div><img src="<?= base_url(); ?>assets/images/top_4.jpg" alt=""></div></div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
+												<?php }else{echo'';}$nomor++;} ?>
 										</div>
-
-										<!-- Top Stories Slider Item -->
+										<?php
+										}else{echo'';}
+										if($tanda_2=='lanjut'){
+										?>
 										<div class="owl-item">
-
-											<!-- Sidebar Post -->
+											<?php
+											$nomor = 0;
+											foreach ($data_berita as $key => $value) {
+												if($nomor=='8' OR $nomor=='9' OR $nomor=='10' OR $nomor=='11'){
+													$thumbnail = '';
+													if($value->thumbnail=='' OR $value->thumbnail==NULL){
+														$thumbnail = base_url().'assets/none.jpg';
+													}else{
+														$thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
+													}
+											?>
 											<div class="side_post">
-												<a href="post.html">
+												<a href="<?= base_url(); ?>news_detail/<?= $value->id_berita; ?>">
 													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="side_post_image"><div><img src="<?= base_url(); ?>assets/images/top_1.jpg" alt=""></div></div>
+														<div class="side_post_image"><div><img src="<?= $thumbnail; ?>" alt=""></div></div>
 														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
+															<div class="side_post_title"><?= $value->judul; ?></div>
+															<small class="post_meta"><?= $value->fullname; ?><span><?= date("M d", strtotime($value->created_at)); ?></span></small>
 														</div>
 													</div>
 												</a>
 											</div>
-
-											<!-- Sidebar Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="side_post_image"><div><img src="<?= base_url(); ?>assets/images/top_2.jpg" alt=""></div></div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
-											<!-- Sidebar Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="side_post_image"><div><img src="<?= base_url(); ?>assets/images/top_3.jpg" alt=""></div></div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
-											<!-- Sidebar Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="side_post_image"><div><img src="<?= base_url(); ?>assets/images/top_4.jpg" alt=""></div></div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
+											<?php }else{echo'';}$nomor++;} ?>
 										</div>
-										<?php } ?>
+										<?php }else{echo'';}} ?>
 									</div>
 								</div>
 							</div>
@@ -469,214 +419,101 @@
 								<!-- Sidebar Slider -->
 								<div class="sidebar_slider_container">
 									<div class="owl-carousel owl-theme sidebar_slider_events">
-
-										<!-- Future Events Slider Item -->
+										<?php
+										$data_event = $this->Main_model->getSelectedData('event a', 'a.*,b.fullname', '', 'a.tanggal_pelaksanaan DESC', '12', '', '', array(
+											'table' => 'user b',
+											'on' => 'a.created_by=b.id',
+											'pos' => 'LEFT'
+										))->result();
+										if($data_event==NULL){
+											echo'';
+										}else{
+											$flag_1 = '';
+											$flag_2 = '';
+											if(count($data_event)>4){
+												$flag_1 = 'lanjut';
+											}else{
+												echo'';
+											}
+										?>
 										<div class="owl-item">
-
-											<!-- Future Events Post -->
+											<?php
+											$nomor = 0;
+											foreach ($data_event as $key => $value) {
+												if($nomor=='0' OR $nomor=='1' OR $nomor=='2' OR $nomor=='3'){
+											?>
 											<div class="side_post">
-												<a href="post.html">
+												<a href="<?= base_url() ?>event_detail/<?= $value->id_event; ?>">
 													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
 														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">13</div>
-															<div class="event_month">apr</div>
+															<div class="event_day"><?= date("d", strtotime($value->tanggal_pelaksanaan)); ?></div>
+															<div class="event_month"><?= date("M", strtotime($value->tanggal_pelaksanaan)); ?></div>
 														</div>
 														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
+															<div class="side_post_title"><?= $value->judul; ?></div>
+															<small class="post_meta"><?= $value->fullname; ?><span><?= date("M d", strtotime($value->created_at)); ?></span></small>
 														</div>
 													</div>
 												</a>
 											</div>
-
-											<!-- Future Events Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">27</div>
-															<div class="event_month">apr</div>
-														</div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
-											<!-- Future Events Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">02</div>
-															<div class="event_month">may</div>
-														</div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
-											<!-- Future Events Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">09</div>
-															<div class="event_month">may</div>
-														</div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
+												<?php }else{echo'';}$nomor++;} ?>
 										</div>
-
-										<!-- Future Events Slider Item -->
+										<?php
+										if($flag_1=='lanjut'){
+											if(count($data_event)>8){
+												$flag_2 = 'lanjut';
+											}else{
+												echo'';
+											}
+										?>
 										<div class="owl-item">
-
-											<!-- Future Events Post -->
+											<?php
+											$nomor = 0;
+											foreach ($data_event as $key => $value) {
+												if($nomor=='4' OR $nomor=='5' OR $nomor=='6' OR $nomor=='7'){
+											?>
 											<div class="side_post">
-												<a href="post.html">
+												<a href="<?= base_url() ?>event_detail/<?= $value->id_event; ?>">
 													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
 														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">13</div>
-															<div class="event_month">apr</div>
+															<div class="event_day"><?= date("d", strtotime($value->tanggal_pelaksanaan)); ?></div>
+															<div class="event_month"><?= date("M", strtotime($value->tanggal_pelaksanaan)); ?></div>
 														</div>
 														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
+															<div class="side_post_title"><?= $value->judul; ?></div>
+															<small class="post_meta"><?= $value->fullname; ?><span><?= date("M d", strtotime($value->tanggal_pelaksanaan)); ?></span></small>
 														</div>
 													</div>
 												</a>
 											</div>
-
-											<!-- Future Events Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">27</div>
-															<div class="event_month">apr</div>
-														</div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
-											<!-- Future Events Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">02</div>
-															<div class="event_month">may</div>
-														</div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
-											<!-- Future Events Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">09</div>
-															<div class="event_month">may</div>
-														</div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
+											<?php }else{echo'';}$nomor++;} ?>
 										</div>
-
-										<!-- Future Events Slider Item -->
+										<?php }else{echo'';}
+										if($flag_2=='lanjut'){
+										?>
 										<div class="owl-item">
-
-											<!-- Future Events Post -->
+											<?php
+											$nomor = 0;
+											foreach ($data_event as $key => $value) {
+												if($nomor=='8' OR $nomor=='9' OR $nomor=='10' OR $nomor=='11'){
+											?>
 											<div class="side_post">
-												<a href="post.html">
+												<a href="<?= base_url() ?>event_detail/<?= $value->id_event; ?>">
 													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
 														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">13</div>
-															<div class="event_month">apr</div>
+															<div class="event_day"><?= date("d", strtotime($value->tanggal_pelaksanaan)); ?></div>
+															<div class="event_month"><?= date("M", strtotime($value->tanggal_pelaksanaan)); ?></div>
 														</div>
 														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
+															<div class="side_post_title"><?= $value->judul; ?></div>
+															<small class="post_meta"><?= $value->fullname; ?><span><?= date("M d", strtotime($value->tanggal_pelaksanaan)); ?></span></small>
 														</div>
 													</div>
 												</a>
 											</div>
-
-											<!-- Future Events Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">27</div>
-															<div class="event_month">apr</div>
-														</div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
-											<!-- Future Events Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">02</div>
-															<div class="event_month">may</div>
-														</div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
-											<!-- Future Events Post -->
-											<div class="side_post">
-												<a href="post.html">
-													<div class="d-flex flex-row align-items-xl-center align-items-start justify-content-start">
-														<div class="event_date d-flex flex-column align-items-center justify-content-center">
-															<div class="event_day">09</div>
-															<div class="event_month">may</div>
-														</div>
-														<div class="side_post_content">
-															<div class="side_post_title">How Did van Gogh’s Turbulent Mind</div>
-															<small class="post_meta">Katy Liu<span>Sep 29</span></small>
-														</div>
-													</div>
-												</a>
-											</div>
-
+											<?php }else{echo'';}$nomor++;} ?>
 										</div>
-
+										<?php }else{echo'';}} ?>
 									</div>
 								</div>
 							</div>
