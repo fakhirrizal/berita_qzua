@@ -131,6 +131,8 @@ $route['kategori'] = 'User/kategori';
 $route['news_detail/(:any)'] = 'User/detail/$1';
 $route['news_detail'] = 'User/detail';
 $route['kategori/(:any)'] = 'User/kategori/$1';
+$route['about'] = 'User/about';
+$route['contact'] = 'User/contact';
 $route['save_subscriber'] = 'User/save_subscriber';
 $route['save_comment'] = 'User/save_comment';
 

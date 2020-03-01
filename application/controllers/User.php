@@ -8,7 +8,7 @@ class User extends CI_Controller {
     public function index($key='')
     {
         $this->Main_model->update_visitor();
-        $data['berita'] = array();
+        $data['kategori'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*')->result();
         $this->load->view('public/main',$data);
     }
     public function detail($key=''){
@@ -28,24 +28,35 @@ class User extends CI_Controller {
         else{
             $replace_key = str_replace('%20',' ',$key);
             $checking_data = $this->Main_model->getSelectedData('kategori_berita a', 'a.*',array('a.kategori_berita'=>$replace_key))->row();
-            $check_berita = $this->db->query("SELECT * FROM `berita` WHERE `id_kategori_berita` LIKE '%".$checking_data->id_kategori_berita."%'")->result();
-            $tampung_real = array();
-            foreach ($check_berita as $key => $value) {
-                $pecah_kategori = explode(',',$value->id_kategori_berita);
-                for ($i=0; $i < count($pecah_kategori); $i++) { 
-                    if($pecah_kategori[$i]==$checking_data->id_kategori_berita){
-                        $isi['id_berita'] = $value->id_berita;
-                        $tampung_real[] = $isi;
-                        break;
-                    }else{
-                        echo'';
+            if($checking_data==NULL){
+                // harusnya ada halaman 404
+                redirect();
+            }else{
+                $check_berita = $this->db->query("SELECT * FROM `berita` WHERE `id_kategori_berita` LIKE '%".$checking_data->id_kategori_berita."%'")->result();
+                $tampung_real = array();
+                foreach ($check_berita as $key => $value) {
+                    $pecah_kategori = explode(',',$value->id_kategori_berita);
+                    for ($i=0; $i < count($pecah_kategori); $i++) { 
+                        if($pecah_kategori[$i]==$checking_data->id_kategori_berita){
+                            $isi['id_berita'] = $value->id_berita;
+                            $tampung_real[] = $isi;
+                            break;
+                        }else{
+                            echo'';
+                        }
                     }
                 }
-            }
-            foreach ($tampung_real as $key => $value) {
-                echo $value['id_berita'].'<br>';
+                foreach ($tampung_real as $key => $value) {
+                    echo $value['id_berita'].'<br>';
+                }
             }
         }
+    }
+    public function about(){
+        $this->load->view('public/about');
+    }
+    public function contact(){
+        $this->load->view('public/contact');
     }
     public function save_subscriber(){
         $this->db->trans_start();
