@@ -245,9 +245,9 @@ class App extends CI_Controller {
 		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
 		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/photo_profile/'; // path folder
 		$config['allowed_types'] = 'jpg|png|jpeg|bmp'; // type yang dapat diakses bisa anda sesuaikan
-		$config['max_size'] = '3072'; // maksimum besar file 3M
-		$config['max_width']  = '5000'; // lebar maksimum 5000 px
-		$config['max_height']  = '5000'; // tinggi maksimu 5000 px
+		$config['max_size'] = '3072'; // mActionmum besar file 3M
+		$config['max_width']  = '5000'; // lebar mActionmum 5000 px
+		$config['max_height']  = '5000'; // tinggi mActionmu 5000 px
 		$config['file_name'] = $nmfile; // nama yang terupload nantinya
 
 		$this->upload->initialize($config);

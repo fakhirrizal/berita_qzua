@@ -47,7 +47,7 @@
 									</button>
 								</div>
 									<span class="separator">|</span>
-									<a href="<?=base_url('admin_side/tambah_data_anggota');?>" class="btn green uppercase">Tambah Data <i class="fa fa-plus"></i> </a>
+									<a href="<?=base_url('admin_side/tambah_data_anggota');?>" class="btn green uppercase">Add Data <i class="fa fa-plus"></i> </a>
 							</div>
 							<!-- <div class="col-md-4" style='text-align: right;'>
 								<a href="<?=base_url('admin/Master/download_admin_data');?>" class="btn btn-default">Ekspor Data <i class="fa fa-cloud-download"></i></a>
@@ -67,7 +67,7 @@
 								<th style="text-align: center;"> Nama </th>
 								<th style="text-align: center;"> Keterangan </th>
 								<th style="text-align: center;"> Status </th>
-								<th style="text-align: center;" width="7%"> Aksi </th>
+								<th style="text-align: center;" width="7%"> Action </th>
 							</tr>
 						</thead>
 					</table>

@@ -119,6 +119,8 @@ $route['admin_side/hapus_event/(:any)'] = 'admin/Master/hapus_event/$1';
 
 $route['admin_side/subscriber'] = 'admin/Master/subscriber';
 
+$route['admin_side/kritik_saran'] = 'admin/Report/kritik_saran';
+
 $route['admin_side/iklan'] = 'admin/Setting/iklan';
 $route['admin_side/tambah_iklan'] = 'admin/Setting/tambah_iklan';
 $route['admin_side/simpan_iklan'] = 'admin/Setting/simpan_iklan';
@@ -137,6 +139,8 @@ $route['about'] = 'User/about';
 $route['contact'] = 'User/contact';
 $route['save_subscriber'] = 'User/save_subscriber';
 $route['save_comment'] = 'User/save_comment';
+$route['save_issue'] = 'User/save_issue';
+$route['searching'] = 'User/searching';
 
 /*
 | -------------------------------------------------------------------------

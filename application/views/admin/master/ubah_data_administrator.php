@@ -43,7 +43,7 @@
 		<i class="fa fa-circle"></i>
 	</li>
 	<li>
-		<span>Tambah Data</span>
+		<span>Add Data</span>
 	</li>
 </ul>
 <?= $this->session->flashdata('sukses') ?>
@@ -51,7 +51,7 @@
 <div class="page-content-inner">
 	<div class="m-heading-1 border-yellow m-bordered" style="background-color:#FAD405;">
 		<h3>Catatan</h3>
-		<p> Kolom isian dengan tanda bintang (<font color='red'>*</font>) adalah wajib untuk di isi.</p>
+		<p> Fields with an asterisk (<font color='red'>*</font>) are required to be filled out.</p>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
@@ -89,7 +89,7 @@
 						<div class="form-actions margin-top-10">
 							<div class="row">
 								<div class="col-md-offset-2 col-md-10">
-									<button type="reset" class="btn default">Batal</button>
+									<button type="reset" class="btn default">Cancel</button>
 									<button type="submit" class="btn blue">Perbarui</button>
 								</div>
 							</div>

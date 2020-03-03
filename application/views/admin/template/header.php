@@ -73,13 +73,14 @@ else{echo'';}
         </a>
         <div id="collapseTwo" class="collapse <?php if($parent=='master'){echo'show';}else{echo'';} ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Pengguna</h6>
+            <h6 class="collapse-header">User</h6>
             <a class="collapse-item <?php if($child=='administrator'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/administrator'); ?>">Administrator</a>
             <a class="collapse-item <?php if($child=='subscriber'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/subscriber'); ?>">Subscriber</a>
-			<h6 class="collapse-header">Berita</h6>
-            <a class="collapse-item <?php if($child=='kategori_berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/kategori_berita'); ?>">Kategori Berita</a>
-            <a class="collapse-item <?php if($child=='berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/berita'); ?>">Berita</a>
-            <a class="collapse-item <?php if($child=='komen_berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/komen_berita'); ?>">Komentar Berita</a>
+            <a class="collapse-item <?php if($child=='kritik_saran'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/kritik_saran'); ?>">Critics and Suggestions</a>
+			<h6 class="collapse-header">News</h6>
+            <a class="collapse-item <?php if($child=='kategori_berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/kategori_berita'); ?>">Category of News</a>
+            <a class="collapse-item <?php if($child=='berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/berita'); ?>">News</a>
+            <a class="collapse-item <?php if($child=='komen_berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/komen_berita'); ?>">Comments</a>
             <a class="collapse-item <?php if($child=='event'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/event'); ?>">Event</a>
           </div>
         </div>
@@ -88,11 +89,11 @@ else{echo'';}
 	  <li class="nav-item <?php if($parent=='setting'){echo'active';}else{echo'';} ?>">
         <a class="nav-link <?php if($parent=='setting'){echo'';}else{echo'collapsed';} ?>" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Pengaturan</span>
+          <span>Setting</span>
         </a>
         <div id="collapseThree" class="collapse <?php if($parent=='setting'){echo'show';}else{echo'';} ?>" aria-labelledby="headingThree" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item <?php if($child=='iklan'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/iklan'); ?>">Iklan</a>
+            <a class="collapse-item <?php if($child=='iklan'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/iklan'); ?>">Ads</a>
           </div>
         </div>
 	  </li>
@@ -100,13 +101,13 @@ else{echo'';}
       <li class="nav-item <?php if($parent=='log_activity'){echo'active';}else{echo'';} ?>">
         <a class="nav-link" href="<?php echo site_url('admin_side/log_aktifitas'); ?>">
           <i class="fas fa-fw fa-list"></i>
-          <span>Log Aktifitas</span></a>
+          <span>Log Activity</span></a>
       </li>
 
       <li class="nav-item <?php if($parent=='about'){echo'active';}else{echo'';} ?>">
         <a class="nav-link" href="<?php echo site_url('admin_side/tentang_aplikasi'); ?>">
           <i class="fas fa-fw fa-bookmark"></i>
-          <span>Tentang Aplikasi</span></a>
+          <span>About Application</span></a>
       </li>
 
       <!-- Divider -->
@@ -292,16 +293,16 @@ else{echo'';}
 				<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 				<a class="dropdown-item" href="<?php echo site_url('admin_side/profil'); ?>">
 					<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-					Profil
+					Profile
 				</a>
 				<a class="dropdown-item" href="#">
 					<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-					Pengaturan
+					Setting
 				</a>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
 					<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-					Keluar
+					Sign out
 				</a>
 				</div>
 			</li>

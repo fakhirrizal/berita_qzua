@@ -6,7 +6,7 @@
 <?= $this->session->flashdata('gagal') ?>
 <div class="page-breadcrumb breadcrumb" style="background-color:#8cb2ea;">
 	<font color='black'>
-		<h4>Catatan</h4>
+		<h4>Notes</h4>
 		<!-- <a> 1. Ketika mengklik <b>Atur Ulang Sandi</b>, maka kata sandi otomatis menjadi "<b>1234</b>"</a><br>
 		<a> 2. Data ekspor berupa file excel (<b>.xls</b>)</a> -->
 	</font>
@@ -14,7 +14,7 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
 	<!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
-	<a href="<?=base_url('admin_side/tambah_iklan');?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Tambah Data <i class="fa fa-plus"></i></a>
+	<a href="<?=base_url('admin_side/tambah_iklan');?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Add Data <i class="fa fa-plus"></i></a>
   </div>
   <div class="card-body">
 	<div class="table-responsive">
@@ -24,10 +24,10 @@
 					<tr>
 						<th style="text-align: center;" width="1%"> # </th>
 						<th style="text-align: center;"> Advertiser </th>
-						<th style="text-align: center;"> Judul </th>
-						<th style="text-align: center;"> Deskripsi </th>
-						<th style="text-align: center;"> Jadwal Penayangan </th>
-						<th style="text-align: center;" width="1%"> Aksi </th>
+						<th style="text-align: center;"> Title </th>
+						<th style="text-align: center;"> Description </th>
+						<th style="text-align: center;"> Showtime </th>
+						<th style="text-align: center;" width="1%"> Action </th>
 					</tr>
 				</thead>
 			</table>

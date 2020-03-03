@@ -100,51 +100,20 @@ $id_kategori_berita = '';
 
 						<div class="blog_section">
 							<div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">News in "<?= $kategori_berita; ?>" Category <?php if($data_berita==NULL){echo'is Empty';}else{echo'';} ?></div>
-								<?php
-								$tanda = 0;
-								$no = 0;
-								$nomer = 0;
-								?>
+								<div class="section_title">"<?= $kategori_berita; ?>" Category is Not Found</div>
 								<div class="section_tags ml-auto">
 									<ul>
 										<li><a href="<?= base_url(); ?>">all</a></li>
-										<?php
-										$hitung = count($kategori);
-										if($hitung>4){
-											$tanda = 1;
-										}else{
-											echo'';
-										}
-										if($kategori==NULL){
-											echo'';
-										}else{
-											foreach ($kategori as $key => $value) {
-                                                $id_kategori_berita = $value->id_kategori_berita;
-												if($no=='0' OR $no=='1' OR $no=='2' OR $no=='3'){
-													echo'<li class="active"><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
-													$no++;
-												}else{
-													echo'';
-												}
-											}
-										}
-										?>
-										<!-- <li><a href="category.html">style hunter</a></li>
-										<li><a href="category.html">vogue</a></li>
-										<li><a href="category.html">health & fitness</a></li>
-										<li><a href="category.html">travel</a></li> -->
 									</ul>
 								</div>
                                 <?php
-                                $cek_kategori_lain = $this->db->query("SELECT a.* FROM kategori_berita a WHERE a.id_kategori_berita NOT IN ('".$id_kategori_berita."')")->result();
-								if($cek_kategori_lain!=NULL){
+								if($kategori!=NULL){
 									echo'
 									<div class="section_panel_more">
 										<ul>
 											<li>more
 												<ul style="height: 300px;overflow: scroll;">';
-												foreach ($cek_kategori_lain as $key => $value) {
+												foreach ($kategori as $key => $value) {
 													echo'<li><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
 												}
 											echo'</ul>
@@ -163,17 +132,6 @@ $id_kategori_berita = '';
 							<!-- <div id = "dontmisscard2" class="card mb-2">							
 							</div> -->
 
-                            <?php
-                            if($data_berita==NULL){
-                                echo'';
-                            }else{
-                                echo'
-                                <div class="load_more">
-                                    <div id="load_more_newest" class="load_more_button text-center trans_200">Load More</div>
-                                </div>
-                                ';
-                            }
-                            ?>
 						</div>
 
 						<!-- Blog Section - What's Trending -->
@@ -250,120 +208,5 @@ $id_kategori_berita = '';
 <script src="<?= base_url(); ?>assets/plugins/masonry/masonry.js"></script>
 <script src="<?= base_url(); ?>assets/plugins/masonry/images_loaded.js"></script>
 <script src="<?= base_url(); ?>assets/js/custom.js"></script>
-<script>
-	$(document).ready(function(){
-		var loadmore_var 	= "";
-		var arrayindex		= 0;
-
-		var wrapper			= $("#dontmisscard");
-		var wrapper2		= $("#dontmisssub");
-		var wrapper3		= $("#blog_section_g");
-		
-		var table_wrapper	= "";
-		var table_wrapper2	= "";
-
-		$.ajax({
-			url: "<?php echo site_url('NewsLoad/newsload');?>",
-			type: 'POST',
-			dataType: 'json',
-            data: {category:'<?= $id_kategori_berita; ?>'},				
-			success: function( response ) {
-				loadmore_var = response.slice(0,5)
-				// for (i = 0; i < response.length; i++){
-				// 	table_wrapper+='<div class="card card_small_with_image grid-item">'+
-				// 						'<img class="card-img-top" src="<?= base_url(); ?>assets/images/post_10.jpg" alt="">'+
-				// 						'<div class="card-body">'+
-				// 							'<div class="card-title card-title-small"><a href="post.html">'+response[i].judul+'</a></div>'+
-				// 							'<small class="post_meta"><a href="#">Katy Liu</a><span>'+response[i].created_at+'</span></small>'+
-				// 						'</div>'+
-				// 					'</div>';
-				// }
-				for (i = 0; i < loadmore_var.length; i++){
-					var thumbnail = '';
-					if(loadmore_var[i].thumbnail=='' || loadmore_var[i].thumbnail==null){
-						var thumbnail = '<?= base_url(); ?>assets/none.png';
-					}else{
-						var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore_var[i].thumbnail;
-					}
-					if (i > 0){
-						table_wrapper2 += '<div class="card mb-2" >'+
-												'<div class="row no-gutters">'+
-													'<div class="col-md-4">'+
-														'<img src="'+thumbnail+'" class="card-img" alt="...">'+
-													'</div>'+
-													'<div class="col-md-8">'+
-														'<div class="card-body">'+
-															'<h5 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h5>'+
-															'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
-															'<p class="card-text"><small class="text-muted"><span>'+loadmore_var[i].created_at+'</span></small></p>'+
-														'</div>'+
-													'</div>'+
-										 		'</div>'+
-											'</div>';
-					}
-
-					if(i == 0){
-						table_wrapper += '<div class="card mb-2">'+
-											'<img src="'+thumbnail+'" class="card-img-top" alt="">'+
-													'<div class="card-body">'+
-														'<h3 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h3>'+
-														'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
-														'<small class="post_meta"><a href="#">'+loadmore_var[i].by+'</a><span>'+loadmore_var[i].created_at+'</span></small>'+
-													'</div>'+
-										  '</div>';
-					}
-					arrayindex = i
-				}
-				$(wrapper).html(table_wrapper);
-				$(wrapper2).html(table_wrapper2);				
-			}
-		});
-
-		
-		$("#load_more_newest").click(function(){
-			$.ajax({
-				url: "<?php echo site_url('NewsLoad/newsload');?>",
-				type: 'POST',
-				dataType: 'json',		
-                data: {category:'<?= $id_kategori_berita; ?>'},				
-				success: function( response ) {
-					let resp_length 	= response.length - 1;
-					let arrayindexnew	= arrayindex + 1;
-
-					let loadmore = response.splice(arrayindexnew,resp_length);
-					// console.log(loadmore);
-		
-					for (i = 0; i < loadmore.length; i++){
-						var thumbnail = '';
-						if(loadmore[i].thumbnail=='' || loadmore[i].thumbnail==null){
-							var thumbnail = '<?= base_url(); ?>assets/none.png';
-						}else{
-							var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore[i].thumbnail;
-						}						
-						table_wrapper2 += '<div class="card mb-2" >'+
-												'<div class="row no-gutters">'+
-													'<div class="col-md-4">'+
-														'<img src="'+thumbnail+'" class="card-img" alt="...">'+
-													'</div>'+
-													'<div class="col-md-8">'+
-														'<div class="card-body">'+
-															'<h5 class="card-title"><a href="news_detail/'+loadmore[i].id_berita+'">'+loadmore[i].judul+'</a></h5>'+
-															'<p class="card-text">'+loadmore[i].berita+'</p>'+
-															'<p class="card-text"><small class="text-muted"><span>'+loadmore[i].created_at+'</span></small></p>'+
-														'</div>'+
-													'</div>'+
-												'</div>'+
-											'</div>';
-						
-					}
-					$(wrapper2).html(table_wrapper2);
-				}
-			});
-
-			
-		});
-	});
-		
-</script>
 </body>
 </html>

@@ -6,7 +6,7 @@
 <?= $this->session->flashdata('gagal') ?>
 <div class="page-breadcrumb breadcrumb" style="background-color:#8cb2ea;">
 	<font color='black'>
-		<h4>Catatan</h4>
+		<h4>Notes</h4>
 		<!-- <a> 1. Ketika mengklik <b>Atur Ulang Sandi</b>, maka kata sandi otomatis menjadi "<b>1234</b>"</a><br>
 		<a> 2. Data ekspor berupa file excel (<b>.xls</b>)</a> -->
 	</font>
@@ -14,7 +14,7 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
 	<!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
-	<a href="<?=base_url('admin_side/cleaning_log');?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Kosongkan Log <i class="fa fa-trash"></i></a>
+	<a href="<?=base_url('admin_side/cleaning_log');?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Clear Log <i class="fa fa-trash"></i></a>
   </div>
   <div class="card-body">
 	<div class="table-responsive">
@@ -22,11 +22,11 @@
 			<thead>
 				<tr>
 					<th style="text-align: center;" width="4%"> # </th>
-					<th style="text-align: center;"> Tipe Aktifitas </th>
-					<th style="text-align: center;"> Aktifitas </th>
-					<th style="text-align: center;"> Pengguna </th>
-					<th style="text-align: center;"> Waktu </th>
-					<th style="text-align: center;" width="7%"> Aksi </th>
+					<th style="text-align: center;"> Activity Type </th>
+					<th style="text-align: center;"> Activity </th>
+					<th style="text-align: center;"> User </th>
+					<th style="text-align: center;"> Datetime </th>
+					<th style="text-align: center;" width="7%"> Action </th>
 				</tr>
 			</thead>
 			<tbody>
@@ -44,7 +44,7 @@
 					<td style="text-align: center;">
 						<div class="dropdown no-arrow mb-4">
 							<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Aksi
+								Action
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 								<a class="dropdown-item detaildata" href="#" data-toggle="modal" data-target="#detaildata" id="<?= md5($value->activity_id); ?>">Detail Data</a>

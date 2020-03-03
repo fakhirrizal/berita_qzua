@@ -41,12 +41,12 @@ class Master extends CI_Controller {
 				$isi['action'] =
 				'<div class="dropdown no-arrow mb-4">
 					<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Aksi
+						Action
 					</button>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_data_admin/'.md5($value->id)).'">Hapus Data</a>
+						<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_data_admin/'.md5($value->id)).'">Delete Data</a>
 						<hr>
-						<a class="dropdown-item" href="'.site_url('admin_side/atur_ulang_kata_sandi_admin/'.md5($value->id)).'">Atur Ulang Sandi</a>
+						<a class="dropdown-item" href="'.site_url('admin_side/atur_ulang_kata_sandi_admin/'.md5($value->id)).'">Reset Password</a>
 					</div>
 				</div>';
 				$data_tampil[] = $isi;
@@ -220,7 +220,7 @@ class Master extends CI_Controller {
 
 		$this->Main_model->updateData('user',array('is_active'=>'0','deleted'=>'1'),array('id'=>$user_id));
 
-		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","Menghapus data akun (".$name.")",$this->session->userdata('location'));
+		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","MengDelete Data akun (".$name.")",$this->session->userdata('location'));
 		$this->db->trans_complete();
 		if($this->db->trans_status() === false){
 			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal dihapus.<br /></div>' );
@@ -269,7 +269,7 @@ class Master extends CI_Controller {
 			$return_on_click = "return confirm('Anda yakin?')";
 			$isi['action'] =	'
 								<div class="btn-group" style="text-align: center;">
-									<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi
+									<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Action
 										<i class="fa fa-angle-down"></i>
 									</button>
 									<ul class="dropdown-menu" role="menu">
@@ -279,7 +279,7 @@ class Master extends CI_Controller {
 										</li>
 										<li>
 											<a onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_data_anggota/'.md5($value->user_id)).'">
-												<i class="icon-trash"></i> Hapus Data </a>
+												<i class="icon-trash"></i> Delete Data </a>
 										</li>
 										<li class="divider"> </li>
 										<li>
@@ -317,7 +317,7 @@ class Master extends CI_Controller {
 			$return_on_click = "return confirm('Anda yakin?')";
 			$isi['action'] =	'
 								<div class="btn-group" style="text-align: center;">
-									<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Aksi
+									<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Action
 										<i class="fa fa-angle-down"></i>
 									</button>
 									<ul class="dropdown-menu" role="menu">
@@ -327,7 +327,7 @@ class Master extends CI_Controller {
 										</li>
 										<li>
 											<a onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_data_anggota/'.md5($value->user_id)).'">
-												<i class="icon-trash"></i> Hapus Data </a>
+												<i class="icon-trash"></i> Delete Data </a>
 										</li>
 										<li class="divider"> </li>
 										<li>
@@ -524,16 +524,16 @@ class Master extends CI_Controller {
                     }
                 }
             }
-            $isi['isi'] = number_format($tampung_real,0).' Berita';
+            $isi['isi'] = number_format($tampung_real,0).' News';
 			$return_on_click = "return confirm('Anda yakin?')";
 			$isi['action'] =	'
 			<div class="dropdown no-arrow mb-4">
 				<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Aksi
+					Action
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					<a class="dropdown-item" href="'.site_url('admin_side/detail_kategori_berita/'.md5($value->id_kategori_berita)).'">Detail Data</a>
-					<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_kategori_berita/'.md5($value->id_kategori_berita)).'">Hapus Data</a>
+					<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_kategori_berita/'.md5($value->id_kategori_berita)).'">Delete Data</a>
 				</div>
 			</div>';
 			$data_tampil[] = $isi;
@@ -618,7 +618,7 @@ class Master extends CI_Controller {
 		$this->Main_model->deleteData('kategori_berita',array('id_kategori_berita'=>$id));
 		// $this->Main_model->updateData('kategori_berita',array('deleted'=>'1'),array('md5(id_kategori_berita)'=>$this->uri->segment(3)));
 
-		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","Menghapus data kategori berita (".$nama.")",$this->session->userdata('location'));
+		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","MengDelete Data kategori berita (".$nama.")",$this->session->userdata('location'));
 		$this->db->trans_complete();
 		if($this->db->trans_status() === false){
 			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal dihapus.<br /></div>' );
@@ -677,11 +677,11 @@ class Master extends CI_Controller {
 			$isi['action'] =	'
 			<div class="dropdown no-arrow mb-4">
 				<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Aksi
+					Action
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					<a class="dropdown-item" href="'.site_url('admin_side/detail_berita/'.md5($value->id_berita)).'">Detail Data</a>
-					<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_berita/'.md5($value->id_berita)).'">Hapus Data</a>
+					<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_berita/'.md5($value->id_berita)).'">Delete Data</a>
 				</div>
 			</div>';
 			$data_tampil[] = $isi;
@@ -708,9 +708,9 @@ class Master extends CI_Controller {
 		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
 		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/berita/'; // path folder
 		$config['allowed_types'] = 'jpg|png|jpeg|bmp'; // type yang dapat diakses bisa anda sesuaikan
-		$config['max_size'] = '3072'; // maksimum besar file 3M
-		$config['max_width']  = '5000'; // lebar maksimum 5000 px
-		$config['max_height']  = '5000'; // tinggi maksimu 5000 px
+		$config['max_size'] = '3072'; // mActionmum besar file 3M
+		$config['max_width']  = '5000'; // lebar mActionmum 5000 px
+		$config['max_height']  = '5000'; // tinggi mActionmu 5000 px
 		$config['file_name'] = $nmfile; // nama yang terupload nantinya
 
 		$this->upload->initialize($config);
@@ -796,9 +796,9 @@ class Master extends CI_Controller {
 		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
 		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/berita/'; // path folder
 		$config['allowed_types'] = 'jpg|png|jpeg|bmp'; // type yang dapat diakses bisa anda sesuaikan
-		$config['max_size'] = '3072'; // maksimum besar file 3M
-		$config['max_width']  = '5000'; // lebar maksimum 5000 px
-		$config['max_height']  = '5000'; // tinggi maksimu 5000 px
+		$config['max_size'] = '3072'; // mActionmum besar file 3M
+		$config['max_width']  = '5000'; // lebar mActionmum 5000 px
+		$config['max_height']  = '5000'; // tinggi mActionmu 5000 px
 		$config['file_name'] = $nmfile; // nama yang terupload nantinya
 
 		$this->upload->initialize($config);
@@ -850,7 +850,7 @@ class Master extends CI_Controller {
 		$this->Main_model->deleteData('berita',array('id_berita'=>$id));
 		$this->Main_model->deleteData('komentar_berita',array('id_berita'=>$id));
 
-		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","Menghapus data berita (".$nama.")",$this->session->userdata('location'));
+		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","MengDelete Data berita (".$nama.")",$this->session->userdata('location'));
 		$this->db->trans_complete();
 		if($this->db->trans_status() === false){
 			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal dihapus.<br /></div>' );
@@ -992,7 +992,7 @@ class Master extends CI_Controller {
 		$this->Main_model->deleteData('komentar_berita',array('id_parent_comment'=>$id));
 		$this->Main_model->deleteData('komentar_berita',array('id_komentar_berita'=>$id));
 
-		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","Menghapus data komentar berita (oleh ".$nama.")",$this->session->userdata('location'));
+		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","MengDelete Data komentar berita (oleh ".$nama.")",$this->session->userdata('location'));
 		$this->db->trans_complete();
 		if($this->db->trans_status() === false){
 			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal dihapus.<br /></div>' );
@@ -1025,11 +1025,11 @@ class Master extends CI_Controller {
 			$isi['action'] =
 			'<div class="dropdown no-arrow mb-4">
 				<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Aksi
+					Action
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					<a class="dropdown-item" href="'.site_url('admin_side/detail_event/'.md5($value->id_event)).'">Detail Data</a>
-					<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_event/'.md5($value->id_event)).'">Hapus Data</a>
+					<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_event/'.md5($value->id_event)).'">Delete Data</a>
 				</div>
 			</div>';
 			$data_tampil[] = $isi;
@@ -1056,9 +1056,9 @@ class Master extends CI_Controller {
 		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
 		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/event/'; // path folder
 		$config['allowed_types'] = 'jpg|png|jpeg|bmp'; // type yang dapat diakses bisa anda sesuaikan
-		$config['max_size'] = '3072'; // maksimum besar file 3M
-		$config['max_width']  = '5000'; // lebar maksimum 5000 px
-		$config['max_height']  = '5000'; // tinggi maksimu 5000 px
+		$config['max_size'] = '3072'; // mActionmum besar file 3M
+		$config['max_width']  = '5000'; // lebar mActionmum 5000 px
+		$config['max_height']  = '5000'; // tinggi mActionmu 5000 px
 		$config['file_name'] = $nmfile; // nama yang terupload nantinya
 
 		$this->upload->initialize($config);
@@ -1117,9 +1117,9 @@ class Master extends CI_Controller {
 		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
 		$config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"]).'/data_upload/event/'; // path folder
 		$config['allowed_types'] = 'jpg|png|jpeg|bmp'; // type yang dapat diakses bisa anda sesuaikan
-		$config['max_size'] = '3072'; // maksimum besar file 3M
-		$config['max_width']  = '5000'; // lebar maksimum 5000 px
-		$config['max_height']  = '5000'; // tinggi maksimu 5000 px
+		$config['max_size'] = '3072'; // mActionmum besar file 3M
+		$config['max_width']  = '5000'; // lebar mActionmum 5000 px
+		$config['max_height']  = '5000'; // tinggi mActionmu 5000 px
 		$config['file_name'] = $nmfile; // nama yang terupload nantinya
 
 		$this->upload->initialize($config);
@@ -1172,7 +1172,7 @@ class Master extends CI_Controller {
 
 		$this->Main_model->deleteData('event',array('id_event'=>$id));
 
-		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","Menghapus data event (".$nama.")",$this->session->userdata('location'));
+		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting data","MengDelete Data event (".$nama.")",$this->session->userdata('location'));
 		$this->db->trans_complete();
 		if($this->db->trans_status() === false){
 			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal dihapus.<br /></div>' );

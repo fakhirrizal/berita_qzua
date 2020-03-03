@@ -6,11 +6,11 @@
 <?= $this->session->flashdata('gagal') ?>
 <div class="page-breadcrumb breadcrumb" style="background-color:#8cb2ea;">
 	<font color='black'>
-		<h4>Catatan</h4>
-		<a> 1. Kolom isian dengan tanda bintang (<font color='red'>*</font>) adalah wajib untuk di isi.</a><br>
-		<a> 2. Ketentuan file yang diupload:</a><br>
-		<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Format berupa file <b>.jpg</b>, <b>.jpeg</b>, <b>.png</b>, <b>.bmp</b></a><br>
-        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Ukuran maksimum file <b>3 MB</b></a><br>
+		<h4>Notes</h4>
+		<a> 1. Fields with an asterisk (<font color='red'>*</font>) are required to be filled out.</a><br>
+		<a> 2. TnC for uploaded files:</a><br>
+		<a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Allowed file format is <b>.jpg</b>, <b>.jpeg</b>, <b>.png</b>, <b>.bmp</b></a><br>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Maximum file size <b>3 MB</b></a><br>
 	</font>
 </div>
 <div class="card shadow mb-4">
@@ -20,31 +20,31 @@
             <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>">
             <div class="form-body">
                 <div class="form-group form-md-line-input has-danger">
-                    <label class="control-label" for="form_control_1">Judul <span class="required"> * </span></label>
+                    <label class="control-label" for="form_control_1">Title <span class="required"> * </span></label>
                     <input type="text" class="form-control" name="nama" placeholder="Type something" value='<?= $data_utama->judul; ?>' required>
                 </div>
             </div>
             <div class="form-body">
                 <div class="form-group form-md-line-input has-danger">
-                    <label class="control-label" for="form_control_1">Deskripsi </label>
+                    <label class="control-label" for="form_control_1">Description </label>
                     <textarea class="form-control" name="desc"><?= $data_utama->deskripsi; ?></textarea>
                 </div>
             </div>
             <div class="form-body">
                 <div class="form-group form-md-line-input has-danger">
-                    <label class="control-label" for="form_control_1">Tanggal Pelaksanaan <span class="required"> * </span></label>
+                    <label class="control-label" for="form_control_1">Date <span class="required"> * </span></label>
                     <input type="date" class="form-control" name="tgl" placeholder="Type something" value='<?= $data_utama->tanggal_pelaksanaan; ?>' required>
                 </div>
             </div>
             <div class="form-body">
                 <div class="form-group form-md-line-input has-danger">
-                    <label class="control-label" for="form_control_1">Tempat </label>
+                    <label class="control-label" for="form_control_1">Venue </label>
                     <input type="text" class="form-control" name="tempat" placeholder="Type something" value='<?= $data_utama->tempat; ?>'>
                 </div>
             </div>
             <div class="form-body">
                 <div class="form-group form-md-line-input has-danger">
-                    <label class="control-label" for="form_control_1">Penyelenggara </label>
+                    <label class="control-label" for="form_control_1">Organizer </label>
                     <input type="text" class="form-control" name="by" placeholder="Type something" value='<?= $data_utama->penyelenggara; ?>'>
                 </div>
             </div>
@@ -73,13 +73,13 @@
                 <span class="icon text-white-50">
                 <i class="fas fa-arrow-left"></i>
                 </span>
-                <span class="text">Batal</span>
+                <span class="text">Cancel</span>
             </button>
             <button type="submit" class="btn btn-success btn-icon-split">
                 <span class="icon text-white-50">
                 <i class="fas fa-check"></i>
                 </span>
-                <span class="text">Perbarui</span>
+                <span class="text">Update</span>
             </button>
         </div>
     </form>

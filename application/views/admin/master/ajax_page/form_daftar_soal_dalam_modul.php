@@ -69,7 +69,7 @@
     <div class="form-actions margin-top-10">
         <div class="row">
             <div class="col-md-offset-2 col-md-10">
-                <button type="reset" class="btn default">Batal</button>
+                <button type="reset" class="btn default">Cancel</button>
                 <button type="submit" class="btn blue">Perbarui</button>
                 |
                 <a class="btn red" href='<?= base_url(); ?>admin_side/modul_locked/<?= $id_mod; ?>'>Locked</a>
@@ -88,7 +88,7 @@
             <tr>
                 <th style="text-align: center;" width="1%"> # </th>
                 <th style="text-align: center;"> Kode Berita </th>
-                <th style="text-align: center;" width="1%"> Aksi </th>
+                <th style="text-align: center;" width="1%"> Action </th>
             </tr>
         </thead>
         <tbody>

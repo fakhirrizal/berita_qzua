@@ -6,11 +6,11 @@
         <div class="card-body">
         <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Iklan Masuk</div>
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Ads List</div>
             <div class="h5 mb-0 font-weight-bold text-gray-800">
                 <?php
                 $get_data_iklan = $this->Main_model->getSelectedData('iklan a', 'a.*')->result();
-                echo number_format(count($get_data_iklan),0).' Iklan';
+                echo number_format(count($get_data_iklan),0).' Ads';
                 ?>
             </div>
             </div>
@@ -28,7 +28,7 @@
         <div class="card-body">
         <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pendapatan Iklan</div>
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Advertising Revenue</div>
             <div class="h5 mb-0 font-weight-bold text-gray-800">
                 <?php
                 $get_data_penghasilan_iklan = $this->Main_model->getSelectedData('iklan a', 'SUM(a.price) AS total')->row();
@@ -50,13 +50,13 @@
         <div class="card-body">
         <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Berita</div>
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">News</div>
             <div class="row no-gutters align-items-center">
                 <div class="col-auto">
                 <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
                     <?php
                     $get_data_berita = $this->Main_model->getSelectedData('berita a', 'a.*')->result();
-                    echo number_format(count($get_data_berita),0).' Berita';
+                    echo number_format(count($get_data_berita),0).' News';
                     ?>
                 </div>
                 </div>
@@ -81,11 +81,11 @@
         <div class="card-body">
         <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Komentar</div>
+            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Comment</div>
             <div class="h5 mb-0 font-weight-bold text-gray-800">
                 <?php
                 $get_data_komen = $this->Main_model->getSelectedData('komentar_berita  a', 'a.*')->result();
-                echo number_format(count($get_data_komen),0).' Komentar';
+                echo number_format(count($get_data_komen),0).' Comments';
                 ?>
             </div>
             </div>
@@ -103,7 +103,7 @@
     <div class="col-xl-12 col-lg-12">
     <div class="card shadow mb-8">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Grafik Pengunjung Harian</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Daily Visitor</h6>
         <div class="dropdown no-arrow">
             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -264,7 +264,7 @@
     <div class="col-lg-7 mb-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Berita Populer</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Popular News</h6>
             </div>
             <div class="card-body">
             <?php
@@ -371,7 +371,7 @@
     <div class="col-lg-5 mb-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Komentar Terakhir</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Last Comment</h6>
             </div>
             <div class="card-body">
                 <?php

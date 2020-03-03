@@ -9,9 +9,9 @@
 		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
 		<div class="logo menu_mm"><a href="#">Avision</a></div>
 		<div class="search">
-			<form action="#">
-				<input type="search" class="header_search_input menu_mm" required="required" placeholder="Type to Search...">
-				<img class="header_search_icon menu_mm" src="<?= base_url(); ?>assets/images/search_2.png" alt="">
+			<form action="<?= base_url(); ?>searching" method='post'>
+				<input type="search" class="header_search_input" name='key' required="required" placeholder="Type to Search...">
+				<img class="header_search_icon" src="<?= base_url(); ?>assets/images/search.png" alt="">
 			</form>
 		</div>
 		<nav class="menu_nav">
@@ -84,17 +84,23 @@
 								<?php
 								if($tanda=='1'){
 									echo'
-									<div class="section_panel_more">
-										<ul>
+									<div class="section_panel_more" >
+										<ul >
 											<li>more
-												<ul>';
-												foreach ($kategori as $key => $value) {
-													if($nomer=='0' OR $nomer=='1' OR $nomer=='2' OR $nomer=='3'){
-														echo'';														
-													}else{
+												<ul style="height: 300px;overflow: scroll;">';
+												if($this->agent->mobile()){
+													foreach ($kategori as $key => $value) {
 														echo'<li><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
 													}
-													$nomer++;
+												}else{
+													foreach ($kategori as $key => $value) {
+														if($nomer=='0' OR $nomer=='1' OR $nomer=='2' OR $nomer=='3'){
+															echo'';														
+														}else{
+															echo'<li><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
+														}
+														$nomer++;
+													}
 												}
 													// <li><a href="category.html">new look 2018</a></li>
 													// <li><a href="category.html">street fashion</a></li>
@@ -118,8 +124,15 @@
 							<!-- <div id = "dontmisscard2" class="card mb-2">							
 							</div> -->
 
-							<div class="load_more">
+							<!-- <div class="load_more">
 								<div id="load_more_newest" class="load_more_button text-center trans_200">Load More</div>
+							</div> -->
+
+							<div id = "load_more_newest" class="load_more">
+								<div class="load_more_button text-center trans_200">Load More</div>
+							</div>
+							<div id = "show_less_newest" class="load_more d-none">
+								<div class="load_more_button text-center trans_200">Show Less</div>
 							</div>
 						</div>
 
@@ -171,14 +184,14 @@
 										<div class="videos">
 											<div class="player_container">
 												<div id="P1" class="player" 
-												     data-property="{videoURL:'2ScS5kwm7nI',containment:'self',startAt:0,mute:false,autoPlay:false,loop:false,opacity:1}">
+												     data-property="{videoURL:'Dj0am0D1iu0',containment:'self',startAt:0,mute:false,autoPlay:false,loop:false,opacity:1}">
 												</div>
 											</div>
 											<div class="playlist">
 												<div class="playlist_background"></div>
 
 												<!-- Video -->
-												<div class="video_container video_command active" onclick="jQuery('#P1').YTPChangeVideo({videoURL: '2ScS5kwm7nI', mute:false, addRaster:true})">
+												<div class="video_container video_command active" onclick="jQuery('#P1').YTPChangeVideo({videoURL: 'Dj0am0D1iu0', mute:false, addRaster:true})">
 													<div class="video d-flex flex-row align-items-center justify-content-start">
 														<div class="video_image"><div><img src="<?= base_url(); ?>assets/images/video_1.jpg" alt=""></div><img class="play_img" src="<?= base_url(); ?>assets/images/play.png" alt=""></div>
 														<div class="video_content">
@@ -283,7 +296,7 @@
 			type: 'POST',
 			dataType: 'json',				
 			success: function( response ) {
-				loadmore_var = response.slice(0,5)
+				loadmore_var = response.slice(0,3)
 				// for (i = 0; i < response.length; i++){
 				// 	table_wrapper+='<div class="card card_small_with_image grid-item">'+
 				// 						'<img class="card-img-top" src="<?= base_url(); ?>assets/images/post_10.jpg" alt="">'+
@@ -308,7 +321,7 @@
 													'</div>'+
 													'<div class="col-md-8">'+
 														'<div class="card-body">'+
-															'<h5 class="card-title"><a href="<? base_url(); ?>news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h5>'+
+															'<h5 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h5>'+
 															'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
 															'<p class="card-text"><small class="text-muted"><span>'+loadmore_var[i].created_at+'</span></small></p>'+
 														'</div>'+
@@ -321,7 +334,7 @@
 						table_wrapper += '<div class="card mb-2">'+
 											'<img src="'+thumbnail+'" class="card-img-top" alt="">'+
 													'<div class="card-body">'+
-														'<h3 class="card-title"><a href="<?= base_url(); ?>news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h3>'+
+														'<h3 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h3>'+
 														'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
 														'<small class="post_meta"><a href="#">'+loadmore_var[i].by+'</a><span>'+loadmore_var[i].created_at+'</span></small>'+
 													'</div>'+
@@ -346,14 +359,14 @@
 
 					let loadmore = response.splice(arrayindexnew,resp_length);
 					// console.log(loadmore);
-		
-					for (i = 0; i < loadmore.length; i++){
+					
+					for (i = 0 ; i < loadmore.length; i++){	
 						var thumbnail = '';
 						if(loadmore[i].thumbnail=='' || loadmore[i].thumbnail==null){
 							var thumbnail = '<?= base_url(); ?>assets/none.png';
 						}else{
 							var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore[i].thumbnail;
-						}						
+						}					
 						table_wrapper2 += '<div class="card mb-2" >'+
 												'<div class="row no-gutters">'+
 													'<div class="col-md-4">'+
@@ -361,20 +374,88 @@
 													'</div>'+
 													'<div class="col-md-8">'+
 														'<div class="card-body">'+
-															'<h5 class="card-title"><a href="post.html">'+loadmore[i].judul+'</a></h5>'+
+															'<h5 class="card-title"><a href="news_detail/'+loadmore[i].id_berita+'">'+loadmore[i].judul+'</a></h5>'+
 															'<p class="card-text">'+loadmore[i].berita+'</p>'+
 															'<p class="card-text"><small class="text-muted"><span>'+loadmore[i].created_at+'</span></small></p>'+
 														'</div>'+
 													'</div>'+
 												'</div>'+
 											'</div>';
-						
+						arrayindexnew = i;
 					}
 					$(wrapper2).html(table_wrapper2);
+					$("#show_less_newest" ).removeClass("d-none");
+					$("#load_more_newest" ).addClass("d-none");
+
+					arrayindex 		= 0;
+					loadmore_var 	= "";
+					table_wrapper	= "";
+					table_wrapper2	= "";
 				}
 			});
+		});
 
-			
+		$("#show_less_newest").click(function(){
+			$(wrapper).html("");
+			$(wrapper2).html("");
+
+			var innerwrapper 	= $(wrapper).html();
+			var innerwarapper2	= $(wrapper2).html();
+
+			if (innerwrapper == "" && innerwarapper2 == ""){
+				// console.log(innerwrapper);
+				$.ajax({
+					url: "<?php echo site_url('NewsLoad/newsload');?>",
+					type: 'POST',
+					dataType: 'json',				
+					success: function( response ) {
+						loadmore_var = response.slice(0,5);
+						
+						for (i = 0; i < loadmore_var.length; i++){
+							var thumbnail = '';
+							if(loadmore_var[i].thumbnail=='' || loadmore_var[i].thumbnail==null){
+								var thumbnail = '<?= base_url(); ?>assets/none.png';
+							}else{
+								var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore_var[i].thumbnail;
+							}
+							if (i > 0){	
+								table_wrapper2 += '<div class="card mb-2" >'+
+														'<div class="row no-gutters">'+
+															'<div class="col-md-4">'+
+																'<img src="'+thumbnail+'" class="card-img" alt="...">'+
+															'</div>'+
+															'<div class="col-md-8">'+
+																'<div class="card-body">'+
+																	'<h5 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h5>'+
+																	'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
+																	'<p class="card-text"><small class="text-muted"><span>'+loadmore_var[i].created_at+'</span></small></p>'+
+																'</div>'+
+															'</div>'+
+														'</div>'+
+													'</div>';
+							}
+
+							if(i == 0){
+								table_wrapper += '<div class="card mb-2">'+
+													'<img src="'+thumbnail+'" class="card-img-top" alt="">'+
+															'<div class="card-body">'+
+																'<h3 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h3>'+
+																'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
+																'<small class="post_meta"><a href="#">Katy Liu</a><span>'+loadmore_var[i].created_at+'</span></small>'+
+															'</div>'+
+												'</div>';
+							}
+							arrayindex = i
+						}
+						$(wrapper).html(table_wrapper);
+						$(wrapper2).html(table_wrapper2);
+
+						$("#load_more_newest" ).removeClass("d-none");
+						$("#show_less_newest" ).addClass("d-none");
+
+					}
+				});
+			}
 		});
 	});
 		

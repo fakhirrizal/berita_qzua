@@ -6,8 +6,8 @@
 <?= $this->session->flashdata('gagal') ?>
 <div class="page-breadcrumb breadcrumb" style="background-color:#8cb2ea;">
 	<font color='black'>
-		<h4>Catatan</h4>
-		<a> 1. Kolom isian dengan tanda bintang (<font color='red'>*</font>) adalah wajib untuk di isi.</a>
+		<h4>Notes</h4>
+		<a> 1. Fields with an asterisk (<font color='red'>*</font>) are required to be filled out.</a>
 		<!-- <br><a> 2. Data ekspor berupa file excel (<b>.xls</b>)</a> -->
 	</font>
 </div>
@@ -17,7 +17,7 @@
             <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>">
             <div class="form-body">
                 <div class="form-group form-md-line-input has-danger">
-                    <label class="control-label" for="form_control_1">Nama <span class="required"> * </span></label>
+                    <label class="control-label" for="form_control_1">Fullname <span class="required"> * </span></label>
                     <input type="text" class="form-control" name="nama" placeholder="Type something" required>
                 </div>
 			</div>
@@ -40,13 +40,13 @@
                 <span class="icon text-white-50">
                 <i class="fas fa-arrow-left"></i>
                 </span>
-                <span class="text">Batal</span>
+                <span class="text">Cancel</span>
             </button>
             <button type="submit" class="btn btn-success btn-icon-split">
                 <span class="icon text-white-50">
                 <i class="fas fa-check"></i>
                 </span>
-                <span class="text">Simpan</span>
+                <span class="text">Save</span>
             </button>
         </div>
     </form>

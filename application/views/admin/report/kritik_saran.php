@@ -7,14 +7,14 @@
 <div class="page-breadcrumb breadcrumb" style="background-color:#8cb2ea;">
 	<font color='black'>
 		<h4>Notes</h4>
-		<a> 1. When clicking <b>Reset Password</b>, the password will automatically become "<b>1234</b>"</a>
-		<!-- <a> 2. Data ekspor berupa file excel (<b>.xls</b>)</a> -->
+		<!-- <a> 1. Ketika mengklik <b>Atur Ulang Sandi</b>, maka kata sandi otomatis menjadi "<b>1234</b>"</a><br>
+		<a> 2. Data ekspor berupa file excel (<b>.xls</b>)</a> -->
 	</font>
 </div>
 <div class="card shadow mb-4">
   <div class="card-header py-3">
 	<!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
-	<a href="<?=base_url('admin_side/tambah_data_admin');?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Add Data <i class="fa fa-plus"></i></a>
+	<!-- <a href="<?=base_url('admin_side/tambah_berita');?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Add Data <i class="fa fa-plus"></i></a> -->
   </div>
   <div class="card-body">
 	<div class="table-responsive">
@@ -23,11 +23,11 @@
 				<thead>
 					<tr>
 						<th style="text-align: center;" width="1%"> # </th>
-						<th style="text-align: center;"> Nickname </th>
-						<th style="text-align: center;"> Username </th>
-						<th style="text-align: center;"> Total Login </th>
-						<th style="text-align: center;"> Last Activity </th>
-						<th style="text-align: center;" width="1%"> Action </th>
+						<th style="text-align: center;"> Fullname </th>
+						<th style="text-align: center;"> Email </th>
+						<th style="text-align: center;"> Message </th>
+						<th style="text-align: center;"> Created At </th>
+						<th style="text-align: center;" width="12%"> Action </th>
 					</tr>
 				</thead>
 			</table>
@@ -35,18 +35,18 @@
 		<script type="text/javascript" language="javascript" >
 			$(document).ready(function(){
 				$('#tbl').dataTable({
-					"order": [[ 1, "asc" ]],
+					"order": [[ 0, "asc" ]],
 					"bProcessing": true,
 					"ajax" : {
-						url:"<?= site_url('admin/Master/json_admin'); ?>"
+						url:"<?= site_url('admin/Report/json_kritik_saran'); ?>"
 					},
 					"aoColumns": [
-								{ mData: 'number', sClass: "alignCenter" },
-								{ mData: 'nama' } ,
-								{ mData: 'username', sClass: "alignCenter" } ,
-								{ mData: 'total_login', sClass: "alignCenter" },
-								{ mData: 'last_activity', sClass: "alignCenter" },
-								{ mData: 'action' }
+								{ mData: 'no', sClass: "alignCenter" },
+								{ mData: 'judul' } ,
+								{ mData: 'kategori', sClass: "alignCenter" },
+								{ mData: 'isi', sClass: "alignCenter" },
+								{ mData: 'dibuat', sClass: "alignCenter" },
+								{ mData: 'action', sClass: "alignCenter" }
 							]
 				});
 
