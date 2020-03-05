@@ -1,369 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>Queensland Zhejiang United Association Inc. - <?= $kategori_berita; ?></title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="description" content="Queensland Zhejiang United Association Inc.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/bootstrap4/bootstrap.min.css">
-    <link href="<?= base_url(); ?>assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/jquery.mb.YTPlayer-3.1.12/jquery.mb.YTPlayer.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/main_styles.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/responsive.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/new_style.css">
-    <link href="<?= base_url(); ?>assets/logo.png" rel="icon" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>Queensland Zhejiang United Association Inc. - Category <?= $kategori_berita; ?></title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="<?= base_url(); ?>assets/img/logo.png">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/style.css">
+
 </head>
+
 <body>
-<?php
-$id_kategori_berita = '';
-?>
-<div class="super_container">
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
 
-	<!-- Header -->
-	<header class="header">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="header_content d-flex flex-row align-items-center justify-content-start">
-						<div class="logo"><a href="#"><img src='<?= base_url().'assets/images/qzua.png'?>' class='new-logo'></a></div>
-						<nav class="main_nav">
-							<ul>
-								<li><a href="<?= base_url(); ?>">Home</a></li>
-								<li class="active"><a href="<?= base_url(); ?>kategori/News">News</a></li>
-								<li><a href="<?= base_url(); ?>about">About</a></li>
-								<li><a href="<?= base_url(); ?>contact">Contact</a></li>
-							</ul>
-						</nav>
-						<div class="search_container ml-auto">
-							<!-- <div class="weather">
-								<div class="temperature">+10°</div>
-								<img class="weather_icon" src="<?= base_url(); ?>assets/images/cloud.png" alt="">
-							</div> -->
-							<form action="<?= base_url(); ?>searching" method='post'>
-								<input type="search" class="header_search_input" name='key' required="required" placeholder="Type to Search...">
-								<img class="header_search_icon" src="<?= base_url(); ?>assets/images/search.png" alt="">
-							</form>
-							
-						</div>
-						<div class="hamburger ml-auto menu_mm">
-							<i class="fa fa-bars trans_200 menu_mm" aria-hidden="true"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-    </header>
+    <?php include 'header.php' ?>
 
-	<!-- Menu -->
-	<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
-		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
-		<div class="logo menu_mm"><a href="#">Avision</a></div>
-		<div class="search">
-			<form action="#">
-				<input type="search" class="header_search_input menu_mm" required="required" placeholder="Type to Search...">
-				<img class="header_search_icon menu_mm" src="<?= base_url(); ?>assets/images/search_2.png" alt="">
-			</form>
-		</div>
-		<nav class="menu_nav">
-			<ul class="menu_mm">
-				<li class="menu_mm"><a href="<?= base_url(); ?>">home</a></li>
-				<li class="menu_mm"><a href="<?= base_url(); ?>news">News</a></li>
-				<li class="menu_mm"><a href="<?= base_url(); ?>about">About</a></li>
-				<li class="menu_mm"><a href="<?= base_url(); ?>contact">Contact</a></li>
-			</ul>
-		</nav>
-	</div>
-	
-	<!-- Home
-	<div class="home">
-		
-		Home Slider
-		?php include 'banner.php' ?
-	</div>-->
-	
-	<!-- Page Content -->
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(<?= base_url(); ?>assets/img/bg-img/41.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2><?= $kategori_berita; ?></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Breadcrumb Area End ##### -->
 
-	<div class="page_content">
-		<div class="container">
-			<div class="row row-lg-eq-height">
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="mag-breadcrumb py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Feature</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Archive by Category “<?= $kategori_berita; ?>”</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
 
-				<!-- Main Content -->
+    <!-- ##### Archive Post Area Start ##### -->
+    <div class="archive-post-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-8">
+                    <div class="archive-posts-area bg-white p-30 mb-30 box-shadow">
 
-				<div class="col-lg-9">
-					<div class="main_content">
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/42.jpg);">
+                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
+                            </div>
 
-						<!-- Blog Section - Don't Miss -->
-
-						<div class="blog_section">
-							<div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">News in "<?= $kategori_berita; ?>" Category <?php if($data_berita==NULL){echo'is Empty';}else{echo'';} ?></div>
-								<?php
-								$tanda = 0;
-								$no = 0;
-								$nomer = 0;
-								?>
-								<div class="section_tags ml-auto">
-									<ul>
-										<li><a href="<?= base_url(); ?>">all</a></li>
-										<?php
-										$hitung = count($kategori);
-										if($hitung>4){
-											$tanda = 1;
-										}else{
-											echo'';
-										}
-										if($kategori==NULL){
-											echo'';
-										}else{
-											foreach ($kategori as $key => $value) {
-                                                $id_kategori_berita = $value->id_kategori_berita;
-												if($no=='0' OR $no=='1' OR $no=='2' OR $no=='3'){
-													echo'<li class="active"><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
-													$no++;
-												}else{
-													echo'';
-												}
-											}
-										}
-										?>
-										<!-- <li><a href="category.html">style hunter</a></li>
-										<li><a href="category.html">vogue</a></li>
-										<li><a href="category.html">health & fitness</a></li>
-										<li><a href="category.html">travel</a></li> -->
-									</ul>
-								</div>
-                                <?php
-                                $cek_kategori_lain = $this->db->query("SELECT a.* FROM kategori_berita a WHERE a.id_kategori_berita NOT IN ('".$id_kategori_berita."')")->result();
-								if($cek_kategori_lain!=NULL){
-									echo'
-									<div class="section_panel_more">
-										<ul>
-											<li>more
-												<ul style="height: 300px;overflow: scroll;">';
-												foreach ($cek_kategori_lain as $key => $value) {
-													echo'<li><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
-												}
-											echo'</ul>
-											</li>
-										</ul>
-									</div>';
-								}else{
-									echo'';
-								}
-								?>
-							</div>
-							<div id = "dontmisscard">							
-							</div>
-							<div id = "dontmisssub">							
-							</div>
-							<!-- <div id = "dontmisscard2" class="card mb-2">							
-							</div> -->
-
-                            <?php
-                            if($data_berita==NULL){
-                                echo'';
-                            }else{
-                                echo'
-                                <div class="load_more">
-                                    <div id="load_more_newest" class="load_more_button text-center trans_200">Load More</div>
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">lifestyle</a>
                                 </div>
-                                ';
-                            }
-                            ?>
-						</div>
+                                <a href="video-post.html" class="post-title">Global Travel And Vacations Luxury Travel On A Tight Budget</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
+                            </div>
+                        </div>
 
-						<!-- Blog Section - What's Trending -->
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/43.jpg);">
+                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
+                            </div>
 
-						<!-- <div class="blog_section">
-							<div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">What's Trending</div>
-								<div class="section_tags ml-auto">
-									<ul>
-										<li class="active"><a href="category.html">all</a></li>
-										<li><a href="category.html">style hunter</a></li>
-										<li><a href="category.html">vogue</a></li>
-										<li><a href="category.html">health & fitness</a></li>
-										<li><a href="category.html">travel</a></li>
-									</ul>
-								</div>
-								<div class="section_panel_more">
-									<ul>
-										<li>more
-											<ul>
-												<li><a href="category.html">new look 2018</a></li>
-												<li><a href="category.html">street fashion</a></li>
-												<li><a href="category.html">business</a></li>
-												<li><a href="category.html">recipes</a></li>
-												<li><a href="category.html">sport</a></li>
-												<li><a href="category.html">celebrities</a></li>
-											</ul>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="section_content">
-								<div class="grid clearfix">
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">lifestyle</a>
+                                </div>
+                                <a href="video-post.html" class="post-title">The Luxury Of Traveling With Yacht Charter Companies</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
+                            </div>
+                        </div>
 
-								</div>
-							</div>
-						</div> -->
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/44.jpg);">
+                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
+                            </div>
 
-						<!-- Blog Section - Latest -->
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">lifestyle</a>
+                                </div>
+                                <a href="video-post.html" class="post-title">Will The Democrats Be Able To Reverse The Online Gambling Ban</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
+                            </div>
+                        </div>
 
-						<div class="blog_section">
-							<!-- <div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">Latest Articles</div>
-							</div>
-							<div class="section_content">
-								<div id= "blog_section_g" class="grid clearfix">
-									<div class="card card_small_with_image grid-item">
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/45.jpg);">
+                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
+                            </div>
 
-									</div>
-								</div>								
-							</div> -->
-						</div>
-					</div>
-				</div>
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">lifestyle</a>
+                                </div>
+                                <a href="video-post.html" class="post-title">Family Safari Vacation To The Home Of The Gods</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
+                            </div>
+                        </div>
 
-				<!-- Sidebar -->
-				<?php include 'sidebar.php' ?>
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/46.jpg);">
+                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
+                            </div>
 
-			</div>
-		</div>
-	</div>
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">lifestyle</a>
+                                </div>
+                                <a href="video-post.html" class="post-title">Addiction When Gambling Becomes A Problem</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
+                            </div>
+                        </div>
 
-	<!-- Footer -->
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/47.jpg);">
+                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
+                            </div>
 
-	<?php include 'footer.php' ?>
-</div>
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">lifestyle</a>
+                                </div>
+                                <a href="video-post.html" class="post-title">Take A Romantic Break In A Boutique Hotel</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
+                            </div>
+                        </div>
 
-<script src="<?= base_url(); ?>assets/js/jquery-3.2.1.min.js"></script>
-<script src="<?= base_url(); ?>assets/styles/bootstrap4/popper.js"></script>
-<script src="<?= base_url(); ?>assets/styles/bootstrap4/bootstrap.min.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/jquery.mb.YTPlayer-3.1.12/jquery.mb.YTPlayer.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/easing/easing.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/masonry/masonry.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/masonry/images_loaded.js"></script>
-<script src="<?= base_url(); ?>assets/js/custom.js"></script>
-<script>
-	$(document).ready(function(){
-		var loadmore_var 	= "";
-		var arrayindex		= 0;
+                        <!-- Single Catagory Post -->
+                        <div class="single-catagory-post d-flex flex-wrap">
+                            <!-- Thumbnail -->
+                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/48.jpg);">
+                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
+                            </div>
 
-		var wrapper			= $("#dontmisscard");
-		var wrapper2		= $("#dontmisssub");
-		var wrapper3		= $("#blog_section_g");
-		
-		var table_wrapper	= "";
-		var table_wrapper2	= "";
+                            <!-- Post Contetnt -->
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <a href="#">MAY 8, 2018</a>
+                                    <a href="archive.html">lifestyle</a>
+                                </div>
+                                <a href="video-post.html" class="post-title">Global Travel And Vacations Luxury Travel On A Tight Budget</a>
+                                <!-- Post Meta -->
+                                <div class="post-meta-2">
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
+                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                </div>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
+                            </div>
+                        </div>
 
-		$.ajax({
-			url: "<?php echo site_url('NewsLoad/newsload');?>",
-			type: 'POST',
-			dataType: 'json',
-            data: {category:'<?= $id_kategori_berita; ?>'},				
-			success: function( response ) {
-				loadmore_var = response.slice(0,5)
-				// for (i = 0; i < response.length; i++){
-				// 	table_wrapper+='<div class="card card_small_with_image grid-item">'+
-				// 						'<img class="card-img-top" src="<?= base_url(); ?>assets/images/post_10.jpg" alt="">'+
-				// 						'<div class="card-body">'+
-				// 							'<div class="card-title card-title-small"><a href="post.html">'+response[i].judul+'</a></div>'+
-				// 							'<small class="post_meta"><a href="#">Katy Liu</a><span>'+response[i].created_at+'</span></small>'+
-				// 						'</div>'+
-				// 					'</div>';
-				// }
-				for (i = 0; i < loadmore_var.length; i++){
-					var thumbnail = '';
-					if(loadmore_var[i].thumbnail=='' || loadmore_var[i].thumbnail==null){
-						var thumbnail = '<?= base_url(); ?>assets/none.png';
-					}else{
-						var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore_var[i].thumbnail;
-					}
-					if (i > 0){
-						table_wrapper2 += '<div class="card mb-2" >'+
-												'<div class="row no-gutters">'+
-													'<div class="col-md-4">'+
-														'<img src="'+thumbnail+'" class="card-img" alt="...">'+
-													'</div>'+
-													'<div class="col-md-8">'+
-														'<div class="card-body">'+
-															'<h5 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h5>'+
-															'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
-															'<p class="card-text"><small class="text-muted"><span>'+loadmore_var[i].created_at+'</span></small></p>'+
-														'</div>'+
-													'</div>'+
-										 		'</div>'+
-											'</div>';
-					}
+                        <!-- Pagination -->
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#"><i class="ti-angle-right"></i></a></li>
+                            </ul>
+                        </nav>
 
-					if(i == 0){
-						table_wrapper += '<div class="card mb-2">'+
-											'<img src="'+thumbnail+'" class="card-img-top" alt="">'+
-													'<div class="card-body">'+
-														'<h3 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h3>'+
-														'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
-														'<small class="post_meta"><a href="#">'+loadmore_var[i].by+'</a><span>'+loadmore_var[i].created_at+'</span></small>'+
-													'</div>'+
-										  '</div>';
-					}
-					arrayindex = i
-				}
-				$(wrapper).html(table_wrapper);
-				$(wrapper2).html(table_wrapper2);				
-			}
-		});
+                    </div>
+                </div>
 
-		
-		$("#load_more_newest").click(function(){
-			$.ajax({
-				url: "<?php echo site_url('NewsLoad/newsload');?>",
-				type: 'POST',
-				dataType: 'json',		
-                data: {category:'<?= $id_kategori_berita; ?>'},				
-				success: function( response ) {
-					let resp_length 	= response.length - 1;
-					let arrayindexnew	= arrayindex + 1;
+                <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+                    <div class="sidebar-area bg-white mb-30 box-shadow">
+                        <?php include 'right_sidebar.php' ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Archive Post Area End ##### -->
 
-					let loadmore = response.splice(arrayindexnew,resp_length);
-					// console.log(loadmore);
-		
-					for (i = 0; i < loadmore.length; i++){
-						var thumbnail = '';
-						if(loadmore[i].thumbnail=='' || loadmore[i].thumbnail==null){
-							var thumbnail = '<?= base_url(); ?>assets/none.png';
-						}else{
-							var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore[i].thumbnail;
-						}						
-						table_wrapper2 += '<div class="card mb-2" >'+
-												'<div class="row no-gutters">'+
-													'<div class="col-md-4">'+
-														'<img src="'+thumbnail+'" class="card-img" alt="...">'+
-													'</div>'+
-													'<div class="col-md-8">'+
-														'<div class="card-body">'+
-															'<h5 class="card-title"><a href="news_detail/'+loadmore[i].id_berita+'">'+loadmore[i].judul+'</a></h5>'+
-															'<p class="card-text">'+loadmore[i].berita+'</p>'+
-															'<p class="card-text"><small class="text-muted"><span>'+loadmore[i].created_at+'</span></small></p>'+
-														'</div>'+
-													'</div>'+
-												'</div>'+
-											'</div>';
-						
-					}
-					$(wrapper2).html(table_wrapper2);
-				}
-			});
+    <!-- ##### Footer Area Start ##### -->
+    <?php include 'footer.php' ?>
+    <!-- ##### Footer Area End ##### -->
 
-			
-		});
-	});
-		
-</script>
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="<?= base_url(); ?>assets/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="<?= base_url(); ?>assets/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="<?= base_url(); ?>assets/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="<?= base_url(); ?>assets/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="<?= base_url(); ?>assets/js/active.js"></script>
 </body>
+
 </html>

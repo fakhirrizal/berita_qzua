@@ -1,464 +1,297 @@
-<?php include 'header.php' ?>
-<div class="super_container">
+<!DOCTYPE html>
+<html lang="en">
 
-	<!-- Header -->
-	<?php include 'navbar.php' ?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Queensland Zhejiang United Association Inc.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<!-- Menu -->
-	<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
-		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
-		<div class="logo menu_mm"><a href="#">Avision</a></div>
-		<div class="search">
-			<form action="<?= base_url(); ?>searching" method='post'>
-				<input type="search" class="header_search_input" name='key' required="required" placeholder="Type to Search...">
-				<img class="header_search_icon" src="<?= base_url(); ?>assets/images/search.png" alt="">
-			</form>
-		</div>
-		<nav class="menu_nav">
-			<ul class="menu_mm">
-				<li class="menu_mm"><a href="<?= base_url(); ?>">home</a></li>
-				<li class="menu_mm"><a href="<?= base_url(); ?>news">News</a></li>
-				<li class="menu_mm"><a href="<?= base_url(); ?>about">About</a></li>
-				<li class="menu_mm"><a href="<?= base_url(); ?>contact">Contact</a></li>
-			</ul>
-		</nav>
-	</div>
-	
-	<!-- Home
-	<div class="home">
-		
-		Home Slider
-		?php include 'banner.php' ?
-	</div>-->
-	
-	<!-- Page Content -->
+    <!-- Title -->
+    <title>Queensland Zhejiang United Association Inc.</title>
 
-	<div class="page_content">
-		<div class="container">
-			<div class="row row-lg-eq-height">
+    <!-- Favicon -->
+    <link rel="icon" href="<?= base_url(); ?>assets/img/logo.png">
 
-				<!-- Main Content -->
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/style.css">
 
-				<div class="col-lg-9">
-					<div class="main_content">
+</head>
 
-						<!-- Blog Section - Don't Miss -->
+<body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    
+	<?php include 'header.php' ?>
+    <!-- ##### Header Area End ##### -->
 
-						<div class="blog_section">
-							<div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">Newest Article</div>
-								<?php
-								$tanda = 0;
-								$no = 0;
-								$nomer = 0;
-								?>
-								<div class="section_tags ml-auto">
-									<ul>
-										<li class="active"><a href="<?= base_url(); ?>">all</a></li>
-										<?php
-										$hitung = count($kategori);
-										if($hitung>4){
-											$tanda = 1;
-										}else{
+    <!-- ##### Hero Area Start ##### -->
+    <?php include 'banner.php' ?>
+    <!-- ##### Hero Area End ##### -->
+
+    <!-- ##### Mag Posts Area Start ##### -->
+    <section class="mag-posts-area d-flex flex-wrap">
+		<?php include 'left_sidebar.php' ?>
+
+        <!-- >>>>>>>>>>>>>>>>>>>>
+             Main Posts Area
+        <<<<<<<<<<<<<<<<<<<<< -->
+        <div class="mag-posts-content mt-30 mb-30 p-30 box-shadow">
+            <!-- Trending Now Posts Area -->
+            <div class="trending-now-posts mb-30">
+                <!-- Section Title -->
+                <div class="section-heading">
+                    <h5>OUR EVENT</h5>
+                </div>
+
+                <div class="trending-post-slides owl-carousel">
+					<?php
+					$get_event = $this->Main_model->getSelectedData('event a', 'a.*', '', 'a.tanggal_pelaksanaan DESC', '6')->result();
+					foreach ($get_event as $key => $value) {
+						$poster = '';
+						if($value->poster==NULL){
+							$poster = base_url().'assets/img/none.png';
+						}else{
+							$poster = base_url().'data_upload/event/'.$value->poster;
+						}
+					?>
+                    <div class="single-trending-post">
+                        <img src="<?= $poster; ?>" alt="">
+                        <div class="post-content">
+                            <!-- <a href="#" class="post-cata">Video</a> -->
+                            <a href="<?= base_url().'event_detail/'.$value->id_event; ?>" class="post-title"><?= $value->judul; ?></a>
+                        </div>
+					</div>
+					<?php } ?>
+                </div>
+            </div>
+
+            <!-- Feature Video Posts Area -->
+            <div class="feature-video-posts mb-30">
+                <!-- Section Title -->
+                <div class="section-heading">
+                    <h5>Latest News</h5>
+                </div>
+
+                <div class="featured-video-posts">
+                    <div class="row">
+                        <div class="col-12 col-lg-7">
+							<!-- Single Featured Post -->
+							<?php
+							$checking_data = $this->Main_model->getSelectedData('kategori_berita a', 'a.*',array('a.kategori_berita'=>'Videos'))->row();
+							$check_berita = $this->db->query("SELECT a.*,(SELECT COUNT(b.id_berita) FROM komentar_berita b WHERE b.id_berita=a.id_berita) AS jml FROM berita a WHERE a.id_kategori_berita LIKE '%".$checking_data->id_kategori_berita."%' ORDER BY a.created_at DESC")->result();
+							$tampung_real = array();
+							foreach ($check_berita as $key => $value) {
+								$pecah_kategori = explode(',',$value->id_kategori_berita);
+								for ($i=0; $i < count($pecah_kategori); $i++) { 
+									if($pecah_kategori[$i]==$checking_data->id_kategori_berita){
+										$isi['id_berita'] = $value->id_berita;
+										$isi['thumbnail'] = $value->thumbnail;
+										$isi['created_at'] = $value->created_at;
+										$isi['id_kategori_berita'] = $value->id_kategori_berita;
+										$isi['judul'] = $value->judul;
+										$isi['berita'] = $value->berita;
+										$isi['video_link'] = $value->video_link;
+										$isi['jml'] = $value->jml;
+										$isi['counter'] = $value->counter;
+										$tampung_real[] = $isi;
+										break;
+									}else{
+										echo'';
+									}
+								}
+							}
+							$flag = 0;
+							foreach ($tampung_real as $key => $value) {
+								if($flag=='0'){
+									$thumbnail = '';
+									if($value['thumbnail']==NULL){
+										$thumbnail = base_url().'assets/img/none.png';
+									}else{
+										$thumbnail = base_url().'data_upload/berita/'.$value['thumbnail'];
+									}
+									$kategori_berita = array();
+									$id_kategori_berita = explode(',',$value['id_kategori_berita']);
+									for ($i=0; $i < count($id_kategori_berita); $i++) { 
+										$get_kategori_berita = $this->Main_model->getSelectedData('kategori_berita a', 'a.*',array('a.id_kategori_berita'=>$id_kategori_berita[$i]))->row();
+										if($get_kategori_berita->kategori_berita=='Videos'){
 											echo'';
 										}
-										if($kategori==NULL){
+										elseif($get_kategori_berita->kategori_berita=='News'){
 											echo'';
 										}else{
-											foreach ($kategori as $key => $value) {
-												if($no=='0' OR $no=='1' OR $no=='2' OR $no=='3'){
-													echo'<li><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
-													$no++;
-												}else{
-													echo'';
-												}
-											}
+											$kategori_berita[] = $get_kategori_berita->kategori_berita;
 										}
-										?>
-										<!-- <li><a href="category.html">style hunter</a></li>
-										<li><a href="category.html">vogue</a></li>
-										<li><a href="category.html">health & fitness</a></li>
-										<li><a href="category.html">travel</a></li> -->
-									</ul>
-								</div>
+									}
+							?>
+                            <div class="single-featured-post">
+                                <!-- Thumbnail -->
+                                <div class="post-thumbnail mb-50">
+                                    <img src="<?= $thumbnail; ?>" alt="">
+                                    <a href="<?= $value['video_link']; ?>" target="_blank" class="video-play"><i class="fa fa-play"></i></a>
+                                </div>
+                                <!-- Post Contetnt -->
+                                <div class="post-content">
+                                    <div class="post-meta">
+                                        <a href="#"><?= date("M d, Y", strtotime($value['created_at'])); ?></a>
+                                        <a href="#"><?= implode(', ',$kategori_berita); ?></a>
+                                    </div>
+                                    <a href="video-post.html" class="post-title"><?= $value['judul']; ?></a>
+                                    <p><?= $value['berita']; ?></p>
+                                </div>
+                                <!-- Post Share Area -->
+                                <div class="post-share-area d-flex align-items-center justify-content-between">
+                                    <!-- Post Meta -->
+                                    <div class="post-meta pl-3">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> <?= number_format($value['counter'],0); ?></a>
+                                        <!-- <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a> -->
+                                        <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> <?= number_format($value['jml'],0); ?></a>
+                                    </div>
+                                    <!-- Share Info -->
+                                    <div class="share-info">
+                                        <a href="#" class="sharebtn"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+                                        <!-- All Share Buttons -->
+                                        <div class="all-share-btn d-flex">
+                                            <a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                            <a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                            <a href="#" class="google-plus"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                            <a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+							</div>
+								<?php }else{echo'';}$flag++;} ?>
+                        </div>
+
+                        <div class="col-12 col-lg-5">
+                            <!-- Featured Video Posts Slide -->
+                            <div class="featured-video-posts-slide owl-carousel">
 								<?php
-								if($tanda=='1'){
-									echo'
-									<div class="section_panel_more" >
-										<ul >
-											<li>more
-												<ul style="height: 300px;overflow: scroll;">';
-												if($this->agent->mobile()){
-													foreach ($kategori as $key => $value) {
-														echo'<li><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
-													}
-												}else{
-													foreach ($kategori as $key => $value) {
-														if($nomer=='0' OR $nomer=='1' OR $nomer=='2' OR $nomer=='3'){
-															echo'';														
-														}else{
-															echo'<li><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
-														}
-														$nomer++;
-													}
-												}
-													// <li><a href="category.html">new look 2018</a></li>
-													// <li><a href="category.html">street fashion</a></li>
-													// <li><a href="category.html">business</a></li>
-													// <li><a href="category.html">recipes</a></li>
-													// <li><a href="category.html">sport</a></li>
-													// <li><a href="category.html">celebrities</a></li>
-											echo'</ul>
-											</li>
-										</ul>
+								$get_all_news = $this->Main_model->getSelectedData('berita a', 'a.*')->result();
+								$get_news_1 = $this->Main_model->getSelectedData('berita a', 'a.*', '', 'a.created_at DESC', '5', '0')->result();
+								echo'
+								<div class="single--slide">';
+								foreach ($get_news_1 as $key => $value) {
+									$thumbnail = '';
+									if($value->thumbnail==NULL){
+										$thumbnail = base_url().'assets/img/none.png';
+									}else{
+										$thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
+									}
+                                    echo'<div class="single-blog-post d-flex style-3">
+                                        <div class="post-thumbnail">
+                                            <img src="'.$thumbnail.'" alt="">
+                                        </div>
+                                        <div class="post-content">
+                                            <a href="'.base_url().'news_detail/'.$value->id_berita.'" class="post-title">'.$value->judul.'</a>
+											<div class="post-meta d-flex">
+											'.date("M d, Y", strtotime($value->created_at)).'
+                                            </div>
+                                        </div>
 									</div>';
-								}else{
-									echo'';
+								}
+                                echo'</div>';
+								for ($i= 1; $i <= count($get_all_news); $i++) { 
+									if ( $bagi = $i % 5 == 0 ) {
+										$get_news_i = $this->Main_model->getSelectedData('berita a', 'a.*', '', 'a.created_at DESC', '5', $i)->result();
+										echo'
+										<div class="single--slide">';
+										foreach ($get_news_i as $key => $value) {
+											$thumbnail = '';
+											if($value->thumbnail==NULL){
+												$thumbnail = base_url().'assets/img/none.png';
+											}else{
+												$thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
+											}
+											echo'<div class="single-blog-post d-flex style-3">
+												<div class="post-thumbnail">
+													<img src="'.$thumbnail.'" alt="">
+												</div>
+												<div class="post-content">
+													<a href="'.base_url().'news_detail/'.$value->id_berita.'" class="post-title">'.$value->judul.'</a>
+													<div class="post-meta d-flex">
+													'.date("M d, Y", strtotime($value->created_at)).'
+													</div>
+												</div>
+											</div>';
+										}
+										echo'</div>';
+									}
 								}
 								?>
-							</div>
-							<div id = "dontmisscard">							
-							</div>
-							<div id = "dontmisssub">							
-							</div>
-							<!-- <div id = "dontmisscard2" class="card mb-2">							
-							</div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-							<!-- <div class="load_more">
-								<div id="load_more_newest" class="load_more_button text-center trans_200">Load More</div>
-							</div> -->
+            <!-- Most Viewed Videos -->
+            <div class="most-viewed-videos mb-30">
+                <!-- Section Title -->
+                <div class="section-heading">
+                    <h5>Gallery</h5>
+                </div>
 
-							<div id = "load_more_newest" class="load_more">
-								<div class="load_more_button text-center trans_200">Load More</div>
-							</div>
-							<div id = "show_less_newest" class="load_more d-none">
-								<div class="load_more_button text-center trans_200">Show Less</div>
-							</div>
-						</div>
-
-						<!-- Blog Section - What's Trending -->
-
-						<!-- <div class="blog_section">
-							<div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">What's Trending</div>
-								<div class="section_tags ml-auto">
-									<ul>
-										<li class="active"><a href="category.html">all</a></li>
-										<li><a href="category.html">style hunter</a></li>
-										<li><a href="category.html">vogue</a></li>
-										<li><a href="category.html">health & fitness</a></li>
-										<li><a href="category.html">travel</a></li>
-									</ul>
-								</div>
-								<div class="section_panel_more">
-									<ul>
-										<li>more
-											<ul>
-												<li><a href="category.html">new look 2018</a></li>
-												<li><a href="category.html">street fashion</a></li>
-												<li><a href="category.html">business</a></li>
-												<li><a href="category.html">recipes</a></li>
-												<li><a href="category.html">sport</a></li>
-												<li><a href="category.html">celebrities</a></li>
-											</ul>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="section_content">
-								<div class="grid clearfix">
-
-								</div>
-							</div>
-						</div> -->
-
-						<!-- Blog Section - Videos -->
-
-						<div class="blog_section">
-							<div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">Most Popular Videos</div>
-							</div>
-							<div class="section_content">
-								<div class="row">
-									<div class="col">
-										<div class="videos">
-											<div class="player_container">
-												<div id="P1" class="player" 
-												     data-property="{videoURL:'Dj0am0D1iu0',containment:'self',startAt:0,mute:false,autoPlay:false,loop:false,opacity:1}">
-												</div>
-											</div>
-											<div class="playlist">
-												<div class="playlist_background"></div>
-
-												<!-- Video -->
-												<div class="video_container video_command active" onclick="jQuery('#P1').YTPChangeVideo({videoURL: 'Dj0am0D1iu0', mute:false, addRaster:true})">
-													<div class="video d-flex flex-row align-items-center justify-content-start">
-														<div class="video_image"><div><img src="<?= base_url(); ?>assets/images/video_1.jpg" alt=""></div><img class="play_img" src="<?= base_url(); ?>assets/images/play.png" alt=""></div>
-														<div class="video_content">
-															<div class="video_title">How Did van Gogh’s Turbulent Mind</div>
-															<div class="video_info"><span>1.2M views</span><span>Sep 29</span></div>
-														</div>
-													</div>
-												</div>
-
-												<!-- Video -->
-												<div class="video_container video_command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: 'BzMLA8YIgG0', mute:false, addRaster:true})">
-													<div class="video d-flex flex-row align-items-center justify-content-start">
-														<div class="video_image"><div><img src="<?= base_url(); ?>assets/images/video_2.jpg" alt=""></div><img class="play_img" src="<?= base_url(); ?>assets/images/play.png" alt=""></div>
-														<div class="video_content">
-															<div class="video_title">How Did van Gogh’s Turbulent Mind</div>
-															<div class="video_info"><span>1.2M views</span><span>Sep 29</span></div>
-														</div>
-													</div>
-												</div>
-
-												<!-- Video -->
-												<div class="video_container video_command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: 'bpbcSdqvtUQ', mute:false, addRaster:true})">
-													<div class="video d-flex flex-row align-items-center justify-content-start">
-														<div class="video_image"><div><img src="<?= base_url(); ?>assets/images/video_3.jpg" alt=""></div><img class="play_img" src="<?= base_url(); ?>assets/images/play.png" alt=""></div>
-														<div class="video_content">
-															<div class="video_title">How Did van Gogh’s Turbulent Mind</div>
-															<div class="video_info"><span>1.2M views</span><span>Sep 29</span></div>
-														</div>
-													</div>
-												</div>
-
-												<!-- Video -->
-												<div class="video_container video_command" onclick="jQuery('#P1').YTPChangeVideo({videoURL: 'UjYemgbhJF0', mute:false, addRaster:true})">
-													<div class="video d-flex flex-row align-items-center justify-content-start">
-														<div class="video_image"><div><img src="<?= base_url(); ?>assets/images/video_4.jpg" alt=""></div><img class="play_img" src="<?= base_url(); ?>assets/images/play.png" alt=""></div>
-														<div class="video_content">
-															<div class="video_title">How Did van Gogh’s Turbulent Mind</div>
-															<div class="video_info"><span>1.2M views</span><span>Sep 29</span></div>
-														</div>
-													</div>
-												</div>
-
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Blog Section - Latest -->
-
-						<div class="blog_section">
-							<!-- <div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">Latest Articles</div>
-							</div>
-							<div class="section_content">
-								<div id= "blog_section_g" class="grid clearfix">
-									<div class="card card_small_with_image grid-item">
-
-									</div>
-								</div>								
-							</div> -->
-						</div>
-					</div>
-				</div>
-
-				<!-- Sidebar -->
-				<?php include 'sidebar.php' ?>
-
-			</div>
-		</div>
-	</div>
-
-	<!-- Footer -->
-
-	<?php include 'footer.php' ?>
-</div>
-
-<script src="<?= base_url(); ?>assets/js/jquery-3.2.1.min.js"></script>
-<script src="<?= base_url(); ?>assets/styles/bootstrap4/popper.js"></script>
-<script src="<?= base_url(); ?>assets/styles/bootstrap4/bootstrap.min.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/jquery.mb.YTPlayer-3.1.12/jquery.mb.YTPlayer.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/easing/easing.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/masonry/masonry.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/masonry/images_loaded.js"></script>
-<script src="<?= base_url(); ?>assets/js/custom.js"></script>
-<script>
-	$(document).ready(function(){
-		var loadmore_var 	= "";
-		var arrayindex		= 0;
-
-		var wrapper			= $("#dontmisscard");
-		var wrapper2		= $("#dontmisssub");
-		var wrapper3		= $("#blog_section_g");
-		
-		var table_wrapper	= "";
-		var table_wrapper2	= "";
-
-		$.ajax({
-			url: "<?php echo site_url('NewsLoad/newsload');?>",
-			type: 'POST',
-			dataType: 'json',				
-			success: function( response ) {
-				loadmore_var = response.slice(0,3)
-				// for (i = 0; i < response.length; i++){
-				// 	table_wrapper+='<div class="card card_small_with_image grid-item">'+
-				// 						'<img class="card-img-top" src="<?= base_url(); ?>assets/images/post_10.jpg" alt="">'+
-				// 						'<div class="card-body">'+
-				// 							'<div class="card-title card-title-small"><a href="post.html">'+response[i].judul+'</a></div>'+
-				// 							'<small class="post_meta"><a href="#">Katy Liu</a><span>'+response[i].created_at+'</span></small>'+
-				// 						'</div>'+
-				// 					'</div>';
-				// }
-				for (i = 0; i < loadmore_var.length; i++){
-					var thumbnail = '';
-					if(loadmore_var[i].thumbnail=='' || loadmore_var[i].thumbnail==null){
-						var thumbnail = '<?= base_url(); ?>assets/none.png';
-					}else{
-						var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore_var[i].thumbnail;
-					}
-					if (i > 0){
-						table_wrapper2 += '<div class="card mb-2" >'+
-												'<div class="row no-gutters">'+
-													'<div class="col-md-4">'+
-														'<img src="'+thumbnail+'" class="card-img" alt="...">'+
-													'</div>'+
-													'<div class="col-md-8">'+
-														'<div class="card-body">'+
-															'<h5 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h5>'+
-															'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
-															'<p class="card-text"><small class="text-muted"><span>'+loadmore_var[i].created_at+'</span></small></p>'+
-														'</div>'+
-													'</div>'+
-										 		'</div>'+
-											'</div>';
-					}
-
-					if(i == 0){
-						table_wrapper += '<div class="card mb-2">'+
-											'<img src="'+thumbnail+'" class="card-img-top" alt="">'+
-													'<div class="card-body">'+
-														'<h3 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h3>'+
-														'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
-														'<small class="post_meta"><a href="#">'+loadmore_var[i].by+'</a><span>'+loadmore_var[i].created_at+'</span></small>'+
-													'</div>'+
-										  '</div>';
-					}
-					arrayindex = i
-				}
-				$(wrapper).html(table_wrapper);
-				$(wrapper2).html(table_wrapper2);				
-			}
-		});
-
-		
-		$("#load_more_newest").click(function(){
-			$.ajax({
-				url: "<?php echo site_url('NewsLoad/newsload');?>",
-				type: 'POST',
-				dataType: 'json',				
-				success: function( response ) {
-					let resp_length 	= response.length - 1;
-					let arrayindexnew	= arrayindex + 1;
-
-					let loadmore = response.splice(arrayindexnew,resp_length);
-					// console.log(loadmore);
-					
-					for (i = 0 ; i < loadmore.length; i++){	
-						var thumbnail = '';
-						if(loadmore[i].thumbnail=='' || loadmore[i].thumbnail==null){
-							var thumbnail = '<?= base_url(); ?>assets/none.png';
+                <div class="most-viewed-videos-slide owl-carousel">
+					<?php
+					$get_news = $this->Main_model->getSelectedData('berita a', 'a.*,(SELECT COUNT(b.id_berita) FROM komentar_berita b WHERE b.id_berita=a.id_berita) AS jml', '', 'a.created_at DESC')->result();
+					foreach ($get_news as $key => $value) {
+						if($value->thumbnail==NULL OR $value->thumbnail==''){
+							echo'';
 						}else{
-							var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore[i].thumbnail;
-						}					
-						table_wrapper2 += '<div class="card mb-2" >'+
-												'<div class="row no-gutters">'+
-													'<div class="col-md-4">'+
-														'<img src="'+thumbnail+'" class="card-img" alt="...">'+
-													'</div>'+
-													'<div class="col-md-8">'+
-														'<div class="card-body">'+
-															'<h5 class="card-title"><a href="news_detail/'+loadmore[i].id_berita+'">'+loadmore[i].judul+'</a></h5>'+
-															'<p class="card-text">'+loadmore[i].berita+'</p>'+
-															'<p class="card-text"><small class="text-muted"><span>'+loadmore[i].created_at+'</span></small></p>'+
-														'</div>'+
-													'</div>'+
-												'</div>'+
-											'</div>';
-						arrayindexnew = i;
-					}
-					$(wrapper2).html(table_wrapper2);
-					$("#show_less_newest" ).removeClass("d-none");
-					$("#load_more_newest" ).addClass("d-none");
-
-					arrayindex 		= 0;
-					loadmore_var 	= "";
-					table_wrapper	= "";
-					table_wrapper2	= "";
-				}
-			});
-		});
-
-		$("#show_less_newest").click(function(){
-			$(wrapper).html("");
-			$(wrapper2).html("");
-
-			var innerwrapper 	= $(wrapper).html();
-			var innerwarapper2	= $(wrapper2).html();
-
-			if (innerwrapper == "" && innerwarapper2 == ""){
-				// console.log(innerwrapper);
-				$.ajax({
-					url: "<?php echo site_url('NewsLoad/newsload');?>",
-					type: 'POST',
-					dataType: 'json',				
-					success: function( response ) {
-						loadmore_var = response.slice(0,5);
-						
-						for (i = 0; i < loadmore_var.length; i++){
-							var thumbnail = '';
-							if(loadmore_var[i].thumbnail=='' || loadmore_var[i].thumbnail==null){
-								var thumbnail = '<?= base_url(); ?>assets/none.png';
-							}else{
-								var thumbnail = '<?= base_url(); ?>data_upload/berita/'+loadmore_var[i].thumbnail;
-							}
-							if (i > 0){	
-								table_wrapper2 += '<div class="card mb-2" >'+
-														'<div class="row no-gutters">'+
-															'<div class="col-md-4">'+
-																'<img src="'+thumbnail+'" class="card-img" alt="...">'+
-															'</div>'+
-															'<div class="col-md-8">'+
-																'<div class="card-body">'+
-																	'<h5 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h5>'+
-																	'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
-																	'<p class="card-text"><small class="text-muted"><span>'+loadmore_var[i].created_at+'</span></small></p>'+
-																'</div>'+
-															'</div>'+
-														'</div>'+
-													'</div>';
-							}
-
-							if(i == 0){
-								table_wrapper += '<div class="card mb-2">'+
-													'<img src="'+thumbnail+'" class="card-img-top" alt="">'+
-															'<div class="card-body">'+
-																'<h3 class="card-title"><a href="news_detail/'+loadmore_var[i].id_berita+'">'+loadmore_var[i].judul+'</a></h3>'+
-																'<p class="card-text">'+loadmore_var[i].berita+'</p>'+
-																'<small class="post_meta"><a href="#">Katy Liu</a><span>'+loadmore_var[i].created_at+'</span></small>'+
-															'</div>'+
-												'</div>';
-							}
-							arrayindex = i
+					?>
+					<!-- Single Blog Post -->
+                    <div class="single-blog-post style-4">
+                        <div class="post-thumbnail">
+                            <img src="<?= base_url(); ?>data_upload/berita/<?= $value->thumbnail; ?>" alt="">
+                            <!-- <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a> -->
+                            <!-- <span class="video-duration">09:27</span> -->
+                        </div>
+                        <div class="post-content">
+                            <a href="<?= base_url().'news_detail/'.$value->id_berita; ?>" class="post-title"><?= $value->judul; ?></a>
+                            <div class="post-meta d-flex">
+								<a><?= date("M d, Y", strtotime($value->created_at)); ?></a>
+								<a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> <?= number_format($value->jml,0); ?></a>
+                                <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> <?= number_format($value->counter,0); ?></a>
+                                <!-- <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
+                                <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a> -->
+                            </div>
+                        </div>
+                    </div>
+					<?php
 						}
-						$(wrapper).html(table_wrapper);
-						$(wrapper2).html(table_wrapper2);
-
-						$("#load_more_newest" ).removeClass("d-none");
-						$("#show_less_newest" ).addClass("d-none");
-
 					}
-				});
-			}
-		});
-	});
-		
-</script>
+					?>
+                </div>
+            </div>
+
+            <!--?php include 'sport-videos.php' -->
+        </div>
+		<div class="post-sidebar-area right-sidebar mt-30 mb-30 box-shadow">
+		<?php include 'right_sidebar.php' ?>
+		</div>
+	</section>
+	<!-- ##### Mag Posts Area End ##### -->
+	
+	<?php include 'footer.php' ?>
+
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="<?= base_url(); ?>assets/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="<?= base_url(); ?>assets/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="<?= base_url(); ?>assets/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="<?= base_url(); ?>assets/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="<?= base_url(); ?>assets/js/active.js"></script>
 </body>
+
 </html>

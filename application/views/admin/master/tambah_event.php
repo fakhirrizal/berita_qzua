@@ -50,7 +50,7 @@
             <div class="form-body">
                 <div class="form-group form-md-line-input has-danger">
                     <label class="control-label" for="form_control_1">Poster </label>
-                    <input type="file" class="form-control" name="foto" accept="image/*">
+                    <input type="file" class="form-control" name="foto" accept="image/*" required>
                 </div>
             </div>
         </div>

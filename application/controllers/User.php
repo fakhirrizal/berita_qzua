@@ -13,13 +13,19 @@ class User extends CI_Controller {
     }
     public function detail($key=''){
         if($key!=NULL){
-            $data['data_berita'] = $this->Main_model->getSelectedData('berita a', 'a.*,b.fullname,b.photo', array('a.id_berita'=>$key), '', '', '', '', array(
-                'table' => 'user b',
-                'on' => 'a.created_by=b.id',
+            $get_data = $this->Main_model->getSelectedData('berita a', 'a.*,bb.fullname,bb.photo,(SELECT COUNT(b.id_berita) FROM komentar_berita b WHERE b.id_berita=a.id_berita) AS jml', array('a.id_berita'=>$key), '', '', '', '', array(
+                'table' => 'user bb',
+                'on' => 'a.created_by=bb.id',
                 'pos' => 'LEFT'
             ))->row();
+            $data['data_berita'] = $this->Main_model->getSelectedData('berita a', 'a.*,bb.fullname,bb.photo,(SELECT COUNT(b.id_berita) FROM komentar_berita b WHERE b.id_berita=a.id_berita) AS jml', array('a.id_berita'=>$key), '', '', '', '', array(
+                'table' => 'user bb',
+                'on' => 'a.created_by=bb.id',
+                'pos' => 'LEFT'
+            ))->row();
+            $this->Main_model->updateData('berita',array('counter'=>$get_data->counter+1),array('id_berita'=>$key));
             $data['data_komen'] = $this->db->query("SELECT * FROM `komentar_berita` WHERE `id_berita`='".$key."' AND `id_parent_comment` IS NULL ORDER BY `komentar_berita`.`created_at` ASC")->result();
-            $data['other_news'] = $this->db->query("SELECT a.*,b.fullname FROM berita a LEFT JOIN user b ON a.created_by=b.id WHERE a.id_berita NOT IN ('".$key."') ORDER BY RAND() LIMIT 3")->result();
+            $data['other_news'] = $this->db->query("SELECT a.*,b.fullname,(SELECT COUNT(bb.id_berita) FROM komentar_berita bb WHERE bb.id_berita=a.id_berita) AS jml FROM berita a LEFT JOIN user b ON a.created_by=b.id WHERE a.id_berita NOT IN ('".$key."') ORDER BY RAND() LIMIT 3")->result();
             $this->load->view('public/berita_detail',$data);
         }else{
             redirect();
