@@ -303,11 +303,11 @@ class App extends CI_Controller {
 			$this->Main_model->log_activity($this->session->userdata('id'),'Updating data',"Memperbarui kata sandi akun (".$this->input->post('nama').")",$this->session->userdata('location'));
 			if($this->db->trans_status() === false){
 				$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal diperbarui.<br /></div>' );
-				echo "<script>window.location='".base_url()."admin_side/kata_sandi/'</script>";
+				echo "<script>window.location='".base_url()."admin_side/profil/'</script>";
 			}
 			else{
 				$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil diperbarui.<br /></div>' );
-				echo "<script>window.location='".base_url()."admin_side/kata_sandi'</script>";
+				echo "<script>window.location='".base_url()."admin_side/profil'</script>";
 			}
 		}
 	}

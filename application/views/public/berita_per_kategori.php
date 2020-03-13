@@ -29,9 +29,11 @@
     </div>
 
     <?php include 'header.php' ?>
-
+    <?php
+    $cover = $this->Main_model->getSelectedData('cover a', 'a.*', array('a.page'=>'News Category'))->row();
+    ?>
     <!-- ##### Breadcrumb Area Start ##### -->
-    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(<?= base_url(); ?>assets/img/bg-img/41.jpg);">
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(<?= base_url(); ?>data_upload/cover/<?= $cover->file; ?>);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
@@ -51,8 +53,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Feature</a></li>
+                            <li class="breadcrumb-item"><a href="<?= base_url(); ?>"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                            <!-- <li class="breadcrumb-item"><a href="#">Feature</a></li> -->
                             <li class="breadcrumb-item active" aria-current="page">Archive by Category “<?= $kategori_berita; ?>”</li>
                         </ol>
                     </nav>
@@ -68,185 +70,59 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-xl-8">
                     <div class="archive-posts-area bg-white p-30 mb-30 box-shadow">
-
+                        <?php
+                        if($data_berita==NULL){
+                            $str = "<div class='error-container'><h1 class='error_headline'>Uh-oh!</h1><h2 class='error_headline2'>It could be you, or it could be us, but there's no page here.</h2></div>";
+                            echo $str;
+                        }else{
+                            echo'';
+                        }
+                        foreach ($data_berita as $key => $value) {
+                            $thumbnail = '';
+                            if($value['thumbnail']==NULL){
+                                $thumbnail = base_url().'assets/img/none.png';
+                            }else{
+                                $thumbnail = base_url().'data_upload/berita/'.$value['thumbnail'];
+                            }
+                        ?>
                         <!-- Single Catagory Post -->
                         <div class="single-catagory-post d-flex flex-wrap">
                             <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/42.jpg);">
-                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
+                            <div class="post-thumbnail bg-img" style="background-image: url(<?= $thumbnail; ?>);">
                             </div>
 
                             <!-- Post Contetnt -->
                             <div class="post-content">
                                 <div class="post-meta">
-                                    <a href="#">MAY 8, 2018</a>
-                                    <a href="archive.html">lifestyle</a>
+                                    <font color='#ed3974'><?= date("M d, Y", strtotime($value['created_at'])); ?></font>
+                                    <!-- <a href="archive.html">lifestyle</a> -->
                                 </div>
-                                <a href="video-post.html" class="post-title">Global Travel And Vacations Luxury Travel On A Tight Budget</a>
+                                <a href="<?= base_url().'news_detail/'.$value['id_berita']; ?>" class="post-title"><?= $value['judul']; ?></a>
                                 <!-- Post Meta -->
                                 <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
+                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> <?= number_format($value['counter'],0); ?></a>
+                                    <!-- <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a> -->
+                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> <?= number_format($value['jml'],0); ?></a>
                                 </div>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
+                                <p><?= $value['berita']; ?></p>
                             </div>
                         </div>
-
-                        <!-- Single Catagory Post -->
-                        <div class="single-catagory-post d-flex flex-wrap">
-                            <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/43.jpg);">
-                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
-                            </div>
-
-                            <!-- Post Contetnt -->
-                            <div class="post-content">
-                                <div class="post-meta">
-                                    <a href="#">MAY 8, 2018</a>
-                                    <a href="archive.html">lifestyle</a>
-                                </div>
-                                <a href="video-post.html" class="post-title">The Luxury Of Traveling With Yacht Charter Companies</a>
-                                <!-- Post Meta -->
-                                <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
-                            </div>
-                        </div>
-
-                        <!-- Single Catagory Post -->
-                        <div class="single-catagory-post d-flex flex-wrap">
-                            <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/44.jpg);">
-                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
-                            </div>
-
-                            <!-- Post Contetnt -->
-                            <div class="post-content">
-                                <div class="post-meta">
-                                    <a href="#">MAY 8, 2018</a>
-                                    <a href="archive.html">lifestyle</a>
-                                </div>
-                                <a href="video-post.html" class="post-title">Will The Democrats Be Able To Reverse The Online Gambling Ban</a>
-                                <!-- Post Meta -->
-                                <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
-                            </div>
-                        </div>
-
-                        <!-- Single Catagory Post -->
-                        <div class="single-catagory-post d-flex flex-wrap">
-                            <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/45.jpg);">
-                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
-                            </div>
-
-                            <!-- Post Contetnt -->
-                            <div class="post-content">
-                                <div class="post-meta">
-                                    <a href="#">MAY 8, 2018</a>
-                                    <a href="archive.html">lifestyle</a>
-                                </div>
-                                <a href="video-post.html" class="post-title">Family Safari Vacation To The Home Of The Gods</a>
-                                <!-- Post Meta -->
-                                <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
-                            </div>
-                        </div>
-
-                        <!-- Single Catagory Post -->
-                        <div class="single-catagory-post d-flex flex-wrap">
-                            <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/46.jpg);">
-                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
-                            </div>
-
-                            <!-- Post Contetnt -->
-                            <div class="post-content">
-                                <div class="post-meta">
-                                    <a href="#">MAY 8, 2018</a>
-                                    <a href="archive.html">lifestyle</a>
-                                </div>
-                                <a href="video-post.html" class="post-title">Addiction When Gambling Becomes A Problem</a>
-                                <!-- Post Meta -->
-                                <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
-                            </div>
-                        </div>
-
-                        <!-- Single Catagory Post -->
-                        <div class="single-catagory-post d-flex flex-wrap">
-                            <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/47.jpg);">
-                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
-                            </div>
-
-                            <!-- Post Contetnt -->
-                            <div class="post-content">
-                                <div class="post-meta">
-                                    <a href="#">MAY 8, 2018</a>
-                                    <a href="archive.html">lifestyle</a>
-                                </div>
-                                <a href="video-post.html" class="post-title">Take A Romantic Break In A Boutique Hotel</a>
-                                <!-- Post Meta -->
-                                <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
-                            </div>
-                        </div>
-
-                        <!-- Single Catagory Post -->
-                        <div class="single-catagory-post d-flex flex-wrap">
-                            <!-- Thumbnail -->
-                            <div class="post-thumbnail bg-img" style="background-image: url(img/bg-img/48.jpg);">
-                                <a href="video-post.html" class="video-play"><i class="fa fa-play"></i></a>
-                            </div>
-
-                            <!-- Post Contetnt -->
-                            <div class="post-content">
-                                <div class="post-meta">
-                                    <a href="#">MAY 8, 2018</a>
-                                    <a href="archive.html">lifestyle</a>
-                                </div>
-                                <a href="video-post.html" class="post-title">Global Travel And Vacations Luxury Travel On A Tight Budget</a>
-                                <!-- Post Meta -->
-                                <div class="post-meta-2">
-                                    <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> 1034</a>
-                                    <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a>
-                                    <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 234</a>
-                                </div>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa officia deserunt mollit anim id est laborum. Sed ut perspiciatis lorem150</p>
-                            </div>
-                        </div>
-
-                        <!-- Pagination -->
+                        <?php } ?>
                         <nav>
+                            <ul class="pagination">
+                                <?php
+                                echo $this->pagination->create_links();
+                                ?>
+                            </ul>
+                        </nav>
+                        <!-- <nav>
                             <ul class="pagination">
                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
                                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                                 <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><i class="ti-angle-right"></i></a></li>
+                                <li class="page-item"><a class="page-link" href="#"><i class="ti-angle-left"></i></a></li>
                             </ul>
-                        </nav>
-
+                        </nav> -->
                     </div>
                 </div>
 

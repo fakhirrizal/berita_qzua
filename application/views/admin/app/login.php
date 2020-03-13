@@ -1,114 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr">
 
 <head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Queensland Zhejiang United Association Inc.</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="<?= base_url(); ?>assets_dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="<?= base_url(); ?>assets_dashboard/css/sb-admin-2.min.css" rel="stylesheet">
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link href="<?= base_url(); ?>assets/img/logo.png" rel="icon" type="image/x-icon">
+    <title>Queensland Zhejiang United Association Inc.</title>
+    <!-- Custom CSS -->
+    <link href="<?= base_url(); ?>assets/dashboard_admin/dist/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 </head>
 
-<body class="bg-gradient-primary">
-
-  <div class="container">
-
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-
-      <div class="col-xl-10 col-lg-12 col-md-9">
-
-        <div class="card o-hidden border-0 shadow-lg my-5">
-          <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-              <div class="col-lg-6">
-                <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                  </div>
-                  <form class="user" action="<?= site_url('admin_side/login_process'); ?>" method="post">
-                    <?= $this->session->flashdata('error') ?>
-                    <p id="getLocation"></p>
-                    <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" name='username' placeholder="Enter Username...">
-                    </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="password" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
-                      </div>
-                    </div>
-                    <button type='submit' class="btn btn-primary btn-user btn-block">Login
-                    </button>
-                    <!-- <a href="index.html" class="btn btn-primary btn-user btn-block">
-                      Login
-                    </a> -->
-                    <hr>
-                    <a href="index.html" class="btn btn-google btn-user btn-block">
-                      <i class="fab fa-google fa-fw"></i> Login with Google
-                    </a>
-                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                      <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                    </a>
-                  </form>
-                    <script>
-                        var view = document.getElementById("getLocation");
-                        function getLocation() {
-                            if (navigator.geolocation) {
-                                navigator.geolocation.getCurrentPosition(showPosition);
-                            } else {
-                                view.innerHTML = "";
-                            }
-                        }
-                        function showPosition(position) {
-                            view.innerHTML = "<input type='hidden' name='location' value='" + position.coords.latitude + "," + position.coords.longitude +"' />";
-                        }
-                    </script>
-                  <hr>
-                  <div class="text-center">
-                    <a class="small" href="forgot-password.html">Forgot Password?</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="register.html">Create an Account!</a>
-                  </div>
-                </div>
-              </div>
+<body>
+    <div class="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
             </div>
-          </div>
         </div>
-
-      </div>
-
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
+            style="background:url(<?= base_url(); ?>assets/dashboard_admin/assets/images/big/auth-bg.jpg) no-repeat center center;">
+            <div class="auth-box row">
+                <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url(<?= base_url(); ?>assets/dashboard_admin/assets/images/big/3.jpg);">
+                </div>
+                <div class="col-lg-5 col-md-7 bg-white">
+                    <div class="p-3">
+                        <div class="text-center">
+                            <img src="<?= base_url(); ?>assets/dashboard_admin/assets/images/big/icon.png" alt="wrapkit">
+                        </div>
+                        <h2 class="mt-3 text-center">Sign In</h2>
+                        <p class="text-center">Enter your email address and password to access admin panel.</p>
+                        <form class="mt-4" action="<?= site_url('admin_side/login_process'); ?>" method="post">
+                            <?= $this->session->flashdata('error') ?>
+                            <p id="getLocation"></p>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="text-dark" for="uname">Username</label>
+                                        <input class="form-control" id="uname" name='username' type="text"
+                                            placeholder="enter your username">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="text-dark" for="pwd">Password</label>
+                                        <input class="form-control" id="pwd" name='password' type="password"
+                                            placeholder="enter your password">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 text-center">
+                                    <button type="submit" class="btn btn-block btn-dark">Sign In</button>
+                                </div>
+                                <div class="col-lg-12 text-center mt-5">
+                                    Don't have an account? <a href="#" class="text-danger">Sign Up</a>
+                                </div>
+                            </div>
+                        </form>
+                        <script>
+                            var view = document.getElementById("getLocation");
+                            function getLocation() {
+                                if (navigator.geolocation) {
+                                    navigator.geolocation.getCurrentPosition(showPosition);
+                                } else {
+                                    view.innerHTML = "";
+                                }
+                            }
+                            function showPosition(position) {
+                                view.innerHTML = "<input type='hidden' name='location' value='" + position.coords.latitude + "," + position.coords.longitude +"' />";
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
     </div>
-
-  </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="<?= base_url(); ?>assets_dashboard/vendor/jquery/jquery.min.js"></script>
-  <script src="<?= base_url(); ?>assets_dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="<?= base_url(); ?>assets_dashboard/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="<?= base_url(); ?>assets_dashboard/js/sb-admin-2.min.js"></script>
-
+    <!-- ============================================================== -->
+    <!-- All Required js -->
+    <!-- ============================================================== -->
+    <script src="<?= base_url(); ?>assets/dashboard_admin/assets/libs/jquery/dist/jquery.min.js "></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="<?= base_url(); ?>assets/dashboard_admin/assets/libs/popper.js/dist/umd/popper.min.js "></script>
+    <script src="<?= base_url(); ?>assets/dashboard_admin/assets/libs/bootstrap/dist/js/bootstrap.min.js "></script>
+    <!-- ============================================================== -->
+    <!-- This page plugin js -->
+    <!-- ============================================================== -->
+    <script>
+        $(".preloader ").fadeOut();
+    </script>
 </body>
 
 </html>

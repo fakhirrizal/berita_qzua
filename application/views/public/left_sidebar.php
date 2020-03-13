@@ -21,7 +21,10 @@
                 $thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
             }
         ?>
+        <!-- <div class="single-catagory-post d-flex flex-wrap"> -->
         <div class="single-blog-post d-flex">
+            <!-- <div class="post-thumbnail bg-img" style="background-image: url(<?= $thumbnail; ?>);">
+            </div> -->
             <div class="post-thumbnail">
                 <img src="<?= $thumbnail; ?>" alt="">
             </div>

@@ -1,0 +1,14 @@
+@media only screen and (max-width: 767px) {
+            .header-area .mag-main-menu .top-search-area form input {
+              padding: 0 15px;
+              width: 220px;
+              font-size: 11px;
+              height: 60px; } }
+              
+.section-heading {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 30px;
+  background-color: #f2f4f5;
+  padding: 10px 25px;
+  border-left: 4px solid #0398fc; }

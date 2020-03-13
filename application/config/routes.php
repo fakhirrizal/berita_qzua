@@ -128,11 +128,27 @@ $route['admin_side/detail_iklan/(:any)'] = 'admin/Setting/detail_iklan/$1';
 $route['admin_side/perbarui_iklan'] = 'admin/Setting/perbarui_iklan';
 $route['admin_side/hapus_iklan/(:any)'] = 'admin/Setting/hapus_iklan/$1';
 
+$route['admin_side/slider'] = 'admin/Setting/slider';
+$route['admin_side/tambah_slider'] = 'admin/Setting/tambah_slider';
+$route['admin_side/simpan_slider'] = 'admin/Setting/simpan_slider';
+$route['admin_side/detail_slider/(:any)'] = 'admin/Setting/detail_slider/$1';
+$route['admin_side/perbarui_slider'] = 'admin/Setting/perbarui_slider';
+$route['admin_side/hapus_slider/(:any)'] = 'admin/Setting/hapus_slider/$1';
+
+$route['admin_side/cover'] = 'admin/Setting/cover';
+$route['admin_side/tambah_cover'] = 'admin/Setting/tambah_cover';
+$route['admin_side/simpan_cover'] = 'admin/Setting/simpan_cover';
+$route['admin_side/detail_cover/(:any)'] = 'admin/Setting/detail_cover/$1';
+$route['admin_side/perbarui_cover'] = 'admin/Setting/perbarui_cover';
+$route['admin_side/hapus_cover/(:any)'] = 'admin/Setting/hapus_cover/$1';
+
 /* Public */
 $route['kategori'] = 'User/kategori';
 $route['news_detail/(:any)'] = 'User/detail/$1';
 $route['news_detail'] = 'User/detail';
 $route['kategori/(:any)'] = 'User/kategori/$1';
+$route['tags/(:any)'] = 'User/tag/$1';
+$route['kategori/(:any)/(:any)'] = 'User/kategori/$1/$2';
 $route['event_detail/(:any)'] = 'User/event_detail/$1';
 $route['event_detail'] = 'User/event_detail';
 $route['about'] = 'User/about';

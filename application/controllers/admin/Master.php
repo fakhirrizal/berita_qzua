@@ -735,6 +735,9 @@ class Master extends CI_Controller {
 			'id_kategori_berita' => $id_kategori_berita,
 			'judul' => $this->input->post('nama'),
 			'berita' => $this->input->post('desc'),
+			'berita' => $this->input->post('desc'),
+			'video_link' => $this->input->post('link'),
+			'tags' => $this->input->post('tags'),
 			'thumbnail' => $nama_file,
 			'created_by' => $this->session->userdata('id'),
 			'created_at' => date('Y-m-d H:i:s')
@@ -823,7 +826,9 @@ class Master extends CI_Controller {
 		$data_insert1 = array(
 			'id_kategori_berita' => implode(',',$this->input->post('kat')),
 			'judul' => $this->input->post('nama'),
-			'berita' => $this->input->post('desc')
+			'berita' => $this->input->post('desc'),
+			'video_link' => $this->input->post('link'),
+			'tags' => $this->input->post('tags')
 		);
 		$this->Main_model->updateData('berita',$data_insert1,array('id_berita'=>$this->input->post('id')));
 		// print_r($data_insert1);

@@ -46,13 +46,19 @@ class User extends CI_Controller {
                 $this->load->view('public/wrong_kategori',$data);
                 // redirect();
             }else{
-                $check_berita = $this->db->query("SELECT * FROM `berita` WHERE `id_kategori_berita` LIKE '%".$checking_data->id_kategori_berita."%'")->result();
+                $check_berita = $this->db->query("SELECT a.*,(SELECT COUNT(b.id_berita) FROM komentar_berita b WHERE b.id_berita=a.id_berita) AS jml FROM berita a WHERE a.id_kategori_berita LIKE '%".$checking_data->id_kategori_berita."%' ORDER BY a.created_at DESC")->result();
                 $tampung_real = array();
                 foreach ($check_berita as $key => $value) {
                     $pecah_kategori = explode(',',$value->id_kategori_berita);
                     for ($i=0; $i < count($pecah_kategori); $i++) { 
                         if($pecah_kategori[$i]==$checking_data->id_kategori_berita){
                             $isi['id_berita'] = $value->id_berita;
+                            $isi['judul'] = $value->judul;
+                            $isi['berita'] = $value->berita;
+                            $isi['created_at'] = $value->created_at;
+                            $isi['counter'] = $value->counter;
+                            $isi['thumbnail'] = $value->thumbnail;
+                            $isi['jml'] = $value->jml;
                             $tampung_real[] = $isi;
                             break;
                         }else{
@@ -70,11 +76,100 @@ class User extends CI_Controller {
                     $data['kategori'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*',array('a.kategori_berita'=>$replace_key))->result();
                     $this->load->view('public/berita_per_kategori',$data);
                 }else{
+                    $config['base_url'] = base_url().'kategori/'.$replace_key.'/';
+                    $config['total_rows'] = count($tampung_real);
+                    $config['per_page'] = 7;
+                    $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+                    $config['num_tag_close']    = '</span></li>';
+                    $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+                    $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+                    $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+                    $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+                    $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+                    $config['prev_tagl_close']  = '</span>Next</li>';
+                    $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+                    $config['first_tagl_close'] = '</span></li>';
+                    $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+                    $config['last_tagl_close']  = '</span></li>';
+                    $this->pagination->initialize($config);
+
+                    if($this->uri->segment(3)==NULL OR $this->uri->segment(3)=='1'){
+                        $output = array_slice($tampung_real, 0, 7);
+                    }else{
+                        $output = array_slice($tampung_real, $this->uri->segment(3), 7);
+                    }
+
                     $data['kategori_berita'] = $replace_key;
-                    $data['data_berita'] = $tampung_real;
+                    $data['data_berita'] = $output;
                     $data['kategori'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*',array('a.kategori_berita'=>$replace_key))->result();
                     $this->load->view('public/berita_per_kategori',$data);
+                    
                 }
+            }
+        }
+    }
+    public function tag($key='')
+    {
+        if($key==NULL){
+            redirect();
+        }
+        else{
+            $get_data = $this->db->query("SELECT a.*,(SELECT COUNT(b.id_berita) FROM komentar_berita b WHERE b.id_berita=a.id_berita) AS jml FROM berita a WHERE a.tags LIKE '%".$key."%' ORDER BY a.created_at DESC")->result_array();
+            // $tampung_real = array();
+            // foreach ($check_berita as $key => $value) {
+            //     $pecah_kategori = explode(',',$value->id_kategori_berita);
+            //     for ($i=0; $i < count($pecah_kategori); $i++) { 
+            //         if($pecah_kategori[$i]==$checking_data->id_kategori_berita){
+            //             $isi['id_berita'] = $value->id_berita;
+            //             $isi['judul'] = $value->judul;
+            //             $isi['berita'] = $value->berita;
+            //             $isi['created_at'] = $value->created_at;
+            //             $isi['counter'] = $value->counter;
+            //             $isi['thumbnail'] = $value->thumbnail;
+            //             $isi['jml'] = $value->jml;
+            //             $tampung_real[] = $isi;
+            //             break;
+            //         }else{
+            //             echo'';
+            //         }
+            //     }
+            // }
+            // foreach ($tampung_real as $key => $value) {
+            //     echo $value['id_berita'].'<br>';
+            // }
+            if($get_data==NULL){
+                // halaman category is empty
+                $data['kategori_berita'] = $key;
+                $data['data_berita'] = $get_data;
+                $data['kategori'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*',array('a.kategori_berita'=>$key))->result();
+                $this->load->view('public/tags',$data);
+            }else{
+                $config['base_url'] = base_url().'tags/'.$key.'/';
+                $config['total_rows'] = count($get_data);
+                $config['per_page'] = 7;
+                $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+                $config['num_tag_close']    = '</span></li>';
+                $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+                $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+                $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+                $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+                $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+                $config['prev_tagl_close']  = '</span>Next</li>';
+                $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+                $config['first_tagl_close'] = '</span></li>';
+                $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+                $config['last_tagl_close']  = '</span></li>';
+                $this->pagination->initialize($config);
+
+                if($this->uri->segment(3)==NULL OR $this->uri->segment(3)=='1'){
+                    $output = array_slice($get_data, 0, 7);
+                }else{
+                    $output = array_slice($get_data, $this->uri->segment(3), 7);
+                }
+                $data['kategori_berita'] = $key;
+                $data['data_berita'] = $output;
+                $data['kategori'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*',array('a.kategori_berita'=>$key))->result();
+                $this->load->view('public/tags',$data);
             }
         }
     }
@@ -99,7 +194,7 @@ class User extends CI_Controller {
         $this->load->view('public/contact');
     }
     public function save_subscriber(){
-        $this->db->trans_start();
+        // $this->db->trans_start();
         $checking_data = $this->Main_model->getSelectedData('subscriber a', 'a.*',array('a.email'=>$this->input->post('alamat_surel')))->row();
         if($checking_data==NULL){
             $get_last_id = $this->Main_model->getLastID('subscriber','id_subscriber');
@@ -110,19 +205,19 @@ class User extends CI_Controller {
             );
             $this->Main_model->insertData('subscriber',$data_insert_);
     
-            $this->Main_model->log_activity($this->session->userdata('id'),'Adding data',"Menambahkan data subscriber",$this->session->userdata('location'));
+            // $this->Main_model->log_activity($this->session->userdata('id'),'Adding data',"Menambahkan data subscriber",$this->session->userdata('location'));
         }else{
             echo'';
         }
-		$this->db->trans_complete();
-		if($this->db->trans_status() === false){
-            // message failed
-			echo "<script>window.location='".base_url()."'</script>";
-		}
-		else{
+		// $this->db->trans_complete();
+		// if($this->db->trans_status() === false){
+        //     // message failed
+		// 	echo "<script>window.location='".base_url()."'</script>";
+		// }
+		// else{
             // message success
 			echo "<script>window.location='".base_url()."'</script>";
-		}
+		// }
     }
     public function save_comment(){
         $this->db->trans_start();
@@ -148,10 +243,28 @@ class User extends CI_Controller {
         }
     }
     public function searching(){
+        // if($this->input->post('key')==NULL OR $this->session->userdata('keyword_searching')==NULL){
+        //     $data['berita'] = '';
+        //     $data['event'] = '';
+        //     $data['key_cari'] = '';
+        // }else{
+        //     $key_cari = '';
+        //     if($this->input->post('key')==NULL){
+        //         $key_cari =$this->session->userdata('keyword_searching');
+        //         $data['key_cari'] =$this->session->userdata('keyword_searching');
+        //     }else{
+        //         $key_cari = $this->input->post('key');
+        //         $data['key_cari'] = $this->input->post('key');
+        //         $sess_data['keyword_searching'] = $this->input->post('key');
+        //         $this->session->set_userdata($sess_data);
+        //     }
+        //     $data['berita'] = $this->db->query("SELECT a.*,b.fullname  FROM berita a LEFT JOIN user b ON a.created_by=b.id WHERE (a.judul LIKE '%".$key_cari."%' OR a.berita LIKE '%".$key_cari."%' OR a.created_at LIKE '%".$key_cari."%') ORDER BY a.created_at DESC")->result();
+        //     $data['event'] = $this->db->query("SELECT *  FROM `event` WHERE (`judul` LIKE '%".$key_cari."%' OR `deskripsi` LIKE '%".$key_cari."%' OR `tanggal_pelaksanaan` LIKE '%".$key_cari."%' OR `tempat` LIKE '%".$key_cari."%' OR `penyelenggara` LIKE '%".$key_cari."%') ORDER BY `created_at` DESC")->result();
+        // }
         $key_cari = $this->input->post('key');
-        $data['key_cari'] = $key_cari;
-        $data['berita'] = $this->db->query("SELECT a.*,b.fullname  FROM berita a LEFT JOIN user b ON a.created_by=b.id WHERE (a.judul LIKE '%".$key_cari."%' OR a.berita LIKE '%".$key_cari."%' OR a.created_at LIKE '%".$key_cari."%') ORDER BY a.created_at DESC")->result();
-        $data['event'] = $this->db->query("SELECT *  FROM `event` WHERE (`judul` LIKE '%".$key_cari."%' OR `deskripsi` LIKE '%".$key_cari."%' OR `tanggal_pelaksanaan` LIKE '%".$key_cari."%' OR `tempat` LIKE '%".$key_cari."%' OR `penyelenggara` LIKE '%".$key_cari."%') ORDER BY `created_at` DESC")->result();
+        $data['key_cari'] = $this->input->post('key');
+        $data['berita'] = $this->db->query("SELECT a.*,b.fullname,(SELECT COUNT(bb.id_berita) FROM komentar_berita bb WHERE bb.id_berita=a.id_berita) AS jml FROM berita a LEFT JOIN user b ON a.created_by=b.id WHERE (a.judul LIKE '%".$key_cari."%' OR a.berita LIKE '%".$key_cari."%' OR a.created_at LIKE '%".$key_cari."%') ORDER BY a.created_at DESC")->result_array();
+        $data['event'] = $this->db->query("SELECT *  FROM `event` WHERE (`judul` LIKE '%".$key_cari."%' OR `deskripsi` LIKE '%".$key_cari."%' OR `tanggal_pelaksanaan` LIKE '%".$key_cari."%' OR `tempat` LIKE '%".$key_cari."%' OR `penyelenggara` LIKE '%".$key_cari."%') ORDER BY `tanggal_pelaksanaan` DESC")->result_array();
         $data['kategori'] = $this->Main_model->getSelectedData('kategori_berita a', 'a.*')->result();
         $this->load->view('public/searching',$data);
     }

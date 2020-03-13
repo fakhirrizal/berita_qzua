@@ -6,8 +6,8 @@
             <div class="col-12 col-sm-6 col-lg-3">
                 <div class="footer-widget">
                     <!-- Logo -->
-                    <a href="index.html" class="foo-logo"><img src="<?= base_url(); ?>assets/img/core-img/logo2.png" alt=""></a>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <a href="<?= base_url(); ?>" class="foo-logo"><img src="<?= base_url(); ?>assets/img/core-img/logo.png" alt=""></a>
+                    <p>Main bodies of QZUA members consist of Zhejiang companies in Australia and investors and traders from Zhejiang province, China.</p>
                     <div class="footer-social-info">
                         <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
                         <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
@@ -57,7 +57,7 @@
                             <img src="<?= $thumbnail; ?>" alt="">
                         </div>
                         <div class="post-content">
-                            <a href="<?= base_url(); ?>'news_detail/'<?= $value->id_berita; ?>" class="post-title"><?= $value->judul; ?></a>
+                            <a href="<?= base_url(); ?>news_detail/<?= $value->id_berita; ?>" class="post-title"><?= $value->judul; ?></a>
                             <div class="post-meta d-flex justify-content-between">
                                 <a><?= date("M d, Y", strtotime($value->created_at)); ?></a>
                                 <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> <?= number_format($value->counter,0); ?></a>
@@ -75,21 +75,29 @@
                 <div class="footer-widget">
                     <h6 class="widget-title">Tags</h6>
                     <ul class="footer-tags">
-                        <li><a href="#">Travel</a></li>
-                        <li><a href="#">Fashionista</a></li>
-                        <li><a href="#">Music</a></li>
-                        <li><a href="#">DESIGN</a></li>
-                        <li><a href="#">NEWS</a></li>
-                        <li><a href="#">TRENDING</a></li>
-                        <li><a href="#">VIDEO</a></li>
-                        <li><a href="#">Game</a></li>
-                        <li><a href="#">Sports</a></li>
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Foods</a></li>
-                        <li><a href="#">TV Show</a></li>
-                        <li><a href="#">Twitter Video</a></li>
-                        <li><a href="#">Playing</a></li>
-                        <li><a href="#">clips</a></li>
+                        <?php
+                        $get_tags = $this->db->query("SELECT * FROM `berita` WHERE tags IS NOT NULL")->result();
+                        $data_tampung = array();
+                        foreach ($get_tags as $key => $value) {
+                            if($value->tags=='' OR $value->tags==NULL){
+                                echo'';
+                            }else{
+                                $pecah_tags = explode(',',$value->tags);
+                                for ($i=0; $i < count($pecah_tags); $i++) { 
+                                    if($pecah_tags[$i]=='' OR $pecah_tags[$i]==NULL){
+                                        echo'';
+                                    }else{
+                                        $data_tampung[] = $pecah_tags[$i];
+                                    }
+                                }
+                            }
+                        }
+                        $clean_array = array_filter(array_unique($data_tampung));
+                        // print_r($clean_array);
+                        for ($i=0; $i < count($clean_array); $i++) { 
+                            echo'<li><a href="'.base_url().'tags/'.$clean_array[$i].'">'.$clean_array[$i].'</a></li>';
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -102,9 +110,9 @@
             <div class="row">
                 <!-- Copywrite Text -->
                 <div class="col-12 col-sm-6">
-                    <p class="copywrite-text"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    <p class="copywrite-text">
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Queensland Zhejiang United Association Inc.</a>
+                    </p>
                 </div>
                 <div class="col-12 col-sm-6">
                     <nav class="footer-nav">

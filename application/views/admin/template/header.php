@@ -1,320 +1,255 @@
-<?php
-if(($this->session->userdata('id'))==NULL){
-	echo "<script>alert('Harap login terlebih dahulu')</script>";
-	echo "<script>window.location='".base_url()."admin_side'</script>";
-}
-else{echo'';}
-?>
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr" lang="en">
 
 <head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Queensland Zhejiang United Association Inc.</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="<?= base_url(); ?>assets_dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="<?= base_url(); ?>assets_dashboard/css/sb-admin-2.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this page -->
-  <link href="<?= base_url(); ?>assets_dashboard/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url(); ?>assets/img/logo.png">
+    <title>Queensland Zhejiang United Association Inc.</title>
+    <!-- Custom CSS -->
+    <link href="<?= base_url(); ?>assets/dashboard_admin/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets/dashboard_admin/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets/dashboard_admin/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="<?= base_url(); ?>assets/dashboard_admin/dist/css/style.min.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_dashboard/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 </head>
 
-<body id="page-top">
-
-  <!-- Page Wrapper -->
-  <div id="wrapper">
-
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item <?php if($parent=='home'){echo'active';}else{echo'';} ?>">
-        <a class="nav-link" href="<?php echo site_url('admin_side/beranda'); ?>">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- <div class="sidebar-heading">
-        Interface
-      </div> -->
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item <?php if($parent=='master'){echo'active';}else{echo'';} ?>">
-        <a class="nav-link <?php if($parent=='master'){echo'';}else{echo'collapsed';} ?>" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Master</span>
-        </a>
-        <div id="collapseTwo" class="collapse <?php if($parent=='master'){echo'show';}else{echo'';} ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">User</h6>
-            <a class="collapse-item <?php if($child=='administrator'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/administrator'); ?>">Administrator</a>
-            <a class="collapse-item <?php if($child=='subscriber'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/subscriber'); ?>">Subscriber</a>
-            <a class="collapse-item <?php if($child=='kritik_saran'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/kritik_saran'); ?>">Critics and Suggestions</a>
-			<h6 class="collapse-header">News</h6>
-            <a class="collapse-item <?php if($child=='kategori_berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/kategori_berita'); ?>">Category of News</a>
-            <a class="collapse-item <?php if($child=='berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/berita'); ?>">News</a>
-            <a class="collapse-item <?php if($child=='komen_berita'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/komen_berita'); ?>">Comments</a>
-            <a class="collapse-item <?php if($child=='event'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/event'); ?>">Event</a>
-          </div>
-        </div>
-	  </li>
-
-	  <li class="nav-item <?php if($parent=='setting'){echo'active';}else{echo'';} ?>">
-        <a class="nav-link <?php if($parent=='setting'){echo'';}else{echo'collapsed';} ?>" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Setting</span>
-        </a>
-        <div id="collapseThree" class="collapse <?php if($parent=='setting'){echo'show';}else{echo'';} ?>" aria-labelledby="headingThree" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item <?php if($child=='iklan'){echo'active';}else{echo'';} ?>" href="<?php echo site_url('admin_side/iklan'); ?>">Ads</a>
-          </div>
-        </div>
-	  </li>
-
-      <li class="nav-item <?php if($parent=='log_activity'){echo'active';}else{echo'';} ?>">
-        <a class="nav-link" href="<?php echo site_url('admin_side/log_aktifitas'); ?>">
-          <i class="fas fa-fw fa-list"></i>
-          <span>Log Activity</span></a>
-      </li>
-
-      <li class="nav-item <?php if($parent=='about'){echo'active';}else{echo'';} ?>">
-        <a class="nav-link" href="<?php echo site_url('admin_side/tentang_aplikasi'); ?>">
-          <i class="fas fa-fw fa-bookmark"></i>
-          <span>About Application</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
-      <!-- Main Content -->
-      <div id="content">
-	  	<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-			<!-- Sidebar Toggle (Topbar) -->
-			<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-			<i class="fa fa-bars"></i>
-			</button>
-
-			<!-- Topbar Search -->
-			<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-			<div class="input-group">
-				<input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-				<div class="input-group-append">
-				<button class="btn btn-primary" type="button">
-					<i class="fas fa-search fa-sm"></i>
-				</button>
-				</div>
-			</div>
-			</form>
-
-			<!-- Topbar Navbar -->
-			<ul class="navbar-nav ml-auto">
-
-			<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-			<li class="nav-item dropdown no-arrow d-sm-none">
-				<a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fas fa-search fa-fw"></i>
-				</a>
-				<!-- Dropdown - Messages -->
-				<div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-				<form class="form-inline mr-auto w-100 navbar-search">
-					<div class="input-group">
-					<input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-					<div class="input-group-append">
-						<button class="btn btn-primary" type="button">
-						<i class="fas fa-search fa-sm"></i>
-						</button>
-					</div>
-					</div>
-				</form>
-				</div>
-			</li>
-
-			<!-- Nav Item - Alerts -->
-			<li class="nav-item dropdown no-arrow mx-1">
-				<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fas fa-bell fa-fw"></i>
-				<!-- Counter - Alerts -->
-				<span class="badge badge-danger badge-counter">3+</span>
-				</a>
-				<!-- Dropdown - Alerts -->
-				<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-				<h6 class="dropdown-header">
-					Alerts Center
-				</h6>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-					<div class="mr-3">
-					<div class="icon-circle bg-primary">
-						<i class="fas fa-file-alt text-white"></i>
-					</div>
-					</div>
-					<div>
-					<div class="small text-gray-500">December 12, 2019</div>
-					<span class="font-weight-bold">A new monthly report is ready to download!</span>
-					</div>
-				</a>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-					<div class="mr-3">
-					<div class="icon-circle bg-success">
-						<i class="fas fa-donate text-white"></i>
-					</div>
-					</div>
-					<div>
-					<div class="small text-gray-500">December 7, 2019</div>
-					$290.29 has been deposited into your account!
-					</div>
-				</a>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-					<div class="mr-3">
-					<div class="icon-circle bg-warning">
-						<i class="fas fa-exclamation-triangle text-white"></i>
-					</div>
-					</div>
-					<div>
-					<div class="small text-gray-500">December 2, 2019</div>
-					Spending Alert: We've noticed unusually high spending for your account.
-					</div>
-				</a>
-				<a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-				</div>
-			</li>
-
-			<!-- Nav Item - Messages -->
-			<li class="nav-item dropdown no-arrow mx-1">
-				<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fas fa-envelope fa-fw"></i>
-				<!-- Counter - Messages -->
-				<span class="badge badge-danger badge-counter">7</span>
-				</a>
-				<!-- Dropdown - Messages -->
-				<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-				<h6 class="dropdown-header">
-					Message Center
-				</h6>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-					<div class="dropdown-list-image mr-3">
-					<img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-					<div class="status-indicator bg-success"></div>
-					</div>
-					<div class="font-weight-bold">
-					<div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-					<div class="small text-gray-500">Emily Fowler · 58m</div>
-					</div>
-				</a>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-					<div class="dropdown-list-image mr-3">
-					<img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-					<div class="status-indicator"></div>
-					</div>
-					<div>
-					<div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-					<div class="small text-gray-500">Jae Chun · 1d</div>
-					</div>
-				</a>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-					<div class="dropdown-list-image mr-3">
-					<img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-					<div class="status-indicator bg-warning"></div>
-					</div>
-					<div>
-					<div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-					<div class="small text-gray-500">Morgan Alvarez · 2d</div>
-					</div>
-				</a>
-				<a class="dropdown-item d-flex align-items-center" href="#">
-					<div class="dropdown-list-image mr-3">
-					<img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-					<div class="status-indicator bg-success"></div>
-					</div>
-					<div>
-					<div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-					<div class="small text-gray-500">Chicken the Dog · 2w</div>
-					</div>
-				</a>
-				<a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-				</div>
-			</li>
-
-			<div class="topbar-divider d-none d-sm-block"></div>
-
-			<!-- Nav Item - User Information -->
-			<li class="nav-item dropdown no-arrow">
-				<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<?php
-				$getdata = $this->Main_model->getSelectedData('user a', 'a.*', array('a.id'=>$this->session->userdata('id')))->row();
-				echo '<span class="mr-2 d-none d-lg-inline text-gray-600 small">'.$getdata->fullname.'</span>';
-				if($getdata->photo==NULL){
-					echo'<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">';
-				}else{
-					$foto = base_url().'data_upload/photo_profile/'.$getdata->photo;
-					echo'<img class="img-profile rounded-circle" src="'.$foto.'">';
-				}
-				?>
-				</a>
-				<!-- Dropdown - User Information -->
-				<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-				<a class="dropdown-item" href="<?php echo site_url('admin_side/profil'); ?>">
-					<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-					Profile
-				</a>
-				<a class="dropdown-item" href="#">
-					<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-					Setting
-				</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-					<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-					Sign out
-				</a>
-				</div>
-			</li>
-
-			</ul>
-
-		</nav>
-		<!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
-          </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin6">
+            <nav class="navbar top-navbar navbar-expand-md">
+                <div class="navbar-header" data-logobg="skin6">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <!-- Logo icon -->
+                        <a href="index.html">
+                            <b class="logo-icon">
+                                <!-- Dark Logo icon -->
+                                <img src="<?= base_url(); ?>assets/dashboard_admin/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                                <!-- Light Logo icon -->
+                                <img src="<?= base_url(); ?>assets/dashboard_admin/assets/images/logo-icon.png" alt="homepage" class="light-logo" />
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text -->
+                            <span class="logo-text">
+                                <!-- dark Logo text -->
+                                <img src="<?= base_url(); ?>assets/dashboard_admin/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                                <!-- Light Logo text -->
+                                <img src="<?= base_url(); ?>assets/dashboard_admin/assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                            </span>
+                        </a>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- <li class="nav-item d-none d-md-block">
+                            <a class="nav-link" href="javascript:void(0)">
+                                <form>
+                                    <div class="customize-input">
+                                        <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                                            type="search" placeholder="Search" aria-label="Search">
+                                        <i class="form-control-icon" data-feather="search"></i>
+                                    </div>
+                                </form>
+                            </a>
+                        </li> -->
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <?php
+                                $getdata = $this->Main_model->getSelectedData('user a', 'a.*', array('a.id'=>$this->session->userdata('id')))->row();
+                                if($getdata->photo==NULL){
+                                    echo'<img class="rounded-circle" width="40" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">';
+                                }else{
+                                    $foto = base_url().'data_upload/photo_profile/'.$getdata->photo;
+                                    echo'<img class="rounded-circle" width="40" src="'.$foto.'">';
+                                }
+                                ?>
+                                <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span
+                                        class="text-dark"><?= $getdata->fullname; ?></span> <i data-feather="chevron-down"
+                                        class="svg-icon"></i></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <a class="dropdown-item" href="<?php echo site_url('admin_side/profil'); ?>"><i data-feather="user"
+                                        class="svg-icon mr-2 ml-1"></i>
+                                    My Profile</a>
+                                <!-- <a class="dropdown-item" href="javascript:void(0)"><i data-feather="credit-card"
+                                        class="svg-icon mr-2 ml-1"></i>
+                                    My Balance</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
+                                        class="svg-icon mr-2 ml-1"></i>
+                                    Inbox</a> -->
+                                <div class="dropdown-divider"></div>
+                                <!-- <a class="dropdown-item" href="javascript:void(0)"><i data-feather="settings"
+                                        class="svg-icon mr-2 ml-1"></i>
+                                    Account Setting</a>
+                                <div class="dropdown-divider"></div> -->
+                                <a class="dropdown-item" href="<?php echo site_url('admin/App/logout'); ?>"><i data-feather="power"
+                                        class="svg-icon mr-2 ml-1"></i>
+                                    Logout</a>
+                                <!-- <div class="dropdown-divider"></div>
+                                <div class="pl-4 p-3"><a href="javascript:void(0)" class="btn btn-sm btn-info">View
+                                        Profile</a></div> -->
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin6">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar" data-sidebarbg="skin6">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="<?php echo site_url('admin_side/beranda'); ?>"
+                                aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
+                                    class="hide-menu">Dashboard</span></a></li>
+                        <li class="list-divider"></li>
+                        <!-- <li class="nav-small-cap"><span class="hide-menu">Components</span></li> -->
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                aria-expanded="false"><i data-feather="grid" class="feather-icon"></i><span
+                                    class="hide-menu">Master </span></a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/administrator'); ?>" class="sidebar-link"><span
+                                            class="hide-menu"> Administrator
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/subscriber'); ?>" class="sidebar-link"><span
+                                            class="hide-menu"> Subscriber
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/kritik_saran'); ?>" class="sidebar-link"><span
+                                            class="hide-menu"> Critics and Suggestions
+                                        </span></a>
+                                </li>
+                                <hr>
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/kategori_berita'); ?>" class="sidebar-link"><span
+                                            class="hide-menu"> Category of News
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/berita'); ?>" class="sidebar-link"><span
+                                            class="hide-menu"> News
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/komen_berita'); ?>" class="sidebar-link"><span
+                                            class="hide-menu"> Comments
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/event'); ?>" class="sidebar-link"><span
+                                            class="hide-menu"> Event
+                                        </span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                                aria-expanded="false"><i class="icon-settings"></i><span
+                                    class="hide-menu">Setting </span></a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/iklan'); ?>" class="sidebar-link"><span
+                                            class="hide-menu"> Ads
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/slider'); ?>" class="sidebar-link"><span
+                                            class="hide-menu"> Slider
+                                        </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/cover'); ?>" class="sidebar-link"><span
+                                            class="hide-menu">
+                                            Cover Image
+                                        </span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="<?php echo site_url('admin_side/log_aktifitas'); ?>"
+                                aria-expanded="false"><i data-feather="sidebar" class="feather-icon"></i><span
+                                    class="hide-menu">Log Activity
+                                </span></a>
+                        </li>
+                        <li class="sidebar-item"> <a class="sidebar-link" href="<?php echo site_url('admin_side/tentang_aplikasi'); ?>"
+                                aria-expanded="false"><i data-feather="tag" class="feather-icon"></i><span
+                                    class="hide-menu">About Application
+                                </span></a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            

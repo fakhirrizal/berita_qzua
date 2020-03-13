@@ -29,9 +29,11 @@
     </div>
 
     <?php include 'header.php' ?>
-
+    <?php
+    $cover = $this->Main_model->getSelectedData('cover a', 'a.*', array('a.page'=>'News Category'))->row();
+    ?>
     <!-- ##### Breadcrumb Area Start ##### -->
-    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(<?= base_url(); ?>assets/img/bg-img/41.jpg);">
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(<?= base_url(); ?>data_upload/cover/<?= $cover->file; ?>);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
@@ -51,8 +53,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Feature</a></li>
+                            <li class="breadcrumb-item"><a href="<?= base_url(); ?>"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                            <!-- <li class="breadcrumb-item"><a href="#">Feature</a></li> -->
                             <li class="breadcrumb-item active" aria-current="page">Archive by Category “<?= $kategori_berita; ?>”</li>
                         </ol>
                     </nav>

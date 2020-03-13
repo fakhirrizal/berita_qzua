@@ -1,5 +1,5 @@
 <!-- ##### Header Area Start ##### -->
-<header class="header-area">
+<header class="header-area"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
     <!-- Navbar Area -->
     <div class="mag-main-menu" id="sticker">
@@ -8,7 +8,7 @@
             <nav class="classy-navbar justify-content-between" id="magNav">
 
                 <!-- Nav brand -->
-                <a href="index.html" class="nav-brand"><img src="<?= base_url(); ?>assets/img/core-img/logo.png" alt=""></a>
+                <a href="<?= base_url(); ?>" class="nav-brand"><img src="<?= base_url(); ?>assets/img/core-img/logos.png" alt=""></a>
 
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">

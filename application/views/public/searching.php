@@ -1,242 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>Queensland Zhejiang United Association Inc. - Searching</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="description" content="Queensland Zhejiang United Association Inc.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/bootstrap4/bootstrap.min.css">
-    <link href="<?= base_url(); ?>assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/plugins/jquery.mb.YTPlayer-3.1.12/jquery.mb.YTPlayer.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/main_styles.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/responsive.css">
-    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>assets/styles/new_style.css">
-    <link href="<?= base_url(); ?>assets/logo.png" rel="icon" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>Queensland Zhejiang United Association Inc. - Searching</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="<?= base_url(); ?>assets/img/logo.png">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/style.css">
+
 </head>
+
 <body>
-<?php
-$id_kategori_berita = '';
-?>
-<div class="super_container">
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
 
-	<!-- Header -->
-	<header class="header">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="header_content d-flex flex-row align-items-center justify-content-start">
-						<div class="logo"><a href="#"><img src='<?= base_url().'assets/images/qzua.png'?>' class='new-logo'></a></div>
-						<nav class="main_nav">
-							<ul>
-								<li><a href="<?= base_url(); ?>">Home</a></li>
-								<li><a href="<?= base_url(); ?>kategori/News">News</a></li>
-								<li><a href="<?= base_url(); ?>about">About</a></li>
-								<li><a href="<?= base_url(); ?>contact">Contact</a></li>
-							</ul>
-						</nav>
-						<div class="search_container ml-auto">
-							<!-- <div class="weather">
-								<div class="temperature">+10°</div>
-								<img class="weather_icon" src="<?= base_url(); ?>assets/images/cloud.png" alt="">
-							</div> -->
-							<form action="<?= base_url(); ?>searching" method='post'>
-								<input type="search" class="header_search_input" name='key' required="required" placeholder="Type to Search...">
-								<img class="header_search_icon" src="<?= base_url(); ?>assets/images/search.png" alt="">
-							</form>
-							
-						</div>
-						<div class="hamburger ml-auto menu_mm">
-							<i class="fa fa-bars trans_200 menu_mm" aria-hidden="true"></i>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-    </header>
+    <?php include 'header.php' ?>
+    <?php
+    $cover = $this->Main_model->getSelectedData('cover a', 'a.*', array('a.page'=>'Searching'))->row();
+    ?>
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url(<?= base_url(); ?>data_upload/cover/<?= $cover->file; ?>);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <h2><?= $cover->title; ?></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Breadcrumb Area End ##### -->
 
-	<!-- Menu -->
-	<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
-		<div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
-		<div class="logo menu_mm"><a href="#">Avision</a></div>
-		<div class="search">
-			<form action="#">
-				<input type="search" class="header_search_input menu_mm" required="required" placeholder="Type to Search...">
-				<img class="header_search_icon menu_mm" src="<?= base_url(); ?>assets/images/search_2.png" alt="">
-			</form>
-		</div>
-		<nav class="menu_nav">
-			<ul class="menu_mm">
-				<li class="menu_mm"><a href="<?= base_url(); ?>">home</a></li>
-				<li class="menu_mm"><a href="<?= base_url(); ?>news">News</a></li>
-				<li class="menu_mm"><a href="<?= base_url(); ?>about">About</a></li>
-				<li class="menu_mm"><a href="<?= base_url(); ?>contact">Contact</a></li>
-			</ul>
-		</nav>
-	</div>
-	
-	<!-- Home
-	<div class="home">
-		
-		Home Slider
-		?php include 'banner.php' ?
-	</div>-->
-	
-	<!-- Page Content -->
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="mag-breadcrumb py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<?= base_url(); ?>"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Feature</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><?php if($key_cari==NULL){echo'Unknown Keyword to Searching Our Content';}else{echo'Search Results for: '.$key_cari;} ?></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
 
-	<div class="page_content">
-		<div class="container">
-			<div class="row row-lg-eq-height">
-
-				<!-- Main Content -->
-
-				<div class="col-lg-9">
-					<div class="main_content">
-
-						<!-- Blog Section - Don't Miss -->
-
-						<div class="blog_section">
-							<div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">Search Results for: <?= $key_cari; ?></div>
-								<div class="section_tags ml-auto">
-									<ul>
-										<li><a href="<?= base_url(); ?>">all</a></li>
-									</ul>
-								</div>
-                                <?php
-								if($kategori!=NULL){
-									echo'
-									<div class="section_panel_more">
-										<ul>
-											<li>more
-												<ul style="height: 300px;overflow: scroll;">';
-												foreach ($kategori as $key => $value) {
-													echo'<li><a href="'.base_url().'kategori/'.$value->kategori_berita.'">'.$value->kategori_berita.'</a></li>';
-												}
-											echo'</ul>
-											</li>
-										</ul>
-									</div>';
-								}else{
-									echo'';
-								}
-								?>
-							</div>
-							<div id = "dontmisscard">							
-							</div>
-							<div id = "dontmisssub">							
-							</div>
-
-						</div>
+    <!-- ##### Archive Post Area Start ##### -->
+    <div class="archive-post-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-8">
+                    <div class="archive-posts-area bg-white p-30 mb-30 box-shadow">
                         <?php
-                        if($berita==NULL){
-                            echo'';
+                        if($berita==NULL OR $key_cari==''){
+                            echo'<div class="cnn-search__no-results no-results--returned">
+                                    <h3>Your search for <strong><font color="red">'.$key_cari.'</font></strong> did not match any documents.</h3>
+                                    <h4>A few suggestions</h4>
+                                    <ul>
+                                        <li>
+                                            Make sure all words are spelled correctly
+                                        </li>
+                                        <li>
+                                            Try different keywords
+                                        </li>
+                                        <li>
+                                            Try more general keywords
+                                        </li>
+                                    </ul>
+                                </div>';
                         }else{
-                            $no = 0;
+                            echo'<h3>Berita</h3>';
                             foreach ($berita as $key => $value) {
-                                if($no=='0'){
-                        ?>
-                        <div class="blog_section">
-							<div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">Berita</div>
-							</div>
-							<div class="section_content">
-								<div class="grid clearfix">
-									<div class="card grid-item">
-										<div class="card-body">
-											<div class="card-title"><a href="<?= base_url().'news_detail/'.$value->id_berita; ?>"><?= $value->judul; ?></a></div>
-											<small class="post_meta"><a href="#"><?= $value->fullname; ?></a><span><?= date("M d, Y", strtotime($value->created_at)).' at '.date("h:i a", strtotime($value->created_at)); ?></span></small>
-                                        </div>
+                                $thumbnail = '';
+                                if($value['thumbnail']==NULL){
+                                    $thumbnail = base_url().'assets/img/none.png';
+                                }else{
+                                    $thumbnail = base_url().'data_upload/berita/'.$value['thumbnail'];
+                                }
+                            ?>
+                            <div class="single-catagory-post d-flex flex-wrap">
+                                <!-- Thumbnail -->
+                                <div class="post-thumbnail bg-img" style="background-image: url(<?= $thumbnail; ?>);">
+                                </div>
+
+                                <!-- Post Contetnt -->
+                                <div class="post-content">
+                                    <div class="post-meta">
+                                        <font color='#ed3974'><?= date("M d, Y", strtotime($value['created_at'])); ?></font>
+                                        <!-- <a href="archive.html">lifestyle</a> -->
                                     </div>
-								</div>
-							</div>
-                        </div>
-                        <?php    }else{ ?>
-                        <div class="blog_section">
-							<div class="section_content">
-								<div class="grid clearfix">
-									<div class="card grid-item">
-										<div class="card-body">
-											<div class="card-title"><a href="<?= base_url().'news_detail/'.$value->id_berita; ?>"><?= $value->judul; ?></a></div>
-											<small class="post_meta"><a href="#"><?= $value->fullname; ?></a><span><?= date("M d, Y", strtotime($value->created_at)).' at '.date("h:i a", strtotime($value->created_at)); ?></span></small>
-                                        </div>
+                                    <a href="<?= base_url().'news_detail/'.$value['id_berita']; ?>" class="post-title"><?= $value['judul']; ?></a>
+                                    <!-- Post Meta -->
+                                    <div class="post-meta-2">
+                                        <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> <?= number_format($value['counter'],0); ?></a>
+                                        <!-- <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a> -->
+                                        <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> <?= number_format($value['jml'],0); ?></a>
                                     </div>
-								</div>
-							</div>
-                        </div>
-                        <?php    }$no++;}}
-                        if($berita!=NULL AND $event!=NULL){
-                            echo'
-                            <div class="blog_section">
-                            <div class="section_content">
+                                    <p><?= $value['berita']; ?></p>
+                                </div>
                             </div>
-                            </div>
-                            ';
-                        }else{
-                            echo'';
-                        }
-                        if($event==NULL){
+                        <?php }}
+                        if($event==NULL OR $key_cari==''){
                             echo'';
                         }else{
-                            $no = 0;
+                            echo'<h3>Event</h3>';
                             foreach ($event as $key => $value) {
-                                if($no=='0'){
-                        ?>
-                        <div class="blog_section">
-							<div class="section_panel d-flex flex-row align-items-center justify-content-start">
-								<div class="section_title">Event</div>
-							</div>
-							<div class="section_content">
-								<div class="grid clearfix">
-									<div class="card grid-item">
-										<div class="card-body">
-											<div class="card-title"><a href="<?= base_url().'event_detail/'.$value->id_event; ?>"><?= $value->judul; ?></a></div>
-											<small class="post_meta"><a href="#"><?= $value->penyelenggara; ?></a><span><?= date("M d, Y", strtotime($value->tanggal_pelaksanaan)).' at '.$value->tempat; ?></span></small>
-                                        </div>
+                                $thumbnail = '';
+                                if($value['poster']==NULL){
+                                    $thumbnail = base_url().'assets/img/none.png';
+                                }else{
+                                    $thumbnail = base_url().'data_upload/event/'.$value['poster'];
+                                }
+                            ?>
+                            <div class="single-catagory-post d-flex flex-wrap">
+                                <!-- Thumbnail -->
+                                <div class="post-thumbnail bg-img" style="background-image: url(<?= $thumbnail; ?>);">
+                                </div>
+
+                                <!-- Post Contetnt -->
+                                <div class="post-content">
+                                    <div class="post-meta">
+                                        <font color='#ed3974'><?= date("M d, Y", strtotime($value['tanggal_pelaksanaan'])); ?></font>
+                                        <!-- <a href="archive.html">lifestyle</a> -->
                                     </div>
-								</div>
-							</div>
-                        </div>
-                        <?php    }else{ ?>
-                        <div class="blog_section">
-							<div class="section_content">
-								<div class="grid clearfix">
-									<div class="card grid-item">
-										<div class="card-body">
-											<div class="card-title"><a href="<?= base_url().'event_detail/'.$value->id_event; ?>"><?= $value->judul; ?></a></div>
-											<small class="post_meta"><a href="#"><?= $value->penyelenggara; ?></a><span><?= date("M d, Y", strtotime($value->tanggal_pelaksanaan)).' at '.$value->tempat; ?></span></small>
-                                        </div>
+                                    <a href="<?= base_url().'event_detail/'.$value['id_event']; ?>" class="post-title"><?= $value['judul']; ?></a>
+                                    <!-- Post Meta -->
+                                    <div class="post-meta-2">
+                                        <!-- <a href="#"><i class="fa fa-eye" aria-hidden="true"></i> <?= number_format($value['counter'],0); ?></a> -->
+                                        <!-- <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 834</a> -->
+                                        <!-- <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> <?= number_format($value['jml'],0); ?></a> -->
                                     </div>
-								</div>
-							</div>
-                        </div>
-                        <?php    }$no++;}} ?>
-					</div>
-				</div>
+                                    <p><?= $value['deskripsi']; ?></p>
+                                </div>
+                            </div>
+                        <?php }} ?>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+                    <div class="sidebar-area bg-white mb-30 box-shadow">
+                        <?php include 'right_sidebar.php' ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Archive Post Area End ##### -->
 
-				<!-- Sidebar -->
-				<?php include 'sidebar.php' ?>
+    <!-- ##### Footer Area Start ##### -->
+    <?php include 'footer.php' ?>
+    <!-- ##### Footer Area End ##### -->
 
-			</div>
-		</div>
-	</div>
-
-	<!-- Footer -->
-
-	<?php include 'footer.php' ?>
-</div>
-
-<script src="<?= base_url(); ?>assets/js/jquery-3.2.1.min.js"></script>
-<script src="<?= base_url(); ?>assets/styles/bootstrap4/popper.js"></script>
-<script src="<?= base_url(); ?>assets/styles/bootstrap4/bootstrap.min.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/jquery.mb.YTPlayer-3.1.12/jquery.mb.YTPlayer.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/easing/easing.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/masonry/masonry.js"></script>
-<script src="<?= base_url(); ?>assets/plugins/masonry/images_loaded.js"></script>
-<script src="<?= base_url(); ?>assets/js/custom.js"></script>
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="<?= base_url(); ?>assets/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="<?= base_url(); ?>assets/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="<?= base_url(); ?>assets/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="<?= base_url(); ?>assets/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="<?= base_url(); ?>assets/js/active.js"></script>
 </body>
+
 </html>

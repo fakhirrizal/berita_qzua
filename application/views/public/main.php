@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
     <meta name="description" content="Queensland Zhejiang United Association Inc.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,6 +16,7 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="<?= base_url(); ?>assets/style.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/new-style.css">
 
 </head>
 
@@ -112,7 +113,7 @@
 								if($flag=='0'){
 									$thumbnail = '';
 									if($value['thumbnail']==NULL){
-										$thumbnail = base_url().'assets/img/none.png';
+										$thumbnail = base_url().'assets/img/wordpress-background-video.png';
 									}else{
 										$thumbnail = base_url().'data_upload/berita/'.$value['thumbnail'];
 									}
@@ -142,7 +143,7 @@
                                         <a href="#"><?= date("M d, Y", strtotime($value['created_at'])); ?></a>
                                         <a href="#"><?= implode(', ',$kategori_berita); ?></a>
                                     </div>
-                                    <a href="video-post.html" class="post-title"><?= $value['judul']; ?></a>
+                                    <a href="<?= base_url().'news_detail/'.$value['id_berita']; ?>" class="post-title"><?= $value['judul']; ?></a>
                                     <p><?= $value['berita']; ?></p>
                                 </div>
                                 <!-- Post Share Area -->
@@ -158,8 +159,8 @@
                                         <a href="#" class="sharebtn"><i class="fa fa-share-alt" aria-hidden="true"></i></a>
                                         <!-- All Share Buttons -->
                                         <div class="all-share-btn d-flex">
-                                            <a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                            <a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                            <a href="http://www.facebook.com/sharer.php?u=http://qzua.eaoron.co.id/" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                            <a href="https://twitter.com/share?url=http://qzua.eaoron.co.id/&text=Queensland Zhejiang United Association Inc." class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                                             <a href="#" class="google-plus"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
                                             <a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                                         </div>
@@ -174,7 +175,7 @@
                             <div class="featured-video-posts-slide owl-carousel">
 								<?php
 								$get_all_news = $this->Main_model->getSelectedData('berita a', 'a.*')->result();
-								$get_news_1 = $this->Main_model->getSelectedData('berita a', 'a.*', '', 'a.created_at DESC', '5', '0')->result();
+								$get_news_1 = $this->Main_model->getSelectedData('berita a', 'a.*', '', 'a.created_at DESC', '4', '0')->result();
 								echo'
 								<div class="single--slide">';
 								foreach ($get_news_1 as $key => $value) {
@@ -184,6 +185,16 @@
 									}else{
 										$thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
 									}
+                                    // echo'<div class="single-catagory-post d-flex flex-wrap">
+                                    //     <div class="post-thumbnail bg-img" style="background-image: url('.$thumbnail.');">
+                                    //     </div>
+                                    //     <div class="post-content">
+                                    //         <a href="'.base_url().'news_detail/'.$value->id_berita.'" class="post-title">'.$value->judul.'</a>
+									// 		<div class="post-meta d-flex">
+									// 		'.date("M d, Y", strtotime($value->created_at)).'
+                                    //         </div>
+                                    //     </div>
+                                    // </div>';
                                     echo'<div class="single-blog-post d-flex style-3">
                                         <div class="post-thumbnail">
                                             <img src="'.$thumbnail.'" alt="">
@@ -194,12 +205,15 @@
 											'.date("M d, Y", strtotime($value->created_at)).'
                                             </div>
                                         </div>
-									</div>';
+                                    </div>';
+                                    // <div class="post-thumbnail" style="">
+                                    //     <img src="'.$thumbnail.'" alt="">
+                                    // </div>
 								}
                                 echo'</div>';
 								for ($i= 1; $i <= count($get_all_news); $i++) { 
-									if ( $bagi = $i % 5 == 0 ) {
-										$get_news_i = $this->Main_model->getSelectedData('berita a', 'a.*', '', 'a.created_at DESC', '5', $i)->result();
+									if ( $bagi = $i % 4 == 0 ) {
+										$get_news_i = $this->Main_model->getSelectedData('berita a', 'a.*', '', 'a.created_at DESC', '4', $i)->result();
 										echo'
 										<div class="single--slide">';
 										foreach ($get_news_i as $key => $value) {
@@ -209,17 +223,48 @@
 											}else{
 												$thumbnail = base_url().'data_upload/berita/'.$value->thumbnail;
 											}
-											echo'<div class="single-blog-post d-flex style-3">
-												<div class="post-thumbnail">
-													<img src="'.$thumbnail.'" alt="">
-												</div>
+											// echo'<div class="single-catagory-post d-flex flex-wrap">
+                                            //     <div class="post-thumbnail bg-img" style="background-image: url('.$thumbnail.');">
+                                            //     </div>
+											// 	<div class="post-content">
+											// 		<a href="'.base_url().'news_detail/'.$value->id_berita.'" class="post-title">'.$value->judul.'</a>
+											// 		<div class="post-meta d-flex">
+											// 		'.date("M d, Y", strtotime($value->created_at)).'
+											// 		</div>
+											// 	</div>
+                                            // </div>';
+                                            // echo'<div class="single-blog-post d-flex style-3">
+											// 	<div class="post-thumbnail" style="position: relative;
+                                            //     width: 100px;
+                                            //     height: 100px;
+                                            //     overflow: hidden;">
+                                            //         <img src="'.$thumbnail.'" style="position: absolute;
+                                            //         left: 50%;
+                                            //         top: 50%;
+                                            //         height: 100px;
+                                            //         width: auto;
+                                            //         -webkit-transform: translate(-50%,-50%);
+                                            //             -ms-transform: translate(-50%,-50%);
+                                            //                 transform: translate(-50%,-50%);" alt="">
+                                            //     </div>
+											// 	<div class="post-content">
+											// 		<a href="'.base_url().'news_detail/'.$value->id_berita.'" class="post-title">'.$value->judul.'</a>
+											// 		<div class="post-meta d-flex">
+											// 		'.date("M d, Y", strtotime($value->created_at)).'
+											// 		</div>
+											// 	</div>
+                                            // </div>';
+                                            echo'<div class="single-blog-post d-flex style-3">
+												<div class="post-thumbnail" >
+                                                    <img src="'.$thumbnail.'" alt="">
+                                                </div>
 												<div class="post-content">
 													<a href="'.base_url().'news_detail/'.$value->id_berita.'" class="post-title">'.$value->judul.'</a>
 													<div class="post-meta d-flex">
 													'.date("M d, Y", strtotime($value->created_at)).'
 													</div>
 												</div>
-											</div>';
+                                            </div>';
 										}
 										echo'</div>';
 									}
