@@ -12,7 +12,7 @@
 			<div class="d-flex align-items-center">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb m-0 p-0">
-						<li class="breadcrumb-item"><a href="#">Subscriber</a>
+						<li class="breadcrumb-item"><a href="#">Partner</a>
 						</li>
 					</ol>
 				</nav>
@@ -44,7 +44,7 @@
 			<div class="card shadow mb-4">
 			<div class="card-header py-3">
 				<!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
-				<!-- <a href="<?=base_url('admin_side/tambah_kategori_berita');?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Add Data <i class="fa fa-plus"></i></a> -->
+				<a href="<?=base_url('admin_side/tambah_partner');?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Add Data <i class="fa fa-plus"></i></a>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -53,10 +53,10 @@
 							<thead>
 								<tr>
 									<th style="text-align: center;" width="1%"> # </th>
-									<th style="text-align: center;"> Email </th>
-									<th style="text-align: center;"> Blast Counting </th>
-									<th style="text-align: center;"> Joined Date </th>
-									<th style="text-align: center;"> Action </th>
+									<th style="text-align: center;"> Company Name </th>
+									<th style="text-align: center;"> Showtime </th>
+									<th style="text-align: center;"> Image </th>
+									<th style="text-align: center;" width="1%"> Action </th>
 								</tr>
 							</thead>
 						</table>
@@ -67,14 +67,14 @@
 								"order": [[ 0, "asc" ]],
 								"bProcessing": true,
 								"ajax" : {
-									url:"<?= site_url('admin/Master/json_subscriber'); ?>"
+									url:"<?= site_url('admin/Setting/json_partner'); ?>"
 								},
 								"aoColumns": [
 											{ mData: 'no', sClass: "alignCenter" },
-											{ mData: 'judul', sClass: "alignCenter" } ,
-											{ mData: 'isi', sClass: "alignCenter" },
-											{ mData: 'action', sClass: "alignCenter" },
-											{ mData: 'button', sClass: "alignCenter" }
+											{ mData: 'judul', sClass: "alignCenter" },
+											{ mData: 'tgl', sClass: "alignCenter" } ,
+											{ mData: 'desc', sClass: "alignCenter" },
+											{ mData: 'action' }
 										]
 							});
 
@@ -91,7 +91,6 @@
 						}
 					</script>
 				</div>
-			</div>
 			</div>
 		</div>
 	</div>

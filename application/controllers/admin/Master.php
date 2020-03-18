@@ -486,6 +486,16 @@ class Master extends CI_Controller {
 			$isi['isi'] = number_format($value->counter,0).' x';
 			$pecah_tanggal = explode(' ',$value->created_at);
 			$isi['action'] = $this->Main_model->convert_tanggal($pecah_tanggal[0]).' '.substr($pecah_tanggal[1],0,5);
+			$return_on_click = "return confirm('Anda yakin?')";
+				$isi['button'] =
+				'<div class="dropdown no-arrow mb-4">
+					<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Action
+					</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" onclick="'.$return_on_click.'" href="'.site_url('admin_side/hapus_data_subscriber/'.md5($value->id_subscriber)).'">Delete Data</a>
+					</div>
+				</div>';
 			$data_tampil[] = $isi;
 		}
 		$results = array(
@@ -494,6 +504,27 @@ class Master extends CI_Controller {
 			"iTotalDisplayRecords" => count($data_tampil),
 			"aaData"=>$data_tampil);
 		echo json_encode($results);
+	}
+	public function hapus_data_subscriber(){
+		$this->db->trans_start();
+		$user_id = '';
+		$name = '';
+		$get_data = $this->Main_model->getSelectedData('subscriber a', 'a.*', array('md5(a.id_subscriber)'=>$this->uri->segment(3)))->row();
+		$user_id = $get_data->id_subscriber;
+		$name = $get_data->email;
+
+		$this->Main_model->deleteData('subscriber',array('id_subscriber'=>$user_id));
+
+		$this->Main_model->log_activity($this->session->userdata('id'),"Deleting subscriber's data","Delete subscriber's data (".$name.")",$this->session->userdata('location'));
+		$this->db->trans_complete();
+		if($this->db->trans_status() === false){
+			$this->session->set_flashdata('gagal','<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Oops! </strong>data gagal dihapus.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/subscriber/'</script>";
+		}
+		else{
+			$this->session->set_flashdata('sukses','<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert"><i class="ace-icon fa fa-times"></i></button><strong></i>Yeah! </strong>data telah berhasil dihapus.<br /></div>' );
+			echo "<script>window.location='".base_url()."admin_side/subscriber/'</script>";
+		}
 	}
 	/* Master Kategori Berita*/
 	public function kategori_berita(){
@@ -645,14 +676,14 @@ class Master extends CI_Controller {
 		foreach ($get_data as $key => $value) {
 			$isi['no'] = $no++.'.';
 			$isi['judul'] = $value->judul;
-			$berita = '';
-			$jumlah_karakter = strlen($value->berita);
-			if($jumlah_karakter>70){
-				$berita = substr($value->berita,0,69).'[....]';
-			}else{
-				$berita = $value->berita;
-			}
-			$isi['isi'] = $berita;
+			// $berita = '';
+			// $jumlah_karakter = strlen($value->berita);
+			// if($jumlah_karakter>70){
+			// 	$berita = substr($value->berita,0,69).'[....]';
+			// }else{
+			// 	$berita = $value->berita;
+			// }
+			// $isi['isi'] = $berita;
 			$kategori = '';
 			$pecah_kategori = explode(',',$value->id_kategori_berita);
 			$hitung_urutan = (count($pecah_kategori))-1;
@@ -703,6 +734,9 @@ class Master extends CI_Controller {
 	}
 	public function simpan_berita(){
 		$this->db->trans_start();
+		$id_berita = '';
+		$get_last_id_berita = $this->Main_model->getLastID('berita','id_berita');
+		$id_berita = $get_last_id_berita['id_berita']+1;
 		$id_kategori_berita = '';
 		$nama_file = '';
 		$nmfile = "file_".time(); // nama file saya beri nama langsung dan diikuti fungsi time
@@ -732,6 +766,7 @@ class Master extends CI_Controller {
 		}else{echo'';}
 		$id_kategori_berita = implode(',',$this->input->post('kat'));
 		$data_insert1 = array(
+			'id_berita' => $id_berita,
 			'id_kategori_berita' => $id_kategori_berita,
 			'judul' => $this->input->post('nama'),
 			'berita' => $this->input->post('desc'),
@@ -766,7 +801,7 @@ class Master extends CI_Controller {
 		$mail->Password = "hiyahiya";
 		$mail->SetFrom("admin@eaoron.co.id","Admin");
 		$mail->Subject = "News";
-		$mail->MsgHTML("Link : ");
+		$mail->MsgHTML("Link : ".base_url().'news_detail/'.$id_berita);
 		foreach ($get_subscriber as $key => $value) {
 			$mail->AddAddress($value->email,$value->email);
 			$mail->Send();

@@ -55,7 +55,7 @@
 									<th style="text-align: center;" width="1%"> # </th>
 									<th style="text-align: center;"> Title </th>
 									<th style="text-align: center;"> Category </th>
-									<th style="text-align: center;"> News </th>
+									<!-- <th style="text-align: center;"> News </th> -->
 									<th style="text-align: center;"> Created At </th>
 									<th style="text-align: center;" width="1%"> Action </th>
 								</tr>
@@ -74,7 +74,7 @@
 											{ mData: 'no', sClass: "alignCenter" },
 											{ mData: 'judul', sClass: "alignCenter" } ,
 											{ mData: 'kategori', sClass: "alignCenter" },
-											{ mData: 'isi', sClass: "alignCenter" },
+											// { mData: 'isi', sClass: "alignCenter" },
 											{ mData: 'dibuat', sClass: "alignCenter" },
 											{ mData: 'action' }
 										]

@@ -118,6 +118,7 @@ $route['admin_side/perbarui_event'] = 'admin/Master/perbarui_event';
 $route['admin_side/hapus_event/(:any)'] = 'admin/Master/hapus_event/$1';
 
 $route['admin_side/subscriber'] = 'admin/Master/subscriber';
+$route['admin_side/hapus_data_subscriber/(:any)'] = 'admin/Master/hapus_data_subscriber/$1';
 
 $route['admin_side/kritik_saran'] = 'admin/Report/kritik_saran';
 
@@ -141,6 +142,13 @@ $route['admin_side/simpan_cover'] = 'admin/Setting/simpan_cover';
 $route['admin_side/detail_cover/(:any)'] = 'admin/Setting/detail_cover/$1';
 $route['admin_side/perbarui_cover'] = 'admin/Setting/perbarui_cover';
 $route['admin_side/hapus_cover/(:any)'] = 'admin/Setting/hapus_cover/$1';
+
+$route['admin_side/partner'] = 'admin/Setting/partner';
+$route['admin_side/tambah_partner'] = 'admin/Setting/tambah_partner';
+$route['admin_side/simpan_partner'] = 'admin/Setting/simpan_partner';
+$route['admin_side/detail_partner/(:any)'] = 'admin/Setting/detail_partner/$1';
+$route['admin_side/perbarui_partner'] = 'admin/Setting/perbarui_partner';
+$route['admin_side/hapus_partner/(:any)'] = 'admin/Setting/hapus_partner/$1';
 
 /* Public */
 $route['kategori'] = 'User/kategori';

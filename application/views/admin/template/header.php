@@ -227,6 +227,11 @@
                                             Cover Image
                                         </span></a>
                                 </li>
+                                <li class="sidebar-item"><a href="<?php echo site_url('admin_side/partner'); ?>" class="sidebar-link"><span
+                                            class="hide-menu">
+                                            Partner
+                                        </span></a>
+                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="<?php echo site_url('admin_side/log_aktifitas'); ?>"
